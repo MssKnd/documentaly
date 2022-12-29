@@ -45,7 +45,7 @@ async function main() {
   const map = await markdownFilePathConfigMap(markdownFilePaths)
   return {
     filePathDependencyMap: map,
-    dependencyFilePath: reverseMap(map as any),
+    // dependencyFilePath: reverseMap(map as any),
   }
 }
 
@@ -56,4 +56,4 @@ async function main() {
 // console.log(reverseMap(map as any))
 
 
-export { main as documentDependencies }
+export { main as documentDependencies, reverseMap }
