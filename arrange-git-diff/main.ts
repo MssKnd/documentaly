@@ -16,10 +16,16 @@ function extractFilenameFromGitDiffResult(diffResult: string): string[] {
   return uniqueFileNames;
 }
 
-const target: RemoteBranch = "origin/main";
-const result = await diff(target);
-console.log(result)
-const re = extractFilenameFromGitDiffResult(result);
-console.log(re)
+
+async function main() {
+  const target: RemoteBranch = "origin/main";
+  const result = await diff(target);
+  // console.log(result)
+  const changedFiles = extractFilenameFromGitDiffResult(result);
+  // console.log(re)
+  return changedFiles
+}
 
 type RemoteBranch = `${string}/${string}`;
+
+export {main as getChangedFiles}
