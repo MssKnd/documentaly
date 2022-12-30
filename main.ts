@@ -58,14 +58,11 @@ const unmaintainedMarkdown = Array.from(dependencyFilePathMap.entries())
     },
   );
 
-// console.log(unmaintainedMarkdown);
-// console.log(new Map(unmaintainedMarkdown))
-
-// unmaintainedMarkdown.map()
 const result = unmaintainedMarkdown.filter(([_, changedDependencyfiles]) =>
   changedDependencyfiles.length > 0
 ).map(([markdownFilePath, changedDependencyfiles]) => ({
   markdownFilePath,
   changedDependencyfiles,
 }));
+
 console.log(JSON.stringify(result));

@@ -1,3 +1,7 @@
+---
+dependentFilePaths: ['filename']
+---
+
 ```mermaid
 graph
   a(Get configuration) --> b(Search files)
