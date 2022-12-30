@@ -21,12 +21,9 @@ function extractFilenameFromGitDiffResult(diffResult: string): FilePath[] {
   return uniqueFileNames;
 }
 
-async function main() {
-  const target: RemoteBranch = "origin/main";
-  const result = await diff(target);
-  // console.log(result)
+async function main(targetBranchName: RemoteBranch) {
+  const result = await diff(targetBranchName);
   const changedFiles = extractFilenameFromGitDiffResult(result);
-  // console.log(re)
   return changedFiles;
 }
 
