@@ -19,7 +19,7 @@ import {
 const { filePathDependencyMap } = await documentDependencies();
 
 /** get diff files */
-const changedFiles = await getChangedFiles();
+const changedFiles = await getChangedFiles("origin/main");
 
 function removeChangedDocumentFromDependencyMap(
   documentDependencyMap: Map<MarkdonwFilePath, DependencyConfig>,

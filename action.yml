@@ -1,0 +1,14 @@
+name: "Documentary"
+author: "mssknd"
+description: "check document maintenance"
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+branding:
+  icon: "link"
+  color: "green"
+inputs:
+ target_branch:
+   description: 'target branch name (default: origin/main'
+   default: 'origin/main'
+   required: true
