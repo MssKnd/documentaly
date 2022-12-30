@@ -10,8 +10,9 @@ RUN apt-get -qq update \
   && apt-get -qq -y autoremove \
   && apt-get -qq clean \
   && echo 'export DENO_INSTALL="/root/.deno"' >> ~/.bash_profile \
-  && echo 'export PATH="$DENO_INSTALL/bin:$PATH"' >> ~/.bash_profile \
-  && /bin/bash -c source ~/.bash_profile && bash
+  && echo 'export PATH="$DENO_INSTALL/bin:$PATH"' >> ~/.bash_profile
+
+RUN /bin/bash -c source ~/.bash_profile && bash
 
 # CMD ["/bin/bash", "-c", "source ~/.bash_profile && bash"]
 
