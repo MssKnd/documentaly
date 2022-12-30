@@ -5,6 +5,11 @@ import {
   documentDependencies,
   reverseMap,
 } from "./search-markdown-files/main.ts";
+import {
+  hasMarkdownExtention,
+  MarkdonwFilePath,
+  validateMarkdownFilePath,
+} from "./search-markdown-files/markdown-file-path.ts";
 
 /** get config */
 
@@ -16,17 +21,17 @@ const { filePathDependencyMap } = await documentDependencies();
 /** get diff files */
 const changedFiles = await getChangedFiles();
 
-console.log(filePathDependencyMap);
-console.log(changedFiles);
-
 function removeChangedDocumentFromDependencyMap(
-  documentDependencyMap: Map<FilePath, DependencyConfig>,
+  documentDependencyMap: Map<MarkdonwFilePath, DependencyConfig>,
   changedFiles: FilePath[],
-) {
+): Map<MarkdonwFilePath, DependencyConfig> {
   const documentDependencyMapCopy = new Map(documentDependencyMap);
   for (const changedFilePath of changedFiles) {
-    if (documentDependencyMapCopy.has(changedFilePath)) {
-      documentDependencyMapCopy.delete(changedFilePath);
+    if (hasMarkdownExtention(changedFilePath)) {
+      const markdownPath = validateMarkdownFilePath(changedFilePath);
+      if (documentDependencyMapCopy.has(markdownPath)) {
+        documentDependencyMapCopy.delete(markdownPath);
+      }
     }
   }
   return documentDependencyMapCopy;
@@ -38,18 +43,29 @@ const unchangedDocumentDependencyMap = removeChangedDocumentFromDependencyMap(
 );
 
 const dependencyFilePathMap = reverseMap(unchangedDocumentDependencyMap);
-console.log(dependencyFilePathMap);
+// console.log(dependencyFilePathMap);
 
-const unmaintainedMarkdown = Array.from(dependencyFilePathMap.keys()).map(
-  (key) => {
-    const fileRegExp = new RegExp(key);
-    const changedFileHasDependencies = changedFiles.filter((changedFile) =>
-      changedFile.match(fileRegExp)
-    );
-    return [changedFileHasDependencies, dependencyFilePathMap.get(key)];
-  },
-);
+const unmaintainedMarkdown = Array.from(dependencyFilePathMap.entries())
+  .flatMap(
+    ([key, value]) => {
+      const filePathRegExp = new RegExp(key);
+      const changedFileHasDependencies = changedFiles.filter((changedFile) =>
+        changedFile.match(filePathRegExp)
+      );
+      return value.map((markdown) =>
+        [markdown, changedFileHasDependencies] as const
+      );
+    },
+  );
 
-console.log(unmaintainedMarkdown);
+// console.log(unmaintainedMarkdown);
+// console.log(new Map(unmaintainedMarkdown))
 
-console.log(JSON.stringify(unmaintainedMarkdown));
+// unmaintainedMarkdown.map()
+const result = unmaintainedMarkdown.filter(([_, changedDependencyfiles]) =>
+  changedDependencyfiles.length > 0
+).map(([markdownFilePath, changedDependencyfiles]) => ({
+  markdownFilePath,
+  changedDependencyfiles,
+}));
+console.log(JSON.stringify(result));
