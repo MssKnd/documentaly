@@ -70,7 +70,6 @@ async function main() {
   const map = await markdownFilePathConfigMap(markdownFilePaths);
   return {
     filePathDependencyMap: map,
-    // dependencyFilePath: reverseMap(map as any),
   };
 }
 
