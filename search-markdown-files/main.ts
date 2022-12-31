@@ -65,8 +65,8 @@ function reverseMap(
   return reversedMap;
 }
 
-async function main() {
-  const markdownFilePaths = await findMarkdownFilePath(["."]);
+async function main(filePath: string[]) {
+  const markdownFilePaths = await findMarkdownFilePath(filePath);
   const map = await markdownFilePathConfigMap(markdownFilePaths);
   return {
     filePathDependencyMap: map,

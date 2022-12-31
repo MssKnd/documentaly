@@ -1,3 +1,4 @@
+import { parse } from "https://deno.land/std@0.100.0/flags/mod.ts";
 import { getChangedFiles } from "./arrange-git-diff/mod.ts";
 import { DependencyConfig } from "./search-markdown-files/dependency-config.ts";
 import { FilePath } from "./search-markdown-files/file-path.ts";
@@ -11,15 +12,20 @@ import {
   validateMarkdownFilePath,
 } from "./search-markdown-files/markdown-file-path.ts";
 
+const {
+  t: targetBranch = "origin/main",
+  _: filePaths = ["."]
+} = parse(Deno.args);
+
 /** get config */
 
 /** get markdown config map */
 
 /** create dipendency map */
-const { filePathDependencyMap } = await documentDependencies();
+const { filePathDependencyMap } = await documentDependencies(filePaths.map(filePath => String(filePath)));
 
 /** get diff files */
-const changedFiles = await getChangedFiles("origin/main");
+const changedFiles = await getChangedFiles(targetBranch);
 
 function removeChangedDocumentFromDependencyMap(
   documentDependencyMap: Map<MarkdonwFilePath, DependencyConfig>,
