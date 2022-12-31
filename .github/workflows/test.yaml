@@ -1,10 +1,11 @@
 name: Test
 on: [push]
 jobs:
-  build:
+  hello:
     runs-on: ubuntu-latest
     steps:
-      - name: Change Name
-        uses: mssknd/documentary@main # アクションのリポジトリ
+      - uses: actions/checkout@master
+      - uses: denoland/setup-deno@v1
         with:
-          target_branch: origin/main
+          deno-version: v1.x
+      - run: deno run https://deno.land/x/documentary/main.ts
