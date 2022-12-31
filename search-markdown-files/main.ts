@@ -46,7 +46,7 @@ async function markdownFilePathConfigMap(
   return new Map(markdownFilePathAndConfigTaples);
 }
 
-function reverseMap(
+function reverseDependencyMap(
   map: Map<MarkdonwFilePath, DependencyConfig>,
 ): Map<FilePath, MarkdonwFilePath[]> {
   const reversedMap = new Map<FilePath, MarkdonwFilePath[]>();
@@ -65,12 +65,17 @@ function reverseMap(
   return reversedMap;
 }
 
-async function main(filePath: string[]) {
-  const markdownFilePaths = await findMarkdownFilePath(filePath);
+/**
+ * Search markdown file then map file path and dependency configuration.
+ * @param filePaths
+ * @returns
+ */
+async function main(filePaths: string[]) {
+  const markdownFilePaths = await findMarkdownFilePath(filePaths);
   const map = await markdownFilePathConfigMap(markdownFilePaths);
   return {
     filePathDependencyMap: map,
   };
 }
 
-export { main as documentDependencies, reverseMap };
+export { main as documentDependencies, reverseDependencyMap };
