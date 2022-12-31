@@ -8,4 +8,4 @@ jobs:
       - uses: denoland/setup-deno@v1
         with:
           deno-version: v1.x
-      - run: deno run https://deno.land/x/documentary/main.ts
+      - run: deno run -A https://deno.land/x/documentary/main.ts
