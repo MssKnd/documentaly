@@ -1,7 +1,9 @@
+import { isObject } from "../utilities/mod.ts";
 import { FilePath, validateFilePath } from "./file-path.ts";
 
 type DependencyConfig = {
   dependentFilePaths: FilePath[];
+  // author: string; // TODO
 };
 
 function validateDependencyConfig(input: unknown) {
@@ -20,9 +22,6 @@ function validateDependencyConfig(input: unknown) {
   }
   return baseConfig;
 }
-
-const isObject = (x: unknown): x is Record<string, unknown> =>
-  x !== null && (typeof x === "object" || typeof x === "function");
 
 export type { DependencyConfig };
 export { validateDependencyConfig };

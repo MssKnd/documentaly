@@ -3,8 +3,9 @@ import {
   FilePath,
   validateFilePath,
 } from "../search-markdown-files/file-path.ts";
+import { BranchName } from "./branch-name.ts";
 
-function diff(target: RemoteBranch): Promise<string> {
+function diff(target: BranchName): Promise<string> {
   return $`git diff ${target}..HEAD`.text();
 }
 
@@ -21,12 +22,10 @@ function extractFilenameFromGitDiffResult(diffResult: string): FilePath[] {
   return uniqueFileNames;
 }
 
-async function main(targetBranchName: RemoteBranch) {
+async function main(targetBranchName: BranchName) {
   const result = await diff(targetBranchName);
   const changedFiles = extractFilenameFromGitDiffResult(result);
   return changedFiles;
 }
-
-type RemoteBranch = `${string}/${string}`;
 
 export { main as getChangedFiles };
