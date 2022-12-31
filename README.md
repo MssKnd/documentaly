@@ -1,0 +1,7 @@
+---
+dependentFilePaths: ['.']
+---
+
+# Documentaly
+
+Beta
