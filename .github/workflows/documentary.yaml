@@ -31,7 +31,10 @@ jobs:
           deno-version: v1.x
       - name: debug
         shell: bash
-        run: echo '${{github.event.pull_request}}'
+        run: echo '${{github.event.pull_request.base.sha}}'
+      - name: debug
+        shell: bash
+        run: echo '${{github.event.pull_request.changed_files}}'
       - name: generate comment body file
         shell: bash
         run: deno run -A ./comment/main.ts -j '${{needs.check_dependency.outputs.dependency}}' >> comment-body
