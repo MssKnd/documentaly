@@ -24,12 +24,11 @@ jobs:
           PR_NUMBER: ${{ github.event.pull_request.number }}
         shell: bash
         run: |
-          echo "test ${PR_NUMBER}"
-          gh pr comment ${PR_NUMBER} -b "test"
-          if [ ${PR_NUMBER} =~ ^[0-9]+$ ]; then
+          echo "test_AAAAA ${PR_NUMBER}"
+          if [ -z "${PR_NUMBER}"" ]; then
             # gh pr comment -F ./comments "${URL}"
             echo "if"
-            gh pr comment ${PR_NUMBER} -b "test" 
+            gh pr comment ${PR_NUMBER} -b "test_AAAAA" 
           fi
       # - name: documentary
       #   uses: mssknd/documentary@main
