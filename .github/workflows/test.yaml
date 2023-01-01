@@ -4,4 +4,7 @@ jobs:
   hello:
     runs-on: ubuntu-latest
     steps:
-      - uses: mssknd/documentary@main
+      - name: documentary
+        uses: mssknd/documentary@main
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

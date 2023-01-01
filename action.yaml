@@ -5,10 +5,12 @@ branding:
   icon: "link"
   color: "green"
 inputs:
- target_branch:
-   description: 'target branch name (default: origin/main'
-   default: 'origin/main'
-   required: true
+  GITHUB_TOKEN:
+    required: true
+  target_branch:
+    description: 'target branch name (default: origin/main'
+    default: 'origin/main'
+    required: true
 runs:
   using: 'composite'
   steps:
@@ -21,7 +23,7 @@ runs:
       run: deno run -A https://deno.land/x/documentary/main.ts -t { inputs.target_branch }
     - name: "make comment on pull request when this action was pull request event."
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
         URL: ${{ github.event.pull_request.html_url }}
       shell: bash
       run: |
