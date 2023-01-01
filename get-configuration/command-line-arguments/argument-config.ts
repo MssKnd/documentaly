@@ -24,18 +24,24 @@ function validateCommandLineArgument(input: unknown) {
     "h" in input && isBoolean(input.h)
   ) {
     baseConfig.helpFlag = input.h;
+  } else {
+    baseConfig.helpFlag = false;
   }
   if (
     "t" in input && isString(input.t)
   ) {
     baseConfig.targetBranch = input.t;
+  } else {
+    baseConfig.targetBranch = "main";
   }
   if (
-    "_" in input && Array.isArray(input._)
+    "_" in input && Array.isArray(input._) && input._.length > 0
   ) {
     baseConfig.filePaths = input._.map((filePath) =>
       validateFilePath(filePath)
     );
+  } else {
+    baseConfig.filePaths = [validateFilePath(".")];
   }
   return baseConfig;
 }
