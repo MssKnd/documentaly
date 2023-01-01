@@ -10,6 +10,8 @@ jobs:
       - uses: denoland/setup-deno@v1
         with:
           deno-version: v1.x
+      - name: Fetch base branch
+        run: git fetch origin main:main
       - name: "test"
         shell: bash
         run: |

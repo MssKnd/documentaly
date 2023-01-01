@@ -8,8 +8,8 @@ inputs:
   GITHUB_TOKEN:
     required: true
   target_branch:
-    description: 'target branch name (default: origin/main)'
-    default: 'origin/main'
+    description: 'target branch name (default: main)'
+    default: 'main'
     required: true
 runs:
   using: 'composite'
