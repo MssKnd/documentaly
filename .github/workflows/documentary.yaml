@@ -31,14 +31,14 @@ jobs:
           deno-version: v1.x
       - name: debug
         shell: bash
-        run: ls -la
+        run: echo '${{github.event.pull_request}}'
       - name: generate comment body file
         shell: bash
         run: deno run -A ./comment/main.ts -j '${{needs.check_dependency.outputs.dependency}}' >> comment-body
       - name: "make comment on pull request when this action was pull request event."
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}      
         shell: bash
         run: |
           if [ -n "${PR_NUMBER}" ]; then

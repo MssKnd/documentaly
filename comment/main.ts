@@ -44,8 +44,8 @@ function main(json: unknown) {
   }
   return Array.from(dependencyMap.entries()).map(
     ([markdownFilePath, filePaths]) => {
-      return `未変更のドキュメント（${markdownFilePath}）に関連している以下のファイルが変更されています。\n${
-        filePaths.map((filePath) => `- ${filePath}\n`).join("\n")
+      return `未変更のドキュメント（[${markdownFilePath}]()）に関連している以下のファイルが変更されています。\n${
+        filePaths.map((filePath) => `- ${filePath}\n`).join("")
       }
     `;
     },
