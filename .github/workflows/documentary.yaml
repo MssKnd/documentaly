@@ -2,8 +2,10 @@ name: documentary
 on:
   pull_request:
     types: [synchronize]
+env:
+  base_branch: main
 jobs:
-  documentary:
+  check_dependency:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -11,26 +13,20 @@ jobs:
         with:
           deno-version: v1.x
       - name: Fetch base branch
-        run: git fetch origin main:main
-      - name: "test"
-        shell: bash
-        run: |
-          ls -la
-          git branch
+        run: git fetch origin ${base_branch}:${base_branch}
       - name: "check to maintain documents"
         shell: bash
         # run: deno run -A https://deno.land/x/documentary/main.ts
-        run: deno run -A main.ts
+        run: deno run -A main.ts -t ${base_branch}
       - name: "make comment on pull request when this action was pull request event."
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           URL: ${{ github.event.pull_request.html_url }}
         shell: bash
         run: |
-          echo "${GITHUB_TOKEN}"
-          echo "${URL}" |
-          if ${{ github.event.pull_request.html_url }} = 'true'; then
-            gh pr comment -F ./comments "${URL}"
+          if ${{ github.event.pull_request.html_url }}; then
+            # gh pr comment -F ./comments "${URL}"
+            gh pr comment "test" "${URL}"
           fi
       # - name: documentary
       #   uses: mssknd/documentary@main

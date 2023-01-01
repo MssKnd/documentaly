@@ -1,13 +1,12 @@
-import { isValidBranchName } from "../../arrange-git-diff/branch-name.ts";
 import {
   FilePath,
   validateFilePath,
 } from "../../search-markdown-files/file-path.ts";
-import { isBoolean, isObject } from "../../utilities/mod.ts";
+import { isBoolean, isObject, isString } from "../../utilities/mod.ts";
 
 type CommandLineArgument = {
   helpFlag: boolean;
-  targetBranch: `${string}/${string}`;
+  targetBranch: string;
   filePaths: FilePath[];
 };
 
@@ -15,7 +14,7 @@ type CommandLineArgument = {
 function validateCommandLineArgument(input: unknown) {
   const baseConfig: CommandLineArgument = {
     helpFlag: false,
-    targetBranch: "origin/main",
+    targetBranch: "main",
     filePaths: ["." as FilePath],
   };
   if (!isObject(input)) {
@@ -27,7 +26,7 @@ function validateCommandLineArgument(input: unknown) {
     baseConfig.helpFlag = input.h;
   }
   if (
-    "t" in input && isValidBranchName(input.t)
+    "t" in input && isString(input.t)
   ) {
     baseConfig.targetBranch = input.t;
   }
