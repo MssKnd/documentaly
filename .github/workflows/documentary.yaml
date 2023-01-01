@@ -28,10 +28,12 @@ jobs:
       - uses: denoland/setup-deno@v1
         with:
           deno-version: v1.x
+      - name: debug
+        shell: bash
+        run: ls -la
       - name: generate comment body file
         shell: bash
-        run: ls -la |
-          deno run -A ./comment/main.ts -j ${{needs.check_dependency.outputs.dependency}} >> comment-body
+        run: deno run -A ./comment/main.ts -j ${{needs.check_dependency.outputs.dependency}} >> comment-body
       - name: "make comment on pull request when this action was pull request event."
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
