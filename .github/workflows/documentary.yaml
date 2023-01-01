@@ -1,7 +1,7 @@
 name: documentary
 on:
   pull_request:
-    types: [synchronize]
+    types: [opened, synchronize, reopened]
 env:
   base_branch: main
 jobs:
