@@ -25,7 +25,7 @@ jobs:
         shell: bash
         run: |
           echo "test_AAAAA ${PR_NUMBER}"
-          if [ -z "${PR_NUMBER}" ]; then
+          if [ -n "${PR_NUMBER}" ]; then
             # gh pr comment -F ./comments "${URL}"
             echo "if"
             gh pr comment ${PR_NUMBER} -b "test_AAAAA" 
