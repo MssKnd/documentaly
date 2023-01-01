@@ -72,10 +72,7 @@ function reverseDependencyMap(
  */
 async function main(filePaths: string[]) {
   const markdownFilePaths = await findMarkdownFilePath(filePaths);
-  const map = await markdownFilePathConfigMap(markdownFilePaths);
-  return {
-    filePathDependencyMap: map,
-  };
+  return markdownFilePathConfigMap(markdownFilePaths);
 }
 
 export { main as documentDependencies, reverseDependencyMap };

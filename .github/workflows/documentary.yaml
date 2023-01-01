@@ -29,15 +29,6 @@ jobs:
       - uses: denoland/setup-deno@v1
         with:
           deno-version: v1.x
-      - name: debug
-        shell: bash
-        run: echo '${{github.event.pull_request.html_url}}'
-      - name: debug
-        shell: bash
-        run: echo '${{github.event.pull_request.issue_url}}'
-      - name: debug
-        shell: bash
-        run: echo '${{github.event.pull_request.url}}'
       - name: generate comment body file
         shell: bash
         env:

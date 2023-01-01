@@ -1,6 +1,6 @@
 {
   "tasks": {
-    "discover": "deno run --allow-env --allow-net --allow-read --allow-run main.ts",
+    "check": "deno run --allow-env --allow-net --allow-read --allow-run main.ts check",
     "compile": "deno compile --unstable --lite  --allow-env --allow-net --allow-read --allow-run main.ts"
   }
 }
