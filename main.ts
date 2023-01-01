@@ -73,4 +73,4 @@ const result = unmaintainedMarkdown.filter(([_, changedDependencyfiles]) =>
   changedDependencyfiles,
 }));
 
-console.log(JSON.stringify(result));
+console.log(`json=${JSON.stringify(result)}`);

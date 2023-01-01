@@ -8,7 +8,7 @@ jobs:
   check_dependency:
     runs-on: ubuntu-latest
     outputs:
-      dependency: ${{ steps.documentary.outputs }}
+      dependency: ${{ steps.documentary.outputs.json }}
     steps:
       - uses: actions/checkout@v2
       - uses: denoland/setup-deno@v1
@@ -20,7 +20,7 @@ jobs:
         id: documentary
         shell: bash
         # run: deno run -A https://deno.land/x/documentary/main.ts
-        run: deno run -A main.ts -t ${base_branch} >> $GITHUB_OUTPUT 
+        run: deno run -A main.ts -t ${base_branch} >> $GITHUB_OUTPUT
   comment:
     runs-on: ubuntu-latest
     needs: check_dependency
