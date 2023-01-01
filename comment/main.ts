@@ -45,11 +45,11 @@ function main(json: unknown) {
   return Array.from(dependencyMap.entries()).map(
     ([markdownFilePath, filePaths]) => {
       return `未変更のドキュメント（${markdownFilePath}）に関連している以下のファイルが変更されています。\n${
-        filePaths.map((filePath) => `- ${filePath}\n`)
+        filePaths.map((filePath) => `- ${filePath}\n`).join("\n")
       }
     `;
     },
-  ).join('/n/n');
+  ).join("\n\n");
 }
 
 const {
