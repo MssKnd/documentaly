@@ -20,7 +20,7 @@ runs:
         deno-version: v1.x
     - name: "check to maintain documents"
       shell: bash
-      run: deno run -A https://deno.land/x/documentary/main.ts -t { inputs.target_branch }
+      run: deno run -A https://deno.land/x/documentary/main.ts
     - name: "make comment on pull request when this action was pull request event."
       env:
         GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
