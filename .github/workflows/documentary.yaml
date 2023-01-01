@@ -25,10 +25,11 @@ jobs:
         shell: bash
         run: |
           echo "test ${PR_NUMBER}"
+          gh pr comment ${PR_NUMBER} -b "test"
           if [[ ${ PR_NUMBER } =~ ^[0-9]+$ ]]; then
             # gh pr comment -F ./comments "${URL}"
             echo "if"
-            gh pr comment "${PR_NUMBER}" -b "test" 
+            gh pr comment ${PR_NUMBER} -b "test" 
           fi
       # - name: documentary
       #   uses: mssknd/documentary@main
