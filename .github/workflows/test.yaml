@@ -4,8 +4,4 @@ jobs:
   hello:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - uses: denoland/setup-deno@v1
-        with:
-          deno-version: v1.x
-      - run: deno run -A https://deno.land/x/documentary/main.ts
+      - uses: mssknd/documentary@main
