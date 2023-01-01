@@ -34,7 +34,10 @@ jobs:
         run: echo '${{github.event.pull_request.base.sha}}'
       - name: debug
         shell: bash
-        run: echo '${{github.event.pull_request.changed_files}}'
+        run: echo '${{github.event.pull_request.diff_url}}'
+      - name: debug
+        shell: bash
+        run: echo '${{github.event.pull_request.head.sha}}'
       - name: generate comment body file
         shell: bash
         run: deno run -A ./comment/main.ts -j '${{needs.check_dependency.outputs.dependency}}' >> comment-body
