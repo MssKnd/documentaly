@@ -30,7 +30,8 @@ jobs:
           deno-version: v1.x
       - name: generate comment body file
         shell: bash
-        run: deno run -A comment/main.ts -j ${{needs.check_dependency.outputs.dependency}} >> comments
+        run: ls -la |
+          deno run -A ./comment/main.ts -j ${{needs.check_dependency.outputs.dependency}} >> comment-body
       - name: "make comment on pull request when this action was pull request event."
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -38,7 +39,7 @@ jobs:
         shell: bash
         run: |
           if [ -n "${PR_NUMBER}" ]; then
-            gh pr comment ${PR_NUMBER} -F ./comments
+            gh pr comment ${PR_NUMBER} -F ./comment-body
           fi
       # - name: documentary
       #   uses: mssknd/documentary@main
