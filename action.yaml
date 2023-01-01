@@ -1,9 +1,6 @@
-name: "Documentary"
+name: "documentary"
 author: "mssknd"
 description: "check document maintenance"
-runs:
-  using: 'docker'
-  image: 'Dockerfile'
 branding:
   icon: "link"
   color: "green"
@@ -12,3 +9,11 @@ inputs:
    description: 'target branch name (default: origin/main'
    default: 'origin/main'
    required: true
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/checkout@v2
+    - uses: denoland/setup-deno@v1
+      with:
+        deno-version: v1.x
+    - run: deno run -A https://deno.land/x/documentary/main.ts -t { inputs.target_branch }

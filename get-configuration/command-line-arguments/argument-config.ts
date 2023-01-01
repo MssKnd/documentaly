@@ -22,19 +22,19 @@ function validateCommandLineArgument(input: unknown) {
     throw new Error();
   }
   if (
-    "h" in input && isBoolean(input.helpFlag)
+    "h" in input && isBoolean(input.h)
   ) {
-    baseConfig.helpFlag = input.helpFlag;
+    baseConfig.helpFlag = input.h;
   }
   if (
-    "t" in input && isValidBranchName(input.targetBranch)
+    "t" in input && isValidBranchName(input.t)
   ) {
-    baseConfig.targetBranch = input.targetBranch;
+    baseConfig.targetBranch = input.t;
   }
   if (
-    "_" in input && Array.isArray(input.filePaths)
+    "_" in input && Array.isArray(input._)
   ) {
-    baseConfig.filePaths = input.filePaths.map((filePath) =>
+    baseConfig.filePaths = input._.map((filePath) =>
       validateFilePath(filePath)
     );
   }
