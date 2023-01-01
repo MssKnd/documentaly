@@ -20,7 +20,7 @@ jobs:
         id: documentary
         shell: bash
         # run: deno run -A https://deno.land/x/documentary/main.ts
-        run: deno run -A main.ts -t ${base_branch} >> $GITHUB_OUTPUT
+        run: deno run -A main.ts check -t ${base_branch} >> $GITHUB_OUTPUT
   comment:
     runs-on: ubuntu-latest
     needs: check_dependency
@@ -34,7 +34,7 @@ jobs:
         env:
           PR_HEAD_SHA: ${{github.event.pull_request.head.sha}}
           PR_HEAD_FULL_NAME: ${{github.event.pull_request.head.repo.full_name}}
-        run: deno run -A ./comment/main.ts -b ${PR_HEAD_FULL_NAME} -s ${PR_HEAD_SHA} -j '${{needs.check_dependency.outputs.dependency}}' >> comment-body
+        run: deno run -A main.ts comment -b ${PR_HEAD_FULL_NAME} -s ${PR_HEAD_SHA} -j '${{needs.check_dependency.outputs.dependency}}' >> comment-body
       - name: "make comment on pull request when this action was pull request event."
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
