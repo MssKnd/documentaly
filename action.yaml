@@ -22,14 +22,14 @@ runs:
       with:
         deno-version: v1.x
     - name: Fetch base branch
-      run: git fetch origin ${base_branch}:${base_branch}
+      run: git fetch origin ${{ inputs.base_branch }}:${{ inputs.base_branch }}
     - name: Check to maintain documents
       id: check
       shell: bash
       run: >
         deno run -A
         https://deno.land/x/documentary/main.ts check
-        -t ${base_branch}
+        -t ${{ inputs.base_branch }}
         >> $GITHUB_OUTPUT
       # run: deno run -A main.ts -t ${base_branch} >> $GITHUB_OUTPUT
     - name: Generate comment body file
@@ -46,7 +46,7 @@ runs:
         >> comment-body
     - name: Make comment on pull request when this action was pull request event.
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
         PR_NUMBER: ${{ github.event.pull_request.number }}      
       shell: bash
       run: |
