@@ -40,7 +40,7 @@ jobs:
       #       gh pr comment ${PR_NUMBER} -F ./comment-body
       #     fi
       - name: documentary
-        uses: mssknd/documentary@main
+        uses: mssknd/documentary@feature/github-actions
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           base_branch: main

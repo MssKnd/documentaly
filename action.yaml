@@ -6,12 +6,11 @@ branding:
   color: orange
 inputs:
   GITHUB_TOKEN:
-    description: 'ex. ${{ secrets.GITHUB_TOKEN }}'
+    # description: 'ex. ${{ secrets.GITHUB_TOKEN }}'
     required: true
   base_branch:
     description: 'Base branch name (default: main)'
     default: 'main'
-    required: true
 runs:
   using: 'composite'
   steps:
