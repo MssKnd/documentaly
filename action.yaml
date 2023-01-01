@@ -1,35 +1,55 @@
 name: "documentary"
 author: "mssknd"
-description: "check document maintenance"
+description: Check document maintenance
 branding:
-  icon: "link"
-  color: "green"
+  icon: file-text
+  color: orange
 inputs:
   GITHUB_TOKEN:
+    description: 'ex. ${{ secrets.GITHUB_TOKEN }}'
     required: true
-  target_branch:
-    description: 'target branch name (default: main)'
+  base_branch:
+    description: 'Base branch name (default: main)'
     default: 'main'
     required: true
 runs:
   using: 'composite'
   steps:
-    - uses: actions/checkout@v2
-    - uses: denoland/setup-deno@v1
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Setup deno
+      uses: denoland/setup-deno@v1
       with:
         deno-version: v1.x
-    - name: "check to maintain documents"
+    - name: Fetch base branch
+      run: git fetch origin ${{ inputs.base_branch }}:${{ inputs.base_branch }}
+    - name: Check to maintain documents
+      id: check
       shell: bash
-      run: deno run -A https://deno.land/x/documentary/main.ts
-    - name: "make comment on pull request when this action was pull request event."
+      run: >
+        deno run -A
+        https://deno.land/x/documentary/main.ts check
+        -t ${{ inputs.base_branch }}
+        >> $GITHUB_OUTPUT
+      # run: deno run -A main.ts -t ${base_branch} >> $GITHUB_OUTPUT
+    - name: Generate comment body file
+      shell: bash
+      env:
+        PR_HEAD_SHA: ${{github.event.pull_request.head.sha}}
+        PR_HEAD_FULL_NAME: ${{github.event.pull_request.head.repo.full_name}}
+      run: >
+        deno run -A
+        https://deno.land/x/documentary/main.ts comment
+        -b ${PR_HEAD_FULL_NAME}
+        -s ${PR_HEAD_SHA}
+        -j '${{steps.check.outputs.json}}'
+        >> comment-body
+    - name: Make comment on pull request when this action was pull request event.
       env:
         GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
-        URL: ${{ github.event.pull_request.html_url }}
+        PR_NUMBER: ${{ github.event.pull_request.number }}      
       shell: bash
       run: |
-        echo "${{ inputs.target_branch }}"
-        echo "${GITHUB_TOKEN}"
-        echo "${URL}" |
-        if ${{ github.event.pull_request.html_url }} = 'true'; then
-          gh pr comment -F ./comments "${URL}"
+        if [ -n "${PR_NUMBER}" ]; then
+          gh pr comment ${PR_NUMBER} -F ./comment-body
         fi

@@ -1,14 +1,12 @@
 name: documentary
 on:
   pull_request:
-    types: [synchronize]
+    types: [opened, synchronize, reopened]
 env:
   base_branch: main
 jobs:
-  check_dependency:
+  check:
     runs-on: ubuntu-latest
-    outputs:
-      dependency: ${{ steps.documentary.outputs.json }}
     steps:
       - uses: actions/checkout@v2
       - uses: denoland/setup-deno@v1
@@ -17,39 +15,27 @@ jobs:
       - name: Fetch base branch
         run: git fetch origin ${base_branch}:${base_branch}
       - name: "check to maintain documents"
-        id: documentary
+        id: check
         shell: bash
         # run: deno run -A https://deno.land/x/documentary/main.ts
-        run: deno run -A main.ts -t ${base_branch} >> $GITHUB_OUTPUT
-  comment:
-    runs-on: ubuntu-latest
-    needs: check_dependency
-    steps:
-      - uses: actions/checkout@v2
-      - uses: denoland/setup-deno@v1
-        with:
-          deno-version: v1.x
-      - name: debug
-        shell: bash
-        run: echo '${{github.event.pull_request.html_url}}'
-      - name: debug
-        shell: bash
-        run: echo '${{github.event.pull_request.issue_url}}'
-      - name: debug
-        shell: bash
-        run: echo '${{github.event.pull_request.url}}'
+        run: deno run -A main.ts check -t ${base_branch} >> $GITHUB_OUTPUT
       - name: generate comment body file
         shell: bash
         env:
           PR_HEAD_SHA: ${{github.event.pull_request.head.sha}}
           PR_HEAD_FULL_NAME: ${{github.event.pull_request.head.repo.full_name}}
-        run: deno run -A ./comment/main.ts -b ${PR_HEAD_FULL_NAME} -s ${PR_HEAD_SHA} -j '${{needs.check_dependency.outputs.dependency}}' >> comment-body
+        run: >
+          deno run -A main.ts comment
+          -b ${PR_HEAD_FULL_NAME}
+          -s ${PR_HEAD_SHA}
+          -j '${{steps.check.outputs.json}}'
+          >> comment-body
       - name: "make comment on pull request when this action was pull request event."
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}      
         shell: bash
-        run: |
+        run: >
           if [ -n "${PR_NUMBER}" ]; then
             gh pr comment ${PR_NUMBER} -F ./comment-body
           fi
@@ -57,4 +43,4 @@ jobs:
       #   uses: mssknd/documentary@main
       #   with:
       #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     # target_branch: main
+      #     # base_branch: main
