@@ -31,16 +31,18 @@ jobs:
           deno-version: v1.x
       - name: debug
         shell: bash
-        run: echo '${{github.event.pull_request.base.sha}}'
+        run: echo '${{github.event.pull_request.html_url}}'
       - name: debug
         shell: bash
-        run: echo '${{github.event.pull_request.diff_url}}'
+        run: echo '${{github.event.pull_request.issue_url}}'
       - name: debug
         shell: bash
-        run: echo '${{github.event.pull_request.head.sha}}'
+        run: echo '${{github.event.pull_request.url}}'
       - name: generate comment body file
         shell: bash
-        run: deno run -A ./comment/main.ts -j '${{needs.check_dependency.outputs.dependency}}' >> comment-body
+        env:
+          PR_HEAD_SHA: ${{github.event.pull_request.head.sha}}
+        run: deno run -A ./comment/main.ts -s ${PR_HEAD_SHA} -j '${{needs.check_dependency.outputs.dependency}}' >> comment-body
       - name: "make comment on pull request when this action was pull request event."
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

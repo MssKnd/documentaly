@@ -37,14 +37,14 @@ function validateDependencyMap(input: unknown) {
   return new Map(map);
 }
 
-function main(json: unknown) {
+function main(json: unknown, headSha: string) {
   const dependencyMap = validateDependencyMap(json);
   if (dependencyMap.size === 0) {
     return "未変更のドキュメントはありません";
   }
   return Array.from(dependencyMap.entries()).map(
     ([markdownFilePath, filePaths]) => {
-      return `未変更のドキュメント（[${markdownFilePath}]()）に関連している以下のファイルが変更されています。\n${
+      return `未変更のドキュメント（[${markdownFilePath}](blob/${headSha}/${markdownFilePath})）に関連している以下のファイルが変更されています。\n${
         filePaths.map((filePath) => `- ${filePath}\n`).join("")
       }
     `;
@@ -54,6 +54,7 @@ function main(json: unknown) {
 
 const {
   j: json,
+  s: headSha,
 } = parse(Deno.args);
 
-console.log(main(json));
+console.log(main(json, headSha));
