@@ -42,7 +42,8 @@ jobs:
         shell: bash
         env:
           PR_HEAD_SHA: ${{github.event.pull_request.head.sha}}
-        run: deno run -A ./comment/main.ts -s ${PR_HEAD_SHA} -j '${{needs.check_dependency.outputs.dependency}}' >> comment-body
+          PR_HEAD_FULL_NAME: ${{github.event.pull_request.head.repo.full_name}}
+        run: deno run -A ./comment/main.ts -b ${$PR_HEAD_FULL_NAME} -s ${PR_HEAD_SHA} -j '${{needs.check_dependency.outputs.dependency}}' >> comment-body
       - name: "make comment on pull request when this action was pull request event."
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

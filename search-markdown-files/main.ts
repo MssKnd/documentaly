@@ -14,7 +14,7 @@ async function findMarkdownFilePath(
   filePaths: string[],
 ): Promise<MarkdonwFilePath[]> {
   const commands = filePaths.map((filePath) =>
-    $`find ${filePath} -name '*.md'`.text()
+    $`find ${filePath} -name '*.md' | sed "s|^${filePath}/||"`.text()
   );
   const commandResults = await Promise.all(commands);
   return commandResults.flatMap((commandResult) =>

@@ -37,14 +37,19 @@ function validateDependencyMap(input: unknown) {
   return new Map(map);
 }
 
-function main(json: unknown, headSha: string) {
+function blobUrlBase(branchName: string, headSha: string) {
+  return `https://github.com/${branchName}/blob/${headSha}/`;
+}
+
+function main(json: unknown, branchName: string, headSha: string) {
   const dependencyMap = validateDependencyMap(json);
   if (dependencyMap.size === 0) {
     return "未変更のドキュメントはありません";
   }
+  const baseBlobUrl = blobUrlBase(branchName, headSha);
   return Array.from(dependencyMap.entries()).map(
     ([markdownFilePath, filePaths]) => {
-      return `未変更のドキュメント（[${markdownFilePath}](blob/${headSha}/${markdownFilePath})）に関連している以下のファイルが変更されています。\n${
+      return `未変更のドキュメント（[${markdownFilePath}](${baseBlobUrl}${markdownFilePath})）に関連している以下のファイルが変更されています。\n${
         filePaths.map((filePath) => `- ${filePath}\n`).join("")
       }
     `;
@@ -55,6 +60,7 @@ function main(json: unknown, headSha: string) {
 const {
   j: json,
   s: headSha,
+  b: branchName,
 } = parse(Deno.args);
 
-console.log(main(json, headSha));
+console.log(main(json, branchName, headSha));
