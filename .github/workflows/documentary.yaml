@@ -12,7 +12,9 @@ jobs:
           deno-version: v1.x
       - name: "test"
         shell: bash
-        run: git branch
+        run: |
+          ls -la
+          git branch
       - name: "check to maintain documents"
         shell: bash
         # run: deno run -A https://deno.land/x/documentary/main.ts
