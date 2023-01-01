@@ -8,7 +8,7 @@ import { validateFilePath } from "../search-markdown-files/file-path.ts";
 
 function diff(target: string): Promise<string> {
   // return $`git diff ${t}..HEAD`.text();
-  return $`git diff --name-only HEAD ${target}`.text()
+  return $`git diff --name-only HEAD ${target}`.text();
 }
 
 // function extractFilenameFromGitDiffResult(diffResult: string): FilePath[] {
@@ -26,7 +26,7 @@ function diff(target: string): Promise<string> {
 
 async function main(targetBranchName: string) {
   const result = await diff(targetBranchName);
-  return result.split(/\n/).map(filePath => validateFilePath(filePath))
+  return result.split(/\n/).map((filePath) => validateFilePath(filePath));
   // const changedFiles = extractFilenameFromGitDiffResult(result);
   // return changedFiles;
 }

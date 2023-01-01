@@ -7,6 +7,8 @@ env:
 jobs:
   check_dependency:
     runs-on: ubuntu-latest
+    outputs:
+      dependency: ${{ steps.documentary.outputs }}
     steps:
       - uses: actions/checkout@v2
       - uses: denoland/setup-deno@v1
@@ -15,20 +17,28 @@ jobs:
       - name: Fetch base branch
         run: git fetch origin ${base_branch}:${base_branch}
       - name: "check to maintain documents"
+        id: documentary
         shell: bash
         # run: deno run -A https://deno.land/x/documentary/main.ts
-        run: deno run -A main.ts -t ${base_branch}
+        run: deno run -A main.ts -t ${base_branch} >> $GITHUB_OUTPUT 
+  comment:
+    runs-on: ubuntu-latest
+    needs: check_dependency
+    steps:
+      - uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+      - name: generate comment body file
+        shell: bash
+        run: deno run -A comment/main.ts -j ${{needs.check_dependency.outputs.dependency}} >> comments
       - name: "make comment on pull request when this action was pull request event."
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
         shell: bash
         run: |
-          echo "test_AAAAA ${PR_NUMBER}"
           if [ -n "${PR_NUMBER}" ]; then
-            # gh pr comment -F ./comments "${URL}"
-            echo "if"
-            gh pr comment ${PR_NUMBER} -b "test_AAAAA" 
+            gh pr comment ${PR_NUMBER} -F ./comments
           fi
       # - name: documentary
       #   uses: mssknd/documentary@main
