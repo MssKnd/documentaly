@@ -21,6 +21,7 @@ runs:
       with:
         deno-version: v1.x
     - name: Fetch base branch
+      shell: bash
       run: git fetch origin ${{ inputs.base_branch }}:${{ inputs.base_branch }}
     - name: Check to maintain documents
       id: check
