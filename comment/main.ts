@@ -1,4 +1,3 @@
-import { parse } from "https://deno.land/std@0.100.0/flags/mod.ts";
 import { validateFilePath } from "../search-markdown-files/file-path.ts";
 import { validateMarkdownFilePath } from "../search-markdown-files/markdown-file-path.ts";
 import { isObject, isString } from "../utilities/type-guard.ts";
@@ -44,12 +43,12 @@ function blobUrlBase(branchName: string, headSha: string) {
 function comment(json: string, branchName: string, headSha: string) {
   const dependencyMap = validateDependencyMap(json);
   if (dependencyMap.size === 0) {
-    return "未変更のドキュメントはありません";
+    return "未更新のドキュメントは無いようです 👀";
   }
   const baseBlobUrl = blobUrlBase(branchName, headSha);
   const result = Array.from(dependencyMap.entries()).map(
     ([markdownFilePath, filePaths]) => {
-      return `未変更のドキュメント（[${markdownFilePath}](${baseBlobUrl}${markdownFilePath})）に関連している以下のファイルが変更されています。\n${
+      return `未更新のドキュメント（[${markdownFilePath}](${baseBlobUrl}${markdownFilePath})）に関連した以下のファイルが変更されています。ドキュメントの更新は必要ありませんか？\n${
         filePaths.map((filePath) => `- ${filePath}\n`).join("")
       }
     `;
