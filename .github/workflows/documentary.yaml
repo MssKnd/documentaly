@@ -1,0 +1,12 @@
+name: documentary
+on:
+  pull_request:
+    types: [synchronize]
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: documentary
+        uses: mssknd/documentary@main
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
