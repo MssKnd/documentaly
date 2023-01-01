@@ -10,3 +10,4 @@ jobs:
         uses: mssknd/documentary@main
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # target_branch: main

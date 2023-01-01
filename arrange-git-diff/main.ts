@@ -6,7 +6,8 @@ import {
 import { BranchName } from "./branch-name.ts";
 
 function diff(target: BranchName): Promise<string> {
-  return $`git diff ${target}..HEAD`.text();
+  const t = 'main'
+  return $`git diff ${t}..HEAD`.text();
 }
 
 function extractFilenameFromGitDiffResult(diffResult: string): FilePath[] {
