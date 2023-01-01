@@ -21,12 +21,14 @@ jobs:
       - name: "make comment on pull request when this action was pull request event."
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          URL: ${{ github.event.pull_request.html_url }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
         shell: bash
         run: |
-          if ${{ github.event.pull_request.html_url }}; then
+          echo "test ${PR_NUMBER}"
+          if [[ ${ PR_NUMBER } =~ ^[0-9]+$ ]]; then
             # gh pr comment -F ./comments "${URL}"
-            gh pr comment "${URL}" -b "test" 
+            echo "if"
+            gh pr comment "${PR_NUMBER}" -b "test" 
           fi
       # - name: documentary
       #   uses: mssknd/documentary@main
