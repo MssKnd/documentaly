@@ -8,8 +8,8 @@ inputs:
   GITHUB_TOKEN:
     required: true
   target_branch:
-    description: 'target branch name (default: origin/main'
-    default: 'origin/main'
+    description: 'target branch name (default: main)'
+    default: 'main'
     required: true
 runs:
   using: 'composite'
@@ -27,6 +27,9 @@ runs:
         URL: ${{ github.event.pull_request.html_url }}
       shell: bash
       run: |
+        echo "${{ inputs.target_branch }}"
+        echo "${GITHUB_TOKEN}"
+        echo "${URL}" |
         if ${{ github.event.pull_request.html_url }} = 'true'; then
           gh pr comment -F ./comments "${URL}"
         fi

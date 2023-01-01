@@ -19,7 +19,7 @@ async function findMarkdownFilePath(
   const commandResults = await Promise.all(commands);
   return commandResults.flatMap((commandResult) =>
     commandResult.split("\n").map((filePath) =>
-      validateMarkdownFilePath(filePath)
+      validateMarkdownFilePath(filePath.replace(/^[^\/]*\//, ""))
     )
   );
 }
