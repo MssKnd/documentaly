@@ -49,7 +49,7 @@ function main(json: unknown) {
       }
     `;
     },
-  );
+  ).join('/n/n');
 }
 
 const {
