@@ -1,5 +1,5 @@
-name: "documentary"
-author: "mssknd"
+name: documentary
+author: mssknd
 description: Check document maintenance
 branding:
   icon: file-text
@@ -12,7 +12,7 @@ inputs:
     description: 'Base branch name (default: main)'
     default: 'main'
 runs:
-  using: 'composite'
+  using: composite
   steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -48,7 +48,7 @@ runs:
         GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
         PR_NUMBER: ${{ github.event.pull_request.number }}      
       shell: bash
-      run: |
+      run: >
         if [ -n "${PR_NUMBER}" ]; then
           gh pr comment ${PR_NUMBER} -F ./comment-body
         fi
