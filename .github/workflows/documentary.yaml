@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: documentary
-        uses: mssknd/documentary@${{ github.event.pull_request.head.repo.full_name }}
+        uses: ./ # mssknd/documentary@current-branch
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           base_branch: main
