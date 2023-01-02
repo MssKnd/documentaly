@@ -44,11 +44,15 @@ function validateCommandLineArgument(input: unknown) {
   if (!isObject(input)) {
     throw new Error();
   }
-  baseConfig.helpFlag = "h" in input && isBoolean(input.h) ? input.h : false
-  baseConfig.targetBranch = "t" in input && isString(input.t) ? input.t : "main"
-  baseConfig.json = "j" in input && isString(input.j) ? input.j : "[]"
-  baseConfig.headSha = "s" in input && isString(input.s) ? input.s : undefined
-  baseConfig.branchName = "b" in input && isString(input.b) ? input.b : undefined
+  baseConfig.helpFlag = "h" in input && isBoolean(input.h) ? input.h : false;
+  baseConfig.targetBranch = "t" in input && isString(input.t)
+    ? input.t
+    : "main";
+  baseConfig.json = "j" in input && isString(input.j) ? input.j : "[]";
+  baseConfig.headSha = "s" in input && isString(input.s) ? input.s : undefined;
+  baseConfig.branchName = "b" in input && isString(input.b)
+    ? input.b
+    : undefined;
 
   if (
     "_" in input && Array.isArray(input._)

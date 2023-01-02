@@ -45,7 +45,8 @@ function blobUrlBase(branchName: string, headSha: string) {
 function comment(json: string, branchName: string, headSha: string) {
   const dependencyMap = validateDependencyMap(json);
   if (dependencyMap.size === 0) {
-    return "未更新のドキュメントは無いようです 👀";
+    console.log("未更新のドキュメントは無いようです 👀");
+    return;
   }
   const baseBlobUrl = blobUrlBase(branchName, headSha);
   const result = Array.from(dependencyMap.entries()).map(
