@@ -28,7 +28,7 @@ runs:
       shell: bash
       run: >
         deno run -A
-        https://deno.land/x/documentary/main.ts check
+        https://deno.land/x/documentaly/main.ts check
         -t ${{ inputs.base_branch }}
         >> $GITHUB_OUTPUT
     - name: Generate comment body file
@@ -38,7 +38,7 @@ runs:
         PR_HEAD_FULL_NAME: ${{github.event.pull_request.head.repo.full_name}}
       run: >
         deno run -A
-        https://deno.land/x/documentary/main.ts comment
+        https://deno.land/x/documentaly/main.ts comment
         -b ${PR_HEAD_FULL_NAME}
         -s ${PR_HEAD_SHA}
         -j '${{steps.check.outputs.json}}'
