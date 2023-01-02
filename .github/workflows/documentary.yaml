@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: documentary
-        uses: mssknd/documentary@feature/github-actions
+        uses: mssknd/documentary@main
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           base_branch: main
