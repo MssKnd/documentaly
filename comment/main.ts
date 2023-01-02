@@ -1,5 +1,7 @@
-import { validateFilePath } from "../search-markdown-files/file-path.ts";
-import { validateMarkdownFilePath } from "../search-markdown-files/markdown-file-path.ts";
+import {
+  validateFilePath,
+  validateMarkdownFilePath,
+} from "../check/search-markdown-files/mod.ts";
 import { isObject, isString } from "../utilities/type-guard.ts";
 
 // type DependencyJSON = {

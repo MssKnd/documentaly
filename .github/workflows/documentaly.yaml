@@ -1,4 +1,4 @@
-name: documentary
+name: documentaly
 on:
   pull_request:
     types: [opened, synchronize, reopened]
@@ -8,8 +8,8 @@ jobs:
   check_and_comment:
     runs-on: ubuntu-latest
     steps:
-      - name: documentary
-        uses: mssknd/documentary@main
+      - name: documentaly
+        uses: mssknd/documentaly@main
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           base_branch: main

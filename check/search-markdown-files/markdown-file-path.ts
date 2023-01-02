@@ -1,4 +1,4 @@
-import { Opaque } from "../utilities/opaque.ts";
+import { Opaque } from "../../utilities/opaque.ts";
 import { FilePath, validateFilePath } from "./file-path.ts";
 
 type MarkdonwFilePath = Opaque<"MarkdonwFilePath">;

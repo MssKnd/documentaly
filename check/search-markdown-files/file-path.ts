@@ -1,4 +1,4 @@
-import { Opaque } from "../utilities/opaque.ts";
+import { Opaque } from "../../utilities/opaque.ts";
 
 type FilePath = Opaque<"FilePath">;
 

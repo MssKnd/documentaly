@@ -1,15 +1,13 @@
-import { getChangedFiles } from "../arrange-git-diff/mod.ts";
-import { DependencyConfig } from "../search-markdown-files/dependency-config.ts";
-import { FilePath } from "../search-markdown-files/file-path.ts";
+import { getChangedFiles } from "./arrange-git-diff/mod.ts";
 import {
+  DependencyConfig,
   documentDependencies,
-  reverseDependencyMap,
-} from "../search-markdown-files/main.ts";
-import {
+  FilePath,
   hasMarkdownExtention,
   MarkdonwFilePath,
+  reverseDependencyMap,
   validateMarkdownFilePath,
-} from "../search-markdown-files/markdown-file-path.ts";
+} from "./search-markdown-files/mod.ts";
 
 function removeChangedDocumentFromDependencyMap(
   documentDependencyMap: Map<MarkdonwFilePath, DependencyConfig>,

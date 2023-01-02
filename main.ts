@@ -1,6 +1,6 @@
 import { check } from "./check/mod.ts";
 import { comment } from "./comment/mod.ts";
-import { commandLineArgument } from "./get-configuration/command-line-arguments/mod.ts";
+import { commandLineArgument } from "./utilities/command-line-arguments/mod.ts";
 
 const {
   // helpFlag,

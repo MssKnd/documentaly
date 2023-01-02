@@ -1,4 +1,4 @@
-import { isObject } from "../utilities/mod.ts";
+import { isObject } from "../../utilities/mod.ts";
 import { FilePath, validateFilePath } from "./file-path.ts";
 
 type DependencyConfig = {
