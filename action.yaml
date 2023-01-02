@@ -6,12 +6,11 @@ branding:
   color: orange
 inputs:
   GITHUB_TOKEN:
-    description: 'ex. ${{ secrets.GITHUB_TOKEN }}'
+    # description: 'ex. ${{ secrets.GITHUB_TOKEN }}'
     required: true
   base_branch:
     description: 'Base branch name (default: main)'
     default: 'main'
-    required: true
 runs:
   using: 'composite'
   steps:
@@ -22,6 +21,7 @@ runs:
       with:
         deno-version: v1.x
     - name: Fetch base branch
+      shell: bash
       run: git fetch origin ${{ inputs.base_branch }}:${{ inputs.base_branch }}
     - name: Check to maintain documents
       id: check
@@ -31,7 +31,6 @@ runs:
         https://deno.land/x/documentary/main.ts check
         -t ${{ inputs.base_branch }}
         >> $GITHUB_OUTPUT
-      # run: deno run -A main.ts -t ${base_branch} >> $GITHUB_OUTPUT
     - name: Generate comment body file
       shell: bash
       env:
