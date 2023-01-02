@@ -1,6 +1,6 @@
 ---
 dependentFilePaths:
-  - "arrange-git-diff/*"
+  - "check/arrange-git-diff/*"
 ---
 
 ```mermaid

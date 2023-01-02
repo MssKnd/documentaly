@@ -1,0 +1,7 @@
+---
+dependentFilePaths: ['check/*']
+---
+
+# check
+
+## -t

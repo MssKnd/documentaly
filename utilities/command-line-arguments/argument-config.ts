@@ -7,13 +7,13 @@ import { isBoolean, isObject, isString } from "../../utilities/mod.ts";
 type Command = "check" | "comment";
 
 type CommandLineArgument = {
-  helpFlag: boolean;
+  helpFlag: boolean; // -h
   command: Command;
-  targetBranch: string;
+  targetBranch: string; // -t
   filePaths: FilePath[];
-  json?: string;
-  headSha?: string;
-  branchName?: string;
+  json?: string; // -j
+  headSha?: string; // -s
+  branchName?: string; // -b
 };
 
 function validateCommand(input: unknown): Command {
@@ -44,41 +44,12 @@ function validateCommandLineArgument(input: unknown) {
   if (!isObject(input)) {
     throw new Error();
   }
-  if (
-    "h" in input && isBoolean(input.h)
-  ) {
-    baseConfig.helpFlag = input.h;
-  } else {
-    baseConfig.helpFlag = false;
-  }
-  if (
-    "t" in input && isString(input.t)
-  ) {
-    baseConfig.targetBranch = input.t;
-  } else {
-    baseConfig.targetBranch = "main";
-  }
-  if (
-    "j" in input && isString(input.j)
-  ) {
-    baseConfig.json = input.j;
-  } else {
-    baseConfig.json = "[]";
-  }
-  if (
-    "s" in input && isString(input.s)
-  ) {
-    baseConfig.headSha = input.s;
-  } else {
-    baseConfig.headSha = undefined;
-  }
-  if (
-    "b" in input && isString(input.b)
-  ) {
-    baseConfig.branchName = input.b;
-  } else {
-    baseConfig.branchName = undefined;
-  }
+  baseConfig.helpFlag = "h" in input && isBoolean(input.h) ? input.h : false
+  baseConfig.targetBranch = "t" in input && isString(input.t) ? input.t : "main"
+  baseConfig.json = "j" in input && isString(input.j) ? input.j : "[]"
+  baseConfig.headSha = "s" in input && isString(input.s) ? input.s : undefined
+  baseConfig.branchName = "b" in input && isString(input.b) ? input.b : undefined
+
   if (
     "_" in input && Array.isArray(input._)
   ) {

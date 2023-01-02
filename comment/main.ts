@@ -2,7 +2,7 @@ import {
   validateFilePath,
   validateMarkdownFilePath,
 } from "../check/search-markdown-files/mod.ts";
-import { isObject, isString } from "../utilities/type-guard.ts";
+import { isObject, isString } from "../utilities/mod.ts";
 
 // type DependencyJSON = {
 //   markdownFilePath: MarkdonwFilePath;
