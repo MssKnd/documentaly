@@ -1,7 +1,7 @@
 import {
   FilePath,
   validateFilePath,
-} from "../../search-markdown-files/file-path.ts";
+} from "../../check/search-markdown-files/mod.ts";
 import { isBoolean, isObject, isString } from "../../utilities/mod.ts";
 
 type Command = "check" | "comment";
