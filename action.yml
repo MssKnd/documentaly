@@ -39,7 +39,7 @@ runs:
         PR_HEAD_SHA: ${{github.event.pull_request.head.sha}}
         PR_HEAD_FULL_NAME: ${{github.event.pull_request.head.repo.full_name}}
       run: >
-        documentalys comment
+        documentaly comment
         -b ${PR_HEAD_FULL_NAME}
         -s ${PR_HEAD_SHA}
         -j ./dipendency.json
