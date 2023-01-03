@@ -1,3 +1,4 @@
+import { resolve } from "https://deno.land/std/path/mod.ts";
 import $ from "https://deno.land/x/dax@0.20.0/mod.ts";
 import {
   FilePath,
@@ -65,11 +66,12 @@ async function validateCommandLineArgument(input: unknown) {
   }
 
   if (baseConfig.command === "comment") {
-    const dirname = await $`pwd`.text();
-    baseConfig.jsonFilePath = "j" in input
-      ? validateFilePath(`${dirname}/${input.j}`)
+    // const dirname = await $`pwd`.text();
+    // const fullpath = resolve(input.j)
+    baseConfig.jsonFilePath = "j" in input && isString(input.j)
+      ? validateFilePath(resolve(input.j))
       : undefined;
-    console.log({dirname}, baseConfig.jsonFilePath)
+    console.log(baseConfig.jsonFilePath)
     baseConfig.headSha = "s" in input && isString(input.s)
       ? input.s
       : undefined;
