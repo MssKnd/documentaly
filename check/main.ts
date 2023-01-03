@@ -64,7 +64,7 @@ async function check(filePaths: FilePath[], targetBranch: string) {
     changedDependencyfiles,
   }));
 
-  console.log(`json=${JSON.stringify(result)}`);
+  console.log(`${JSON.stringify(result)}`);
 }
 
 export { check };
