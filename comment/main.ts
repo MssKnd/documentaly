@@ -1,7 +1,9 @@
+import { FilePath } from "../check/search-markdown-files/file-path.ts";
 import {
   validateFilePath,
   validateMarkdownFilePath,
 } from "../check/search-markdown-files/mod.ts";
+import { importJsonFile } from "../utilities/import-json-file/import-json-file.ts";
 import { isObject, isString } from "../utilities/mod.ts";
 
 // type DependencyJSON = {
@@ -10,14 +12,10 @@ import { isObject, isString } from "../utilities/mod.ts";
 // }
 
 function validateDependencyMap(input: unknown) {
-  if (!isString(input)) {
+  if (!Array.isArray(input)) {
     throw new Error("invalid");
   }
-  const json = JSON.parse(input);
-  if (!Array.isArray(json)) {
-    throw new Error("invalid");
-  }
-  const map = json.map((item) => {
+  const map = input.map((item) => {
     if (
       !(
         isObject(item) &&
@@ -42,8 +40,13 @@ function blobUrlBase(branchName: string, headSha: string) {
   return `https://github.com/${branchName}/blob/${headSha}/`;
 }
 
-function comment(json: string, branchName: string, headSha: string) {
-  const dependencyMap = validateDependencyMap(json);
+async function comment(
+  jsonFilePath: FilePath,
+  branchName: string,
+  headSha: string,
+) {
+  const jsonData = await importJsonFile(jsonFilePath);
+  const dependencyMap = validateDependencyMap(jsonData);
   if (dependencyMap.size === 0) {
     console.log("未更新のドキュメントは無いようです 👀");
     return;

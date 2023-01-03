@@ -1,3 +1,4 @@
+import $ from "https://deno.land/x/dax@0.20.0/mod.ts";
 import {
   FilePath,
   validateFilePath,
@@ -11,7 +12,7 @@ type CommandLineArgument = {
   command: Command;
   targetBranch: string; // -t
   filePaths: FilePath[];
-  json?: string; // -j
+  jsonFilePath?: FilePath; // -j
   headSha?: string; // -s
   branchName?: string; // -b
 };
@@ -31,28 +32,20 @@ function validateCommand(input: unknown): Command {
 }
 
 /** validate command line argument */
-function validateCommandLineArgument(input: unknown) {
+async function validateCommandLineArgument(input: unknown) {
   const baseConfig: CommandLineArgument = {
     helpFlag: false,
     targetBranch: "main",
     command: "check",
     filePaths: ["." as FilePath],
-    json: undefined,
+    jsonFilePath: undefined,
     headSha: undefined,
     branchName: undefined,
   };
+
   if (!isObject(input)) {
     throw new Error();
   }
-  baseConfig.helpFlag = "h" in input && isBoolean(input.h) ? input.h : false;
-  baseConfig.targetBranch = "t" in input && isString(input.t)
-    ? input.t
-    : "main";
-  baseConfig.json = "j" in input && isString(input.j) ? input.j : "[]";
-  baseConfig.headSha = "s" in input && isString(input.s) ? input.s : undefined;
-  baseConfig.branchName = "b" in input && isString(input.b)
-    ? input.b
-    : undefined;
 
   if (
     "_" in input && Array.isArray(input._)
@@ -63,6 +56,27 @@ function validateCommandLineArgument(input: unknown) {
       validateFilePath(filePath)
     );
   }
+
+  if (baseConfig.command === "check") {
+    baseConfig.helpFlag = "h" in input && isBoolean(input.h) ? input.h : false;
+    baseConfig.targetBranch = "t" in input && isString(input.t)
+      ? input.t
+      : "main";
+  }
+
+  if (baseConfig.command === "comment") {
+    const dirname = await $`pwd`.text();
+    baseConfig.jsonFilePath = "j" in input
+      ? validateFilePath(`${dirname}/${input.j}`)
+      : undefined;
+    baseConfig.headSha = "s" in input && isString(input.s)
+      ? input.s
+      : undefined;
+    baseConfig.branchName = "b" in input && isString(input.b)
+      ? input.b
+      : undefined;
+  }
+
   if (baseConfig.filePaths.length === 0) {
     baseConfig.filePaths = [validateFilePath(".")];
   }

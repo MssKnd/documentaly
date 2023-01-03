@@ -7,10 +7,10 @@ const {
   command,
   targetBranch,
   filePaths,
-  json,
+  jsonFilePath,
   headSha,
   branchName,
-} = commandLineArgument();
+} = await commandLineArgument();
 
 /** get markdown config map */
 
@@ -20,10 +20,10 @@ switch (command) {
     check(filePaths, targetBranch);
     break;
   case "comment":
-    if (!json || !branchName || !headSha) {
+    if (!jsonFilePath || !branchName || !headSha) {
       throw new Error("invalid argument");
     }
-    comment(json, branchName, headSha);
+    comment(jsonFilePath, branchName, headSha);
     break;
   default:
     throw new Error("invalid command");
