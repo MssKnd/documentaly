@@ -47,7 +47,7 @@ runs:
         https://deno.land/x/documentaly/main.ts comment
         -b ${PR_HEAD_FULL_NAME}
         -s ${PR_HEAD_SHA}
-        -j dipendency.json
+        -j ./dipendency.json
         >> comment-body.txt
     - name: Make comment on pull request when this action was pull request event.
       env:
