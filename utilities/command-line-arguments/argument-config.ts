@@ -69,6 +69,7 @@ async function validateCommandLineArgument(input: unknown) {
     baseConfig.jsonFilePath = "j" in input
       ? validateFilePath(`${dirname}/${input.j}`)
       : undefined;
+    console.log({dirname}, baseConfig.jsonFilePath)
     baseConfig.headSha = "s" in input && isString(input.s)
       ? input.s
       : undefined;
