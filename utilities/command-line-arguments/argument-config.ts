@@ -1,5 +1,5 @@
 import { resolve } from "https://deno.land/std/path/mod.ts";
-import $ from "https://deno.land/x/dax@0.20.0/mod.ts";
+import $ from "https://deno.land/x/dax@0.21.0/mod.ts";
 import {
   FilePath,
   validateFilePath,
