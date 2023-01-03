@@ -67,7 +67,7 @@ async function validateCommandLineArgument(input: unknown) {
 
   if (baseConfig.command === "comment") {
     baseConfig.jsonFilePath = "j" in input && isString(input.j)
-      ? validateFilePath(resolve(input.j))
+      ? validateFilePath(await Deno.realPath(resolve(Deno.cwd(), input.j)))
       : undefined;
     baseConfig.headSha = "s" in input && isString(input.s)
       ? input.s
