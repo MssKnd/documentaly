@@ -33,7 +33,7 @@ runs:
         >> ./dipendency.json
     - name: debug
       shell: bash
-      run: ls -la
+      run: cat dipendency.json
     - name: Generate comment body file
       shell: bash
       env:
