@@ -20,6 +20,9 @@ runs:
       uses: denoland/setup-deno@v1
       with:
         deno-version: v1.x
+    - name: install documentaly
+      shell: bash
+      run: deno install -A --name documentaly https://deno.land/x/documentaly/main.ts 
     - name: Fetch base branch
       shell: bash
       run: git fetch origin ${{ inputs.BASE_BRANCH }}:${{ inputs.BASE_BRANCH }}
@@ -27,8 +30,7 @@ runs:
       id: check
       shell: bash
       run: >
-        deno run -A
-        https://deno.land/x/documentaly/main.ts check
+        documentaly check
         -t ${{ inputs.BASE_BRANCH }}
         >> ./dipendency.json
     - name: Generate comment body file
@@ -37,8 +39,7 @@ runs:
         PR_HEAD_SHA: ${{github.event.pull_request.head.sha}}
         PR_HEAD_FULL_NAME: ${{github.event.pull_request.head.repo.full_name}}
       run: >
-        deno run -A
-        https://deno.land/x/documentaly/main.ts comment
+        documentaly comment
         -b ${PR_HEAD_FULL_NAME}
         -s ${PR_HEAD_SHA}
         -j ./dipendency.json
