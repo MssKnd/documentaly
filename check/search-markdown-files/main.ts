@@ -1,4 +1,4 @@
-import $ from "https://deno.land/x/dax@0.20.0/mod.ts";
+import $ from "https://deno.land/x/dax@0.21.0/mod.ts";
 import { parse as yamlParse } from "https://deno.land/std@0.170.0/encoding/yaml.ts";
 import { FilePath } from "./file-path.ts";
 import {
