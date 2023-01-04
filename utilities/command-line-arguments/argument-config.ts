@@ -1,5 +1,5 @@
-import { resolve } from "https://deno.land/std/path/mod.ts";
-import $ from "https://deno.land/x/dax@0.20.0/mod.ts";
+// import { resolve } from "https://deno.land/std/path/mod.ts";
+// import $ from "https://deno.land/x/dax@0.20.0/mod.ts";
 import {
   FilePath,
   validateFilePath,
@@ -13,7 +13,8 @@ type CommandLineArgument = {
   command: Command;
   targetBranch: string; // -t
   filePaths: FilePath[];
-  jsonFilePath?: FilePath; // -j
+  json?: unknown[]; // -j
+  // jsonFilePath?: FilePath; // --json-file
   headSha?: string; // -s
   branchName?: string; // -b
 };
@@ -39,7 +40,8 @@ async function validateCommandLineArgument(input: unknown) {
     targetBranch: "main",
     command: "check",
     filePaths: ["." as FilePath],
-    jsonFilePath: undefined,
+    json: undefined,
+    // jsonFilePath: undefined,
     headSha: undefined,
     branchName: undefined,
   };
@@ -66,9 +68,10 @@ async function validateCommandLineArgument(input: unknown) {
   }
 
   if (baseConfig.command === "comment") {
-    baseConfig.jsonFilePath = "j" in input && isString(input.j)
-      ? validateFilePath(await Deno.realPath(resolve(Deno.cwd(), input.j)))
-      : undefined;
+    baseConfig.json = "j" in input && isString(input.j) ? JSON.parse(input.j) : undefined;
+    // baseConfig.jsonFilePath = "jsonFile" in input && isString(input.j)
+    //   ? validateFilePath(await Deno.realPath(resolve(Deno.cwd(), input.j)))
+    //   : undefined;
     baseConfig.headSha = "s" in input && isString(input.s)
       ? input.s
       : undefined;

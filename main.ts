@@ -7,7 +7,8 @@ const {
   command,
   targetBranch,
   filePaths,
-  jsonFilePath,
+  // jsonFilePath,
+  json,
   headSha,
   branchName,
 } = await commandLineArgument();
@@ -20,10 +21,10 @@ switch (command) {
     check(filePaths, targetBranch);
     break;
   case "comment":
-    if (!jsonFilePath || !branchName || !headSha) {
+    if (!json || !branchName || !headSha) {
       throw new Error("invalid argument");
     }
-    comment(jsonFilePath, branchName, headSha);
+    comment(json, branchName, headSha);
     break;
   default:
     throw new Error("invalid command");
