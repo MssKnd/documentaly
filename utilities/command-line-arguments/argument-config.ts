@@ -34,7 +34,7 @@ function validateCommand(input: unknown): Command {
 }
 
 /** validate command line argument */
-async function validateCommandLineArgument(input: unknown) {
+function validateCommandLineArgument(input: unknown) {
   const baseConfig: CommandLineArgument = {
     helpFlag: false,
     targetBranch: "main",

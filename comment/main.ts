@@ -40,7 +40,7 @@ function blobUrlBase(branchName: string, headSha: string) {
   return `https://github.com/${branchName}/blob/${headSha}/`;
 }
 
-async function comment(
+function comment(
   jsonData: unknown[],
   branchName: string,
   headSha: string,
