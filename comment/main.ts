@@ -1,9 +1,9 @@
-import { FilePath } from "../check/search-markdown-files/file-path.ts";
+// import { FilePath } from "../check/search-markdown-files/file-path.ts";
 import {
   validateFilePath,
   validateMarkdownFilePath,
 } from "../check/search-markdown-files/mod.ts";
-import { importJsonFile } from "../utilities/import-json-file/import-json-file.ts";
+// import { importJsonFile } from "../utilities/import-json-file/import-json-file.ts";
 import { isObject, isString } from "../utilities/mod.ts";
 
 // type DependencyJSON = {
@@ -40,12 +40,12 @@ function blobUrlBase(branchName: string, headSha: string) {
   return `https://github.com/${branchName}/blob/${headSha}/`;
 }
 
-async function comment(
-  jsonFilePath: FilePath,
+function comment(
+  jsonData: unknown[],
   branchName: string,
   headSha: string,
 ) {
-  const jsonData = await importJsonFile(jsonFilePath);
+  // const jsonData = await importJsonFile(jsonFilePath);
   const dependencyMap = validateDependencyMap(jsonData);
   if (dependencyMap.size === 0) {
     console.log("未更新のドキュメントは無いようです 👀");
