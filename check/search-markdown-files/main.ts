@@ -1,5 +1,4 @@
-import $ from "https://deno.land/x/dax@0.21.0/mod.ts";
-import { parse as yamlParse } from "https://deno.land/std@0.170.0/encoding/yaml.ts";
+import { $, yaml } from "../deps.ts";
 import { FilePath } from "./file-path.ts";
 import {
   DependencyConfig,
@@ -38,7 +37,7 @@ async function markdownFilePathConfigMap(
   const markdownFilePathAndConfigTaples = await Promise.all(
     markdownFilePaths.map(async (markdownFilePath) => {
       const yamlHeader = await extructYamlHeader(markdownFilePath);
-      const config = yamlParse(yamlHeader) ?? {};
+      const config = yaml.parse(yamlHeader) ?? {};
       const validateCondig = validateDependencyConfig(config);
       return [markdownFilePath, validateCondig] as const;
     }),

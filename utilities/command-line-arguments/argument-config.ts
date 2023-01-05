@@ -1,5 +1,4 @@
 // import { resolve } from "https://deno.land/std/path/mod.ts";
-// import $ from "https://deno.land/x/dax@0.21.0/mod.ts";
 import {
   FilePath,
   validateFilePath,
@@ -68,7 +67,9 @@ function validateCommandLineArgument(input: unknown) {
   }
 
   if (baseConfig.command === "comment") {
-    baseConfig.json = "j" in input && isString(input.j) ? JSON.parse(input.j) : undefined;
+    baseConfig.json = "j" in input && isString(input.j)
+      ? JSON.parse(input.j)
+      : undefined;
     // baseConfig.jsonFilePath = "jsonFile" in input && isString(input.j)
     //   ? validateFilePath(await Deno.realPath(resolve(Deno.cwd(), input.j)))
     //   : undefined;
