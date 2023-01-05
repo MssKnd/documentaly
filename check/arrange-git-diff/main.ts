@@ -1,4 +1,4 @@
-import $ from "https://deno.land/x/dax@0.21.0/mod.ts";
+import { $ } from "../deps.ts";
 import { validateFilePath } from "../search-markdown-files/mod.ts";
 
 function diff(target: string): Promise<string> {
