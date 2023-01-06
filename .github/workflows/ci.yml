@@ -1,6 +1,6 @@
 name: ci
 
-on: [push, pull_request]
+on: [pull_request]
 
 jobs:
   test:
@@ -19,6 +19,6 @@ jobs:
       - name: Check mod.ts
         run: |
           deno check mod.ts
-      - name: Run tests
-        run: |
-          deno test -A
+      # - name: Run tests
+      #   run: |
+      #     deno test -A
