@@ -3,7 +3,7 @@ import { Opaque } from "../../utilities/opaque.ts";
 type FilePath = Opaque<"FilePath">;
 
 function validateFilePath(input: unknown) {
-  // ここに文字数制限などの条件を記載する。本記事の趣旨ではないため割愛
+  // ここに文字数制限などの条件を記載する。
   if (!isString(input)) {
     throw new Error("invalid file path");
   }
