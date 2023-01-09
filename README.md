@@ -31,7 +31,7 @@ jobs:
 
 # setup document (markdown)
 
-```
+```md
 ---
 dependentFilePaths: ['.']
 ---
