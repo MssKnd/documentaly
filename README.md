@@ -15,9 +15,7 @@ configure the trigger as needed.
 
 ```yaml
 name: documentaly
-on:
-  pull_request:
-    types: [opened, synchronize, reopened]
+on: pull_request
 env:
   BASE_BRANCH: main
 jobs:
@@ -31,8 +29,14 @@ jobs:
           base_branch: ${{ env.BASE_BRANCH }}
 ```
 
-## check
+# setup document (markdown)
 
-## comment
+```md
+---
+dependentFilePaths: ['.']
+---
 
-## build (implementing...)
+# Title of Markdown
+
+description.
+```
