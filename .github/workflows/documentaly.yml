@@ -1,7 +1,5 @@
 name: documentaly
-on:
-  pull_request:
-    types: [opened, synchronize, reopened]
+on: pull_request
 env:
   BASE_BRANCH: main
 jobs:
