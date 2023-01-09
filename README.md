@@ -39,5 +39,4 @@ dependentFilePaths: ['.']
 # Title of Markdown
 
 description.
-
 ```
