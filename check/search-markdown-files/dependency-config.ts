@@ -6,7 +6,7 @@ type DependencyConfig = {
   // author: string; // TODO
 };
 
-function validateDependencyConfig(input: unknown) {
+function validateDependencyConfig(input: unknown): DependencyConfig {
   const baseConfig: DependencyConfig = {
     dependentFilePaths: [],
   };

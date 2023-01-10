@@ -1,4 +1,5 @@
 import { Opaque } from "../../utilities/opaque.ts";
+import { isString } from "../../utilities/type-guard.ts";
 
 type FilePath = Opaque<"FilePath">;
 
@@ -8,14 +9,6 @@ function validateFilePath(input: unknown) {
     throw new Error("invalid file path");
   }
   return input as FilePath;
-}
-
-function isString(value: unknown): value is string {
-  if (typeof value === "string" || value instanceof String) {
-    return true;
-  } else {
-    return false;
-  }
 }
 
 export type { FilePath };
