@@ -9,9 +9,7 @@ documentation with the PR . It helps ensure that all documentation is up-to-date
 and consistent with the code changes. Simply add the action to your workflow and
 configure the trigger as needed.
 
-# setup Github Actions
-
-`.github/workflows/documentaly.yml`
+# Usage
 
 ```yaml
 name: documentaly
@@ -26,10 +24,23 @@ jobs:
         uses: mssknd/documentaly@main
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          base_branch: ${{ env.BASE_BRANCH }}
+          BASE_BRANCH: ${{ env.BASE_BRANCH }}
 ```
 
+# Inputs
+
+| Name         | Description       | Default | Required |
+| ------------ | ----------------- | ------- | -------- |
+| GITHUB_TOKEN | your github token | n/a     | yes      |
+| BASE_BRANCH  | base branch name  | main    | no       |
+
+# Outputs
+
+TODO
+
 # setup document (markdown)
+
+Fill in the dependent file path at the beginning of the markdown file.
 
 ```md
 ---
