@@ -1,8 +1,5 @@
 // import { resolve } from "https://deno.land/std/path/mod.ts";
-import {
-  FilePath,
-  validateFilePath,
-} from "../../check/search-markdown-files/mod.ts";
+import { FilePath, validateFilePath } from "../../check/file-path/mod.ts";
 import { isBoolean, isObject, isString } from "../../utilities/mod.ts";
 
 type Command = "check" | "comment";

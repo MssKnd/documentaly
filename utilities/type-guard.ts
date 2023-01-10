@@ -3,6 +3,7 @@ const isObject = (x: unknown): x is Record<string, unknown> =>
 
 const isBoolean = (x: unknown): x is boolean => typeof x === "boolean";
 
-const isString = (x: unknown): x is string => typeof x === "string";
+const isString = (x: unknown): x is string =>
+  typeof x === "string" || x instanceof String;
 
 export { isBoolean, isObject, isString };

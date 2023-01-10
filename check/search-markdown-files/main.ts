@@ -1,9 +1,9 @@
 import { $, yaml } from "../deps.ts";
-import { FilePath } from "./file-path.ts";
+import { FilePath } from "../file-path/mod.ts";
 import {
   DependencyConfig,
   validateDependencyConfig,
-} from "./dependency-config.ts";
+} from "../dependency-config/mod.ts";
 import {
   MarkdonwFilePath,
   validateMarkdownFilePath,

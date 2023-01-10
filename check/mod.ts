@@ -1,8 +1,8 @@
 import { getChangedFiles } from "./arrange-git-diff/mod.ts";
+import { DependencyConfig } from "./dependency-config/mod.ts";
+import { FilePath } from "./file-path/mod.ts";
 import {
-  DependencyConfig,
   documentDependencies,
-  FilePath,
   hasMarkdownExtention,
   MarkdonwFilePath,
   reverseDependencyMap,
