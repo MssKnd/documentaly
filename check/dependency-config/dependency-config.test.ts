@@ -1,5 +1,5 @@
 import { assertEquals } from "https://deno.land/std@0.65.0/testing/asserts.ts";
-import { validateDependencyConfig } from "./dependency-config.ts";
+import { validateDependencyConfig } from "./mod.ts";
 
 Deno.test("validateDependencyConfig", async (t) => {
   await t.step("valid", () => {

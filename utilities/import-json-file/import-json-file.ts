@@ -1,4 +1,4 @@
-import { FilePath } from "../../check/search-markdown-files/mod.ts";
+import { FilePath } from "../../check/file-path/mod.ts";
 
 async function importJsonFile(filePath: FilePath) {
   const { default: data } = await import(filePath, {

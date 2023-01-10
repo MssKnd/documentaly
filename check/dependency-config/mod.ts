@@ -1,6 +1,7 @@
 import { isObject } from "../../utilities/mod.ts";
-import { FilePath, validateFilePath } from "./file-path.ts";
+import { FilePath, validateFilePath } from "../file-path/mod.ts";
 
+/** Markdown header has DependencyConfig */
 type DependencyConfig = {
   dependentFilePaths: FilePath[];
   // author: string; // TODO
@@ -11,7 +12,7 @@ function validateDependencyConfig(input: unknown): DependencyConfig {
     dependentFilePaths: [],
   };
   if (!isObject(input)) {
-    throw new Error();
+    throw new Error("invalid markdown dependency config");
   }
   if (
     "dependentFilePaths" in input && Array.isArray(input.dependentFilePaths)

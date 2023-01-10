@@ -1,5 +1,5 @@
 import { $ } from "../deps.ts";
-import { FilePath, validateFilePath } from "../search-markdown-files/mod.ts";
+import { FilePath, validateFilePath } from "../file-path/mod.ts";
 
 function diff(target: string): Promise<string> {
   return $`git diff --name-only HEAD ${target}`.text();
