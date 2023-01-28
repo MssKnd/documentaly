@@ -1,5 +1,5 @@
 import { parse } from "https://deno.land/std@0.171.0/flags/mod.ts";
-import { validateCommandLineArgument } from "./argument-config.ts";
+import { validateCommandLineArgument } from "./validate-command-line-argument.ts";
 
 /** parsing and validating command line argument */
 function main() {

@@ -2,40 +2,26 @@ import { check, help as checkHelp } from "./check/mod.ts";
 import { comment, help as commentHelp } from "./comment/mod.ts";
 import { commandLineArgument } from "./utilities/command-line-arguments/mod.ts";
 
-const {
-  helpFlag,
-  command,
-  targetBranch,
-  filePaths,
-  // jsonFilePath,
-  json,
-  headSha,
-  branchName,
-} = await commandLineArgument();
-
-/** get markdown config map */
+const commandLineArguments = await commandLineArgument();
 
 /** commands */
-switch (command) {
+switch (commandLineArguments.command) {
   case "check":
-    if (helpFlag) {
+    if (commandLineArguments.helpFlag) {
       checkHelp();
-      Deno.exit(0);
+      break;
     }
-    check(filePaths, targetBranch);
+    check(commandLineArguments);
     break;
   case "comment":
-    if (helpFlag) {
+    if (commandLineArguments.helpFlag) {
       commentHelp();
-      Deno.exit(0);
+      break;
     }
-    if (!json || !branchName || !headSha) {
-      throw new Error("invalid argument");
-    }
-    comment(json, branchName, headSha);
+    comment(commandLineArguments);
     break;
   case "publish":
-    console.log('------');
+    console.log("------");
     break;
   default:
     throw new Error("invalid command");

@@ -25,7 +25,12 @@ function removeChangedDocumentFromDependencyMap(
   return documentDependencyMapCopy;
 }
 
-async function check(filePaths: FilePath[], targetBranch: string) {
+type Props = {
+  filePaths: FilePath[];
+  targetBranch: string;
+};
+
+async function check({ filePaths, targetBranch }: Props) {
   const [filePathDependencyMap, changedFiles] = await Promise.all([
     /** create dipendency map */
     documentDependencies(
