@@ -22,9 +22,9 @@ function validateCommandLineArgument(input: Record<string, unknown>) {
   );
   return {
     filePaths: filePaths.length > 0 ? filePaths : [validateFilePath(".")],
-    zendeskApiAuthHeader: "zenndesk-api-auth-header" in input &&
-        isString(input["zenndesk-api-auth-header"])
-      ? input["zenndesk-api-auth-header"]
+    zendeskApiAuthHeader: "zendesk-api-auth-header" in input &&
+        isString(input["zendesk-api-auth-header"])
+      ? input["zendesk-api-auth-header"]
       : undefined,
     notionApiKey: "notion-api-key" in input && isString(input["notion-api-key"])
       ? input["notion-api-key"]

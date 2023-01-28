@@ -62,7 +62,7 @@ function validateCommandLineArgument(input: unknown) {
     case "publish":
       return {
         command: "publish",
-        ...validatePublishCommandLineArgument({ ...input }),
+        ...validatePublishCommandLineArgument({ ...input, filePaths }),
       } as const;
     default:
       throw new Error();
