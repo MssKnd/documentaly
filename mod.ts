@@ -5,7 +5,7 @@ import { commandLineArgument } from "./utilities/command-line-arguments/mod.ts";
 
 const commandLineArguments = await commandLineArgument();
 
-/** commands */
+/** $ documentaly <commands> */
 switch (commandLineArguments.command) {
   case "check":
     if (commandLineArguments.helpFlag) {
