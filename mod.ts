@@ -1,5 +1,6 @@
 import { check, help as checkHelp } from "./check/mod.ts";
 import { comment, help as commentHelp } from "./comment/mod.ts";
+import { publish, help as publishHelp } from "./publish/mod.ts";
 import { commandLineArgument } from "./utilities/command-line-arguments/mod.ts";
 
 const commandLineArguments = await commandLineArgument();
@@ -21,7 +22,11 @@ switch (commandLineArguments.command) {
     comment(commandLineArguments);
     break;
   case "publish":
-    console.log("------");
+    if (commandLineArguments.helpFlag) {
+      publishHelp();
+      break;
+    }
+    publish(commandLineArguments);
     break;
   default:
     throw new Error("invalid command");

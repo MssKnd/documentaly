@@ -1,5 +1,6 @@
 import { validateCommandLineArgument as validateCheckCommandLineArgument } from "../../check/validate-command-line-argument/mod.ts";
 import { validateCommandLineArgument as validateCommentCommandLineArgument } from "../../comment/validate-command-line-argument/mod.ts";
+import { validateCommandLineArgument as validatePublishCommandLineArgument } from "../../publish/validate-command-line-argument/mod.ts";
 import { isBoolean, isObject, isString } from "../../utilities/mod.ts";
 
 type Command = "check" | "comment" | "publish";
@@ -38,16 +39,16 @@ function validateCommandLineArgument(input: unknown) {
   }
 
   const [command, ...filePaths] = input._;
-  const validatedCommand = validateCommand(command);
+  const validCommand = validateCommand(command);
 
   if ("h" in input && isBoolean(input.h) ? input.h : false) {
     return {
-      command: validatedCommand,
+      command: validCommand,
       helpFlag: true,
     } as const;
   }
 
-  switch (validatedCommand) {
+  switch (validCommand) {
     case "check":
       return {
         command: "check",
@@ -61,6 +62,7 @@ function validateCommandLineArgument(input: unknown) {
     case "publish":
       return {
         command: "publish",
+        ...validatePublishCommandLineArgument({ ...input }),
       } as const;
     default:
       throw new Error();
