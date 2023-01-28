@@ -15,6 +15,7 @@ function hasPropOrError<T extends keyof MarkdownProps>(
     throw new Error(`Props need ${propName}`);
   }
   // FIXME: any
+  // deno-lint-ignore no-explicit-any
   return (target as any)[propName];
 }
 
