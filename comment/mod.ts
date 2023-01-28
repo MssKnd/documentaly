@@ -64,7 +64,7 @@ function comment(
 }
 
 function help() {
-  console.log(`documentaly comment help`)
-} 
+  console.log(`documentaly comment help`);
+}
 
 export { comment, help };
