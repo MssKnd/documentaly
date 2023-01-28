@@ -67,4 +67,18 @@ async function check(filePaths: FilePath[], targetBranch: string) {
   console.log(`${JSON.stringify(result)}`);
 }
 
-export { check };
+// TODO: add to describe Markdown grammar
+function help() {
+  console.log(`
+  usage: documentaly check [options]
+
+  Options:
+    -h,                   show this help message and exit
+    -t TARGET_BRANCH,
+                          target branch to compare with
+  
+  This command compares the specified target branch with the current branch and outputs a list of markdown files that have not been updated accordingly.
+  `)
+} 
+
+export { check, help };

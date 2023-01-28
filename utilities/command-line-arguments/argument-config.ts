@@ -2,7 +2,7 @@
 import { FilePath, validateFilePath } from "../../check/file-path/mod.ts";
 import { isBoolean, isObject, isString } from "../../utilities/mod.ts";
 
-type Command = "check" | "comment";
+type Command = "check" | "comment" | "publish";
 
 type CommandLineArgument = {
   helpFlag: boolean; // -h
@@ -24,6 +24,8 @@ function validateCommand(input: unknown): Command {
       return "check";
     case "comment":
       return "comment";
+    case "publish":
+      return "publish";
     default:
       throw new Error("invalid command");
   }
@@ -46,6 +48,8 @@ function validateCommandLineArgument(input: unknown) {
     throw new Error();
   }
 
+  baseConfig.helpFlag = "h" in input && isBoolean(input.h) ? input.h : false;
+
   if (
     "_" in input && Array.isArray(input._)
   ) {
@@ -57,7 +61,6 @@ function validateCommandLineArgument(input: unknown) {
   }
 
   if (baseConfig.command === "check") {
-    baseConfig.helpFlag = "h" in input && isBoolean(input.h) ? input.h : false;
     baseConfig.targetBranch = "t" in input && isString(input.t)
       ? input.t
       : "main";
@@ -81,6 +84,7 @@ function validateCommandLineArgument(input: unknown) {
   if (baseConfig.filePaths.length === 0) {
     baseConfig.filePaths = [validateFilePath(".")];
   }
+
   return baseConfig;
 }
 

@@ -63,4 +63,8 @@ function comment(
   console.log(result);
 }
 
-export { comment };
+function help() {
+  console.log(`documentaly comment help`)
+} 
+
+export { comment, help };
