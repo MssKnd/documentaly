@@ -40,13 +40,19 @@ function blobUrlBase(branchName: string, headSha: string) {
   return `https://github.com/${branchName}/blob/${headSha}/`;
 }
 
-function comment(
-  jsonData: unknown[],
-  branchName: string,
-  headSha: string,
-) {
+type Props = {
+  json: unknown[];
+  branchName: string;
+  headSha: string;
+};
+
+function comment({
+  json,
+  branchName,
+  headSha,
+}: Props) {
   // const jsonData = await importJsonFile(jsonFilePath);
-  const dependencyMap = validateDependencyMap(jsonData);
+  const dependencyMap = validateDependencyMap(json);
   if (dependencyMap.size === 0) {
     console.log("未更新のドキュメントは無いようです 👀");
     return;
@@ -63,4 +69,8 @@ function comment(
   console.log(result);
 }
 
-export { comment };
+function help() {
+  console.log(`documentaly comment help`);
+}
+
+export { comment, help };

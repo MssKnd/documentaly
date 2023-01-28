@@ -1,4 +1,5 @@
-import { $, yaml } from "../deps.ts";
+import { yaml } from "../../deps.ts";
+import { $ } from "../deps.ts";
 import { FilePath } from "../file-path/mod.ts";
 import {
   DependencyConfig,

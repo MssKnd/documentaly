@@ -1,30 +1,32 @@
-import { check } from "./check/mod.ts";
-import { comment } from "./comment/mod.ts";
+import { check, help as checkHelp } from "./check/mod.ts";
+import { comment, help as commentHelp } from "./comment/mod.ts";
+import { help as publishHelp, publish } from "./publish/mod.ts";
 import { commandLineArgument } from "./utilities/command-line-arguments/mod.ts";
 
-const {
-  // helpFlag,
-  command,
-  targetBranch,
-  filePaths,
-  // jsonFilePath,
-  json,
-  headSha,
-  branchName,
-} = await commandLineArgument();
+const commandLineArguments = await commandLineArgument();
 
-/** get markdown config map */
-
-/** commands */
-switch (command) {
+/** $ documentaly <commands> */
+switch (commandLineArguments.command) {
   case "check":
-    check(filePaths, targetBranch);
+    if (commandLineArguments.helpFlag) {
+      checkHelp();
+      break;
+    }
+    check(commandLineArguments);
     break;
   case "comment":
-    if (!json || !branchName || !headSha) {
-      throw new Error("invalid argument");
+    if (commandLineArguments.helpFlag) {
+      commentHelp();
+      break;
     }
-    comment(json, branchName, headSha);
+    comment(commandLineArguments);
+    break;
+  case "publish":
+    if (commandLineArguments.helpFlag) {
+      publishHelp();
+      break;
+    }
+    publish(commandLineArguments);
     break;
   default:
     throw new Error("invalid command");
