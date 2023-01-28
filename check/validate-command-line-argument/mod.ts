@@ -11,8 +11,7 @@ import { validateFilePath } from "../file-path/mod.ts";
  */
 function validateCommandLineArgument(input: Record<string, unknown>) {
   if (
-    !("filePaths" in input) || !Array.isArray(input.filePaths) ||
-    !("t" in input)
+    !("filePaths" in input) || !Array.isArray(input.filePaths)
   ) {
     throw new Error("invalid check command argument");
   }
@@ -20,7 +19,7 @@ function validateCommandLineArgument(input: Record<string, unknown>) {
     validateFilePath(filePath)
   );
   return {
-    targetBranch: isString(input.t) ? input.t : "main",
+    targetBranch: "t" in input && isString(input.t) ? input.t : "main",
     filePaths: filePaths.length > 0 ? filePaths : [validateFilePath(".")],
   };
 }
