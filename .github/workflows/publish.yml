@@ -33,6 +33,9 @@ jobs:
           >> result.md
       - name: check
         shell: bash
+        run: ls -la
+      - name: check
+        shell: bash
         run: cat result.md
       - name: Make comment on pull request when this action was pull request event.
         env:
