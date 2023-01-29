@@ -7,10 +7,11 @@ async function publishNotion(
   props: Record<string, unknown>,
   body: string,
 ) {
-  const { pageId } = validateMarkdownProps(props);
+  const { pageId, title } = validateMarkdownProps(props);
   const blockTypeObjects = markdownParser(body);
   const notionClient = NotionClient(notionApiKey);
   await notionClient.updatePage(pageId, blockTypeObjects);
+  console.log(`"${title}" updated 🚀`);
 }
 
 export { publishNotion };
