@@ -8,7 +8,7 @@ type UpdateProps = {
 
 function ZendeskClient(auth: string) {
   return {
-    updatePage: async (
+    updateArticle: (
       { subdomain, articleId, locale, title, body }: UpdateProps,
     ) => {
       const json = JSON.stringify({
@@ -16,8 +16,7 @@ function ZendeskClient(auth: string) {
       });
       const endpoint =
         `https://${subdomain}.zendesk.com/api/v2/help_center/articles/${articleId}/translations/${locale}.json`;
-      // const res =
-      await fetch(endpoint, {
+      return fetch(endpoint, {
         headers: {
           Authorization: `${auth}`,
           "Content-Type": "application/json",
@@ -26,7 +25,6 @@ function ZendeskClient(auth: string) {
         method: "PUT",
         body: json,
       });
-      // console.log(res.body)
     },
   };
 }

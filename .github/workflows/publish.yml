@@ -1,0 +1,46 @@
+name: publish
+
+on: 
+  pull_request:
+    branches:
+      - main
+    types: [synchronize, closed]
+
+env:
+  NOTION_API_TOKEN: ${{ secrets.NOTION_API_TOKEN }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+      - name: install documentaly
+        shell: bash
+        run: deno install -A --name documentaly https://deno.land/x/documentaly/mod.ts
+      - name: Fetch base branch
+        shell: bash
+        run: git fetch origin main:main
+      - name: Check to maintain documents
+        id: check
+        shell: bash
+        run: >
+          documentaly publish
+          $(git diff --name-only HEAD main | grep '\.md$' | tr "\n" " "  )
+          --notion-api-key ${{ process.env.NOTION_API_TOKEN }}
+          >> result.md
+      - name: Make comment on pull request when this action was pull request event.
+        env:
+          GITHUB_TOKEN: ${{ process.env.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}      
+        shell: bash
+        run: >
+          if [ -n "${PR_NUMBER}" ]; then
+            gh pr comment ${PR_NUMBER} -F ./result.md
+          fi
+      

@@ -6,14 +6,13 @@ function NotionClient(apiKey: string) {
     auth: apiKey,
   });
   return {
-    updatePage: async (pageId: string, blockTypeObjects: BlockTypeObject[]) => {
-      await notion.blocks.children.append({
+    updatePage: (pageId: string, blockTypeObjects: BlockTypeObject[]) =>
+      notion.blocks.children.append({
         block_id: pageId,
         // FIXME
         // deno-lint-ignore no-explicit-any
         children: blockTypeObjects as any,
-      });
-    },
+      }),
   };
 }
 

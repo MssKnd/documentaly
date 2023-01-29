@@ -29,6 +29,7 @@ function publish({ filePaths, zendeskApiAuthHeader, notionApiKey }: Props) {
         publishNotion(notionApiKey, props, body);
         break;
       default:
+        console.log(`skip: ${filePath}`);
         break;
     }
   });

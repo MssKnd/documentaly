@@ -12,13 +12,21 @@ async function publishZendesk(
   );
   const html = markdownHtmlParser(body);
   const zendeskClient = ZendeskClient(zendeskApiAuthHeader);
-  await zendeskClient.updatePage({
+  // TODO: error handling
+  const res = await zendeskClient.updateArticle({
     subdomain,
     title,
     body: html,
     articleId,
     locale,
   });
+  const {
+    translation: {
+      html_url: articleUrl,
+      updated_at: updatedAt,
+    },
+  } = await res.json();
+  console.log(`"[${title}](${articleUrl})" updated at ${updatedAt}.`);
 }
 
 export { publishZendesk };
