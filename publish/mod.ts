@@ -11,7 +11,7 @@ type Props = {
 
 function publish({ filePaths, zendeskApiAuthHeader, notionApiKey }: Props) {
   if (filePaths.length === 0) {
-    console.log('No change files.')
+    console.log("No change files.");
   }
   filePaths.map(async (filePath) => {
     const { props, body } = await markdownPropsParser(filePath);
