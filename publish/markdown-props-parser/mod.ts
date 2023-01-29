@@ -11,14 +11,17 @@ const hasDistObject = (
 async function markdownPropsParser(filePath: FilePath) {
   const markdown = await Deno.readTextFile(filePath);
 
-  const { header, body } = extructYamlHeader(markdown);
-  const parsedProps = yaml.parse(header ?? "");
+  const { yamlHeader, body } = extructYamlHeader(markdown);
+  const parsedProps = yaml.parse(yamlHeader) ?? {};
 
   if (!hasDistObject(parsedProps)) {
-    throw new Error("invalid markdown props. markdown props need 'dist'.");
+    return {
+      props: { dist: "" },
+      body,
+    };
   }
 
-  return { props: parsedProps, body: body ?? "" };
+  return { props: parsedProps, body };
 }
 
 export { markdownPropsParser };

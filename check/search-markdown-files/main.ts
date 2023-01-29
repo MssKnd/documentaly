@@ -9,6 +9,7 @@ import {
   MarkdonwFilePath,
   validateMarkdownFilePath,
 } from "./markdown-file-path.ts";
+import { extructYamlHeader } from "../../utilities/extruct-yaml-header/mod.ts";
 
 async function findMarkdownFilePath(
   filePaths: string[],
@@ -24,20 +25,13 @@ async function findMarkdownFilePath(
   );
 }
 
-/** extract YAML header from markdown file */
-function extructYamlHeader(
-  markdownFilePath: MarkdonwFilePath,
-): Promise<string> {
-  return $`awk '/^---$/ {p=!p; if (p) {next}; if (!p) {exit}} {if (!p) {exit}} 1' ${markdownFilePath}`
-    .text();
-}
-
 async function markdownFilePathConfigMap(
   markdownFilePaths: MarkdonwFilePath[],
 ) {
   const markdownFilePathAndConfigTaples = await Promise.all(
     markdownFilePaths.map(async (markdownFilePath) => {
-      const yamlHeader = await extructYamlHeader(markdownFilePath);
+      const markdown = await Deno.readTextFile(markdownFilePath);
+      const { yamlHeader } = extructYamlHeader(markdown);
       const config = yaml.parse(yamlHeader) ?? {};
       const validateCondig = validateDependencyConfig(config);
       return [markdownFilePath, validateCondig] as const;
