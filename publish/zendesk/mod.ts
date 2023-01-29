@@ -26,7 +26,7 @@ async function publishZendesk(
       updated_at: updatedAt,
     },
   } = await res.json();
-  console.log(`"[${title}](${articleUrl})" updated at ${updatedAt}.`);
+  console.log(`"[${title}](${articleUrl})" updated at ${updatedAt} 🚀`);
 }
 
 export { publishZendesk };

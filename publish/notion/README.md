@@ -5,10 +5,20 @@ pageId: '59be4190a22e426f9a30af8b2ebb756f'
 title: 'Publish notion page by documentaly'
 ---
 
-# heading_1
+# Publish notion page by documentaly
 
-## heading_2
+```md
+---
+dist: 'notion'
+pageId: '<notion page id>'
+title: 'Publish notion page by documentaly'
+---
 
-- test
-  - children
-  - child2 bbbb
+Markdown body here.
+
+```
+
+# Unimplemented
+- table
+- code
+- others...

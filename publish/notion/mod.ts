@@ -11,7 +11,7 @@ async function publishNotion(
   const blockTypeObjects = markdownParser(body);
   const notionClient = NotionClient(notionApiKey);
   await notionClient.updatePage(pageId, blockTypeObjects);
-  console.log(`"${title}" updated.`);
+  console.log(`"${title}" updated 🚀`);
 }
 
 export { publishNotion };

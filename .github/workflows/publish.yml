@@ -2,7 +2,7 @@ name: publish
 
 on: 
   pull_request:
-    types: [synchronize, closed]
+    types: [closed]
 
 env:
   NOTION_API_TOKEN: ${{ secrets.NOTION_API_TOKEN }}
@@ -26,17 +26,12 @@ jobs:
         run: git fetch origin main:main
       - name: Check to publish documents
         shell: bash
+        # TODO: change mod.ts to documentaly
         run: >
           deno run -A mod.ts publish
           $(git diff --name-only HEAD main | grep '\.md$' | tr "\n" " "  )
           --notion-api-key ${{ env.NOTION_API_TOKEN }}
           >> result.md
-      - name: check
-        shell: bash
-        run: ls -la
-      - name: check
-        shell: bash
-        run: cat result.md
       - name: Make comment on pull request when this action was pull request event.
         env:
           GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
