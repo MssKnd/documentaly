@@ -30,11 +30,11 @@ jobs:
         run: >
           documentaly publish
           $(git diff --name-only HEAD main | grep '\.md$' | tr "\n" " "  )
-          --notion-api-key ${{ process.env.NOTION_API_TOKEN }}
+          --notion-api-key ${{ env.NOTION_API_TOKEN }}
           >> result.md
       - name: Make comment on pull request when this action was pull request event.
         env:
-          GITHUB_TOKEN: ${{ process.env.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}      
         shell: bash
         run: >
