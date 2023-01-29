@@ -11,4 +11,4 @@ title: 'Publish notion page by documentaly'
 
 - test
   - children
-  - child2 aaaa
+  - child2 bbbb

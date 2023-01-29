@@ -24,14 +24,16 @@ jobs:
       - name: Fetch base branch
         shell: bash
         run: git fetch origin main:main
-      - name: Check to maintain documents
-        id: check
+      - name: Check to publish documents
         shell: bash
         run: >
           documentaly publish
           $(git diff --name-only HEAD main | grep '\.md$' | tr "\n" " "  )
           --notion-api-key ${{ env.NOTION_API_TOKEN }}
           >> result.md
+      - name: check
+        shell: bash
+        run: cat result.md
       - name: Make comment on pull request when this action was pull request event.
         env:
           GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
