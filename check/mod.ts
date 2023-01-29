@@ -1,4 +1,4 @@
-import { getChangedFiles } from "./arrange-git-diff/mod.ts";
+import { getChangedFilePaths } from "./get-changed-file-paths/mod.ts";
 import { DependencyConfig } from "./dependency-config/mod.ts";
 import { FilePath } from "./file-path/mod.ts";
 import {
@@ -37,7 +37,7 @@ async function check({ filePaths, targetBranch }: Props) {
       filePaths.map((filePath) => String(filePath)),
     ),
     /** get diff files */
-    getChangedFiles(targetBranch),
+    getChangedFilePaths(targetBranch),
   ]);
 
   const unchangedDocumentDependencyMap = removeChangedDocumentFromDependencyMap(
@@ -74,15 +74,14 @@ async function check({ filePaths, targetBranch }: Props) {
 
 // TODO: add to describe Markdown grammar
 function help() {
-  console.log(`
-  usage: documentaly check [options]
+  console.log(`usage: documentaly check [options]
 
-  Options:
-    -h,                   show this help message and exit
-    -t TARGET_BRANCH,
-                          target branch to compare with
-  
-  This command compares the specified target branch with the current branch and outputs a list of markdown files that have not been updated accordingly.
+Options:
+  -h,                   show this help message and exit
+  -t TARGET_BRANCH,
+                        target branch to compare with
+
+This command compares the specified target branch with the current branch and outputs a list of markdown files that have not been updated accordingly.
   `);
 }
 

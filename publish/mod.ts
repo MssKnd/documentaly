@@ -15,7 +15,6 @@ function publish({ filePaths, zendeskApiAuthHeader, notionApiKey }: Props) {
   }
   filePaths.map(async (filePath) => {
     const { props, body } = await markdownPropsParser(filePath);
-    props.dist;
     switch (props.dist.toLocaleLowerCase()) {
       case "zendesk":
         if (!zendeskApiAuthHeader) {

@@ -1,43 +1,20 @@
 import { yaml } from "../../deps.ts";
-import { $ } from "../deps.ts";
 import { FilePath } from "../file-path/mod.ts";
 import {
   DependencyConfig,
   validateDependencyConfig,
 } from "../dependency-config/mod.ts";
-import {
-  MarkdonwFilePath,
-  validateMarkdownFilePath,
-} from "./markdown-file-path.ts";
-
-async function findMarkdownFilePath(
-  filePaths: string[],
-): Promise<MarkdonwFilePath[]> {
-  const commands = filePaths.map((filePath) =>
-    $`find ${filePath} -name '*.md'`.text()
-  );
-  const commandResults = await Promise.all(commands);
-  return commandResults.flatMap((commandResult) =>
-    commandResult.split("\n").map((filePath) =>
-      validateMarkdownFilePath(filePath.replace(/^[^\/]*\//, ""))
-    )
-  );
-}
-
-/** extract YAML header from markdown file */
-function extructYamlHeader(
-  markdownFilePath: MarkdonwFilePath,
-): Promise<string> {
-  return $`awk '/^---$/ {p=!p; if (p) {next}; if (!p) {exit}} {if (!p) {exit}} 1' ${markdownFilePath}`
-    .text();
-}
+import { MarkdonwFilePath } from "./markdown-file-path.ts";
+import { extructYamlHeader } from "../../utilities/extruct-yaml-header/mod.ts";
+import { findMarkdownFilePaths } from "../find-markdown-file-paths/mod.ts";
 
 async function markdownFilePathConfigMap(
   markdownFilePaths: MarkdonwFilePath[],
 ) {
   const markdownFilePathAndConfigTaples = await Promise.all(
     markdownFilePaths.map(async (markdownFilePath) => {
-      const yamlHeader = await extructYamlHeader(markdownFilePath);
+      const markdown = await Deno.readTextFile(markdownFilePath);
+      const { yamlHeader } = extructYamlHeader(markdown);
       const config = yaml.parse(yamlHeader) ?? {};
       const validateCondig = validateDependencyConfig(config);
       return [markdownFilePath, validateCondig] as const;
@@ -71,7 +48,7 @@ function reverseDependencyMap(
  * @returns
  */
 async function main(filePaths: string[]) {
-  const markdownFilePaths = await findMarkdownFilePath(filePaths);
+  const markdownFilePaths = await findMarkdownFilePaths(filePaths);
   return markdownFilePathConfigMap(markdownFilePaths);
 }
 
