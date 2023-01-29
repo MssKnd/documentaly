@@ -27,7 +27,7 @@ jobs:
       - name: Check to publish documents
         shell: bash
         run: >
-          documentaly publish
+          deno run -A mod.ts publish
           $(git diff --name-only HEAD main | grep '\.md$' | tr "\n" " "  )
           --notion-api-key ${{ env.NOTION_API_TOKEN }}
           >> result.md
