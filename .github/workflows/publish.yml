@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup deno
         uses: denoland/setup-deno@v1
         with:
@@ -28,7 +28,7 @@ jobs:
         shell: bash
         # TODO: change mod.ts to documentaly
         run: >
-          deno run -A mod.ts publish
+          documentaly publish
           $(git diff --name-only HEAD main | grep '\.md$' | tr "\n" " "  )
           --notion-api-key ${{ env.NOTION_API_TOKEN }}
           >> result.md
