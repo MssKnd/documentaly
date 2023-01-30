@@ -32,7 +32,8 @@ jobs:
           PR_NUMBER: ${{ env.PR_NUMBER }}
         shell: bash
         run: >
-          documentaly publish
+          # documentaly publish
+          deno run -A mod.ts publish
           $(gh pr diff ${PR_NUMBER} --name-only | grep '\.md$' | tr "\n" " "  )
           --notion-api-key ${{ env.NOTION_API_TOKEN }}
           >> result.md
