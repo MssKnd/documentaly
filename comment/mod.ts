@@ -70,7 +70,7 @@ function comment({
 }
 
 function help() {
-  console.log(`documentaly comment help`);
+  console.info(`documentaly comment help`);
 }
 
 export { comment, help };

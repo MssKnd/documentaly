@@ -26,19 +26,35 @@ function validateCommand(input: unknown): Command {
   }
 }
 
+/**
+ * github actions で以下の記載をしており、ファイル名が "aaa.md bbb.md ccc.md" とスペース区切り文字列になってしまっているので対応している
+ *
+ * FIXME: gh からの値を正しく複数のファイル名として取得できるように変更して、この関数を削除する
+ *
+ * ```bash
+ * documentaly publish
+ * $(gh pr diff ${PR_NUMBER} --name-only | grep '\.md$' | tr "\n" " "  )
+ * --notion-api-key ${{ env.NOTION_API_TOKEN }}
+ * ```
+ */
+function correctNonFlugArguments(args: unknown[]) {
+  return args.flatMap((arg) => {
+    if (!isString(arg)) {
+      throw Error("invalid argument");
+    }
+    return arg.trim().split(" ");
+  });
+}
+
 /** validate command line argument */
 function validateCommandLineArgument(input: unknown) {
-  if (!isObject(input)) {
-    throw new Error();
-  }
-
   if (
-    !("_" in input) || !Array.isArray(input._)
+    !isObject(input) || !("_" in input) || !Array.isArray(input._)
   ) {
-    throw new Error("");
+    throw new Error("invalid argument");
   }
 
-  const [command, ...filePaths] = input._;
+  const [command, ...filePaths] = correctNonFlugArguments(input._);
   const validCommand = validateCommand(command);
 
   if ("h" in input && isBoolean(input.h) ? input.h : false) {

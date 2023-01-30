@@ -74,7 +74,7 @@ async function check({ filePaths, targetBranch }: Props) {
 
 // TODO: add to describe Markdown grammar
 function help() {
-  console.log(`usage: documentaly check [options]
+  console.info(`usage: documentaly check [options]
 
 Options:
   -h,                   show this help message and exit

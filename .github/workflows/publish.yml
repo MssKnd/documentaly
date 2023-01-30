@@ -7,6 +7,7 @@ on:
 env:
   NOTION_API_TOKEN: ${{ secrets.NOTION_API_TOKEN }}
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  PR_NUMBER: ${{ github.event.pull_request.number }}
 
 jobs:
   publish:
@@ -25,16 +26,21 @@ jobs:
         shell: bash
         run: git fetch origin main
       - name: Check to publish documents
+        env:
+          NOTION_API_TOKEN: ${{ env.NOTION_API_TOKEN }}
+          GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ env.PR_NUMBER }}
         shell: bash
+        # documentaly publish
         run: >
-          documentaly publish
-          $(git diff --name-only HEAD main | grep '\.md$' | tr "\n" " "  )
+          deno run -A mod.ts publish
+          $(gh pr diff ${PR_NUMBER} --name-only | grep '\.md$' | tr "\n" " "  )
           --notion-api-key ${{ env.NOTION_API_TOKEN }}
-          >> result.md
+          > result.md
       - name: Make comment on pull request when this action was pull request event.
         env:
           GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}      
+          PR_NUMBER: ${{ env.PR_NUMBER }}
         shell: bash
         run: >
           if [ -n "${PR_NUMBER}" ]; then
