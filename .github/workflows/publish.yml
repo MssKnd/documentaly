@@ -31,8 +31,8 @@ jobs:
           GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
           PR_NUMBER: ${{ env.PR_NUMBER }}
         shell: bash
+        # documentaly publish
         run: >
-          # documentaly publish
           deno run -A mod.ts publish
           $(gh pr diff ${PR_NUMBER} --name-only | grep '\.md$' | tr "\n" " "  )
           --notion-api-key ${{ env.NOTION_API_TOKEN }}
