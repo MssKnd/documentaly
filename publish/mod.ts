@@ -14,13 +14,15 @@ function publish({ filePaths, zendeskApiAuthHeader, notionApiKey }: Props) {
     console.log("No change files.");
   }
   filePaths.map(async (filePath) => {
-    const { props, body } = await markdownPropsParser(filePath).catch(error => {
-      if (error instanceof Deno.errors.NotFound) {
-        console.error(`"${filePath}" was not found`)
-        return {props: {dist: ""}, body: ""} // skip
-      }
-      throw error;
-    });
+    const { props, body } = await markdownPropsParser(filePath).catch(
+      (error) => {
+        if (error instanceof Deno.errors.NotFound) {
+          console.error(`"${filePath}" was not found`);
+          return { props: { dist: "" }, body: "" }; // skip
+        }
+        throw error;
+      },
+    );
     switch (props.dist.toLocaleLowerCase()) {
       case "zendesk":
         if (!zendeskApiAuthHeader) {

@@ -26,11 +26,11 @@ function validateCommand(input: unknown): Command {
   }
 }
 
-/** 
+/**
  * github actions で以下の記載をしており、ファイル名が "aaa.md bbb.md ccc.md" とスペース区切り文字列になってしまっているので対応している
- * 
+ *
  * FIXME: gh からの値を正しく複数のファイル名として取得できるように変更して、この関数を削除する
- * 
+ *
  * ```bash
  * documentaly publish
  * $(gh pr diff ${PR_NUMBER} --name-only | grep '\.md$' | tr "\n" " "  )
@@ -38,12 +38,12 @@ function validateCommand(input: unknown): Command {
  * ```
  */
 function correctNonFlugArguments(args: unknown[]) {
-  return args.flatMap(arg => {
+  return args.flatMap((arg) => {
     if (!isString(arg)) {
-      throw Error('invalid argument')
+      throw Error("invalid argument");
     }
-    return arg.trim().split(' ')
-  })
+    return arg.trim().split(" ");
+  });
 }
 
 /** validate command line argument */
