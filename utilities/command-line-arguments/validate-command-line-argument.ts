@@ -5,11 +5,6 @@ import { isBoolean, isObject, isString } from "../../utilities/mod.ts";
 
 type Command = "check" | "comment" | "publish";
 
-// type BaseCommandLineArgument = {
-//   helpFlag: boolean; // -h
-//   command: Command;
-// }
-
 function validateCommand(input: unknown): Command {
   if (!isString(input)) {
     throw new Error();
@@ -46,7 +41,17 @@ function correctNonFlugArguments(args: unknown[]) {
   });
 }
 
-/** validate command line argument */
+/**
+ * validate command line argument
+ * 
+ * input is expected below.
+ * ```ts
+ * type commandLineArgument = {
+ *   command: Command;
+ *   helpFlag: boolean; // -h
+ * }
+ * ```
+ */
 function validateCommandLineArgument(input: unknown) {
   if (
     !isObject(input) || !("_" in input) || !Array.isArray(input._)
