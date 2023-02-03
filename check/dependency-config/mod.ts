@@ -8,20 +8,23 @@ type DependencyConfig = {
 };
 
 function validateDependencyConfig(input: unknown): DependencyConfig {
-  const baseConfig: DependencyConfig = {
-    dependentFilePaths: [],
-  };
   if (!isObject(input)) {
     throw new Error("invalid markdown dependency config");
   }
+
   if (
-    "dependentFilePaths" in input && Array.isArray(input.dependentFilePaths)
+    !("dependentFilePaths" in input) || !Array.isArray(input.dependentFilePaths)
   ) {
-    baseConfig.dependentFilePaths = input.dependentFilePaths.map((filePath) =>
-      validateFilePath(filePath)
-    );
+    return {
+      dependentFilePaths: [],
+    };
   }
-  return baseConfig;
+
+  return {
+    dependentFilePaths: input.dependentFilePaths.map((filePath) =>
+      validateFilePath(filePath)
+    ),
+  };
 }
 
 export type { DependencyConfig };

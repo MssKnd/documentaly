@@ -1,4 +1,3 @@
-import { getChangedFilePaths } from "./get-changed-file-paths/mod.ts";
 import { DependencyConfig } from "./dependency-config/mod.ts";
 import { FilePath } from "./file-path/mod.ts";
 import {
@@ -28,17 +27,16 @@ function removeChangedDocumentFromDependencyMap(
 type Props = {
   filePaths: FilePath[];
   targetBranch: string;
+  markdownFilePaths: MarkdonwFilePath[];
 };
 
-async function check({ filePaths, targetBranch }: Props) {
-  const [filePathDependencyMap, changedFiles] = await Promise.all([
-    /** create dipendency map */
-    documentDependencies(
-      filePaths.map((filePath) => String(filePath)),
-    ),
-    /** get diff files */
-    getChangedFilePaths(targetBranch),
-  ]);
+async function check(
+  { filePaths: changedFiles, markdownFilePaths }: Props,
+) {
+  /** create dipendency map */
+  const filePathDependencyMap = await documentDependencies(
+    markdownFilePaths,
+  );
 
   const unchangedDocumentDependencyMap = removeChangedDocumentFromDependencyMap(
     filePathDependencyMap,

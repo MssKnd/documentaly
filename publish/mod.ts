@@ -1,3 +1,4 @@
+import { isObject, isString } from "../utilities/type-guard.ts";
 import { FilePath } from "../check/file-path/mod.ts";
 import { markdownPropsParser } from "./markdown-props-parser/mod.ts";
 import { publishNotion } from "./notion/mod.ts";
@@ -15,15 +16,28 @@ function publish({ filePaths, zendeskApiAuthHeader, notionApiKey }: Props) {
     return;
   }
   filePaths.map(async (filePath) => {
-    const { props, body } = await markdownPropsParser(filePath).catch(
+    const markdown = await Deno.readTextFile(filePath).catch(
       (error) => {
         if (error instanceof Deno.errors.NotFound) {
           console.error(`"${filePath}" was not found`);
-          return { props: { dist: "" }, body: "" }; // skip
+          return ""; // skip
         }
         throw error;
       },
     );
+
+    if (markdown === "") {
+      console.info(`skip: ${filePath}`);
+      return;
+    }
+
+    const { props, body } = markdownPropsParser(markdown);
+
+    if (!hasDistObject(props)) {
+      console.info(`skip: ${filePath}`);
+      return;
+    }
+
     switch (props.dist.toLocaleLowerCase()) {
       case "zendesk":
         if (!zendeskApiAuthHeader) {
@@ -45,6 +59,11 @@ function publish({ filePaths, zendeskApiAuthHeader, notionApiKey }: Props) {
     }
   });
 }
+
+const hasDistObject = (
+  x: unknown,
+): x is { dist: string } & Record<string, unknown> =>
+  isObject(x) && ("dist" in x) && isString(x.dist);
 
 function help() {
   console.info(`documentaly publish help`);

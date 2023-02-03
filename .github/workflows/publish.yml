@@ -7,6 +7,7 @@ on:
 env:
   NOTION_API_TOKEN: ${{ secrets.NOTION_API_TOKEN }}
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  BASE_BRANCH: main
   PR_NUMBER: ${{ github.event.pull_request.number }}
 
 jobs:
@@ -23,8 +24,9 @@ jobs:
         shell: bash
         run: deno install -A --name documentaly https://deno.land/x/documentaly/mod.ts
       - name: Fetch base branch
+        env: ${{ env.BASE_BRANCH }}
         shell: bash
-        run: git fetch origin main
+        run: git fetch origin ${BASE_BRANCH}
       - name: Check to publish documents
         env:
           NOTION_API_TOKEN: ${{ env.NOTION_API_TOKEN }}
@@ -46,4 +48,3 @@ jobs:
           if [ -n "${PR_NUMBER}" ]; then
             gh pr comment ${PR_NUMBER} -F ./result.md
           fi
-      
