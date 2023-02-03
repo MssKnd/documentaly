@@ -34,8 +34,8 @@ function validateCommandLineArgument(input: Record<string, unknown>) {
     filePaths: filePaths.length > 0 ? filePaths : [validateFilePath(".")],
     markdownFilePaths:
       "markdownFilePaths" in input && isString(input.markdownFilePaths)
-        ? input.markdownFilePaths.split(",").map((markdownFilePath) =>
-          validateMarkdownFilePath(markdownFilePath)
+        ? input.markdownFilePaths.trim().split(",").map((markdownFilePath) =>
+          validateMarkdownFilePath(markdownFilePath.trim())
         )
         : [],
   };
