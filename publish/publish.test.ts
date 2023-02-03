@@ -1,7 +1,7 @@
 import {
   assertSpyCall,
   spy,
-} from "https://deno.land/std@0.165.0/testing/mock.ts";
+} from "https://deno.land/std@0.176.0/testing/mock.ts";
 import { FilePath } from "../check/file-path/mod.ts";
 import { publish } from "./mod.ts";
 
