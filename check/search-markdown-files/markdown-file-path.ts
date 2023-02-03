@@ -6,10 +6,10 @@ type MarkdonwFilePath = Opaque<"MarkdonwFilePath">;
 function validateMarkdownFilePath(input: unknown) {
   const filePath = validateFilePath(input);
   console.log('xxxx',filePath)
-  if (!hasMarkdownExtention(filePath)) {
-    // TODO: will change Result Type
-    throw new Error(`invalid markdown file path: ${filePath}`);
-  }
+  // if (!hasMarkdownExtention(filePath)) {
+  //   // TODO: will change Result Type
+  //   throw new Error(`invalid markdown file path: ${filePath}`);
+  // }
   return input as MarkdonwFilePath;
 }
 
