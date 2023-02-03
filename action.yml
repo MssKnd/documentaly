@@ -31,8 +31,8 @@ runs:
     - name: Check to maintain documents
       id: check
       shell: bash
-      run: >
         # documentaly check
+      run: >
         deno run -A mod.ts check
         $(git diff --name-only HEAD ${{ inputs.BASE_BRANCH }} | tr '\n' ' ')
         -m $(find ${{ inputs.MARKDOWN_DIR }} -name '*.md' | sed -e ':a' -e 'N' -e '$!ba' -e 's/\n/,/g' -e 's/,$//')
@@ -42,8 +42,8 @@ runs:
       env:
         PR_HEAD_SHA: ${{github.event.pull_request.head.sha}}
         PR_HEAD_FULL_NAME: ${{github.event.pull_request.head.repo.full_name}}
-      run: >
         # documentaly comment
+      run: >
         deno run -A mod.ts comment
         -b ${PR_HEAD_FULL_NAME}
         -s ${PR_HEAD_SHA}
@@ -52,11 +52,11 @@ runs:
     - name: Find changed files
       shell: bash
       run: >
-        cat comment-body.txt
+        cat ./dipendency.json
     - name: Find changed files
       shell: bash
       run: >
-        cat  ./dipendency.json
+        cat comment-body.txt
     - name: Make comment on pull request when this action was pull request event.
       env:
         GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
