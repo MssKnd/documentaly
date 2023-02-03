@@ -62,7 +62,7 @@ function validateCommandLineArgument(input: unknown) {
   const [command, ...filePaths] = correctNonFlugArguments(input._);
   const validCommand = validateCommand(command);
 
-  if ("h" in input && isBoolean(input.h) ? input.h : false) {
+  if ("help" in input && isBoolean(input.help) ? input.help : false) {
     return {
       command: validCommand,
       helpFlag: true,

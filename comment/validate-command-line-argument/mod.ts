@@ -1,5 +1,11 @@
 import { isString } from "../../utilities/type-guard.ts";
 
+const alias = {
+  j: "jsonString",
+  s: "sha",
+  b: "branchName",
+} as const
+
 /**
  * @param {{j: string, s: string, b: string}} input
  * @param {string} input.j - json string. command line argument -j
@@ -12,9 +18,9 @@ import { isString } from "../../utilities/type-guard.ts";
  */
 function validateCommandLineArgument(input: Record<string, unknown>) {
   if (
-    !("j" in input) || !isString(input.j) ||
-    !("s" in input) || !isString(input.s) ||
-    !("b" in input) || !isString(input.b)
+    !("jsonString" in input) || !isString(input.jsonString) ||
+    !("sha" in input) || !isString(input.sha) ||
+    !("branchName" in input) || !isString(input.branchName)
   ) {
     throw new Error("invalid comment command argument");
   }
@@ -22,11 +28,11 @@ function validateCommandLineArgument(input: Record<string, unknown>) {
   //   ? validateFilePath(await Deno.realPath(resolve(Deno.cwd(), input.j)))
   //   : undefined;
   return {
-    json: JSON.parse(input.j),
+    json: JSON.parse(input.jsonString),
     // jsonFilePath: undefined
-    headSha: input.s,
-    branchName: input.b,
+    headSha: input.sha,
+    branchName: input.branchName,
   };
 }
 
-export { validateCommandLineArgument };
+export { validateCommandLineArgument, alias };
