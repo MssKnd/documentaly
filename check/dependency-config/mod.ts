@@ -11,7 +11,7 @@ function validateDependencyConfig(input: unknown): DependencyConfig {
   if (!isObject(input)) {
     throw new Error("invalid markdown dependency config");
   }
-  
+
   if (
     !("dependentFilePaths" in input) || !Array.isArray(input.dependentFilePaths)
   ) {

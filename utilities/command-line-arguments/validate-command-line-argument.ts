@@ -43,7 +43,7 @@ function correctNonFlugArguments(args: unknown[]) {
 
 /**
  * validate command line argument
- * 
+ *
  * input is expected below.
  * ```ts
  * type commandLineArgument = {

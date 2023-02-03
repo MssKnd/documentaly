@@ -12,14 +12,13 @@ prop2: bar
 ---
 body`;
 
-      // when:
-      const target = markdownPropsParser(markdown);
-      
-      // then:
-      assertEquals(target, {
-        props: parsedProps,
-        body,
-      });
+    // when:
+    const target = markdownPropsParser(markdown);
 
+    // then:
+    assertEquals(target, {
+      props: parsedProps,
+      body,
+    });
   });
 });

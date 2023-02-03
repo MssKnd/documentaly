@@ -48,4 +48,3 @@ jobs:
           if [ -n "${PR_NUMBER}" ]; then
             gh pr comment ${PR_NUMBER} -F ./result.md
           fi
-      

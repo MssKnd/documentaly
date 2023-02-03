@@ -40,13 +40,12 @@ async function check({ filePaths, targetBranch }: Props) {
     getChangedFilePaths(targetBranch),
   ]);
 
-  const unchangedDocumentDependencyMap =
-    await removeChangedDocumentFromDependencyMap(
-      filePathDependencyMap,
-      changedFiles,
-    );
+  const unchangedDocumentDependencyMap = removeChangedDocumentFromDependencyMap(
+    filePathDependencyMap,
+    changedFiles,
+  );
 
-  const dependencyFilePathMap = await reverseDependencyMap(
+  const dependencyFilePathMap = reverseDependencyMap(
     unchangedDocumentDependencyMap,
   );
 
