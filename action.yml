@@ -43,7 +43,7 @@ runs:
         documentaly check
         $(git diff --name-only HEAD ${{ inputs.BASE_BRANCH }} | tr '\n' ' ')
         -m $(find ${{ inputs.MARKDOWN_DIR }} -name '*.md' | sed -e ':a' -e 'N' -e '$!ba' -e 's/\n/,/g' -e 's/,$//')
-        >> ./dipendency.json
+        # >> ./dipendency.json
     - name: Generate comment body file
       shell: bash
       env:
