@@ -11,6 +11,8 @@ inputs:
   BASE_BRANCH:
     description: 'Base branch name (default: main)'
     default: 'main'
+  MARKDOWN_DIR:
+    default: '.'
 runs:
   using: composite
   steps:
@@ -26,12 +28,21 @@ runs:
     - name: Fetch base branch
       shell: bash
       run: git fetch origin ${{ inputs.BASE_BRANCH }}:${{ inputs.BASE_BRANCH }}
+    - name: Find changed files
+      shell: bash
+      run: >
+        IFS=$'\n' read -d '' -ra result_array <<< "$(git diff --name-only HEAD ${{ inputs.BASE_BRANCH }})"
+    - name: Find markdown files
+      shell: bash
+      run: >
+        FIND_MARKDOWN_FILES="$(find ${{ inputs.MARKDOWN_DIR }} -name '*.md' | tr '\n' ',')"
     - name: Check to maintain documents
       id: check
       shell: bash
       run: >
         documentaly check
-        -t ${{ inputs.BASE_BRANCH }}
+        "${result_array[@]}"
+        -m $FIND_MARKDOWN_FILES
         >> ./dipendency.json
     - name: Generate comment body file
       shell: bash

@@ -6,7 +6,6 @@ import {
 } from "../dependency-config/mod.ts";
 import { MarkdonwFilePath } from "./markdown-file-path.ts";
 import { extructYamlHeader } from "../../utilities/extruct-yaml-header/mod.ts";
-import { findMarkdownFilePaths } from "../find-markdown-file-paths/mod.ts";
 
 async function markdownFilePathConfigMap(
   markdownFilePaths: MarkdonwFilePath[],
@@ -47,8 +46,7 @@ function reverseDependencyMap(
  * @param filePaths
  * @returns
  */
-async function main(filePaths: string[]) {
-  const markdownFilePaths = await findMarkdownFilePaths(filePaths);
+function main(markdownFilePaths: MarkdonwFilePath[]) {
   return markdownFilePathConfigMap(markdownFilePaths);
 }
 

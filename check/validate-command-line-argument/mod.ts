@@ -1,5 +1,6 @@
 import { isString } from "../../utilities/type-guard.ts";
 import { validateFilePath } from "../file-path/mod.ts";
+import { validateMarkdownFilePath } from "../search-markdown-files/markdown-file-path.ts";
 
 const alias = {
   t: "targetBranchName",
@@ -9,7 +10,7 @@ const alias = {
 /**
  * @param {{filePaths: string[], t: string}} input
  * @param {string[]} input.filePaths - change file paths.
- * @param {string[]} input.markdownFilePaths - markdown file or directory paths
+ * @param {string[]} input.markdownFilePaths - markdown file or directory paths. separated comma.
  * @param {string} input.targetBranchName - target branch name. command line argument -t
  * @returns {{filePaths: string[], targetBranch: string}} object
  * @returns {string} object.filePaths - target file paths.
@@ -30,6 +31,12 @@ function validateCommandLineArgument(input: Record<string, unknown>) {
         ? input.targetBranchName
         : "main",
     filePaths: filePaths.length > 0 ? filePaths : [validateFilePath(".")],
+    markdownFilePaths:
+      "markdownFilePaths" in input && isString(input.markdownFilePaths)
+        ? input.markdownFilePaths.split(",").map((markdownFilePath) =>
+          validateMarkdownFilePath(markdownFilePath)
+        )
+        : [validateMarkdownFilePath(".")],
   };
 }
 
