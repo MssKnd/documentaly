@@ -35,7 +35,7 @@ runs:
     - name: Find markdown files
       shell: bash
       run: >
-        FIND_MARKDOWN_FILES="$(find ${{ inputs.MARKDOWN_DIR }} -name '*.md' | tr '\n' ',')"
+        FIND_MARKDOWN_FILES="$(find ${{ inputs.MARKDOWN_DIR }} -name '*.md' | sed -e ':a' -e 'N' -e '$!ba' -e 's/\n/,/g' -e 's/,$//')"
     - name: Check to maintain documents
       id: check
       shell: bash
