@@ -4,7 +4,7 @@ import { validateFilePath } from "../file-path/mod.ts";
 const alias = {
   t: "targetBranchName",
   m: "markdownFilePaths",
-} as const
+} as const;
 
 /**
  * @param {{filePaths: string[], t: string}} input
@@ -25,9 +25,12 @@ function validateCommandLineArgument(input: Record<string, unknown>) {
     validateFilePath(filePath)
   );
   return {
-    targetBranch: "targetBranchName" in input && isString(input.targetBranchName) ? input.targetBranchName : "main",
+    targetBranch:
+      "targetBranchName" in input && isString(input.targetBranchName)
+        ? input.targetBranchName
+        : "main",
     filePaths: filePaths.length > 0 ? filePaths : [validateFilePath(".")],
   };
 }
 
-export { validateCommandLineArgument, alias };
+export { alias, validateCommandLineArgument };

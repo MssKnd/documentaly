@@ -4,7 +4,7 @@ const alias = {
   j: "jsonString",
   s: "sha",
   b: "branchName",
-} as const
+} as const;
 
 /**
  * @param {{j: string, s: string, b: string}} input
@@ -35,4 +35,4 @@ function validateCommandLineArgument(input: Record<string, unknown>) {
   };
 }
 
-export { validateCommandLineArgument, alias };
+export { alias, validateCommandLineArgument };
