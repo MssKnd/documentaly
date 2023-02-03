@@ -31,6 +31,10 @@ runs:
     - name: Find changed files
       shell: bash
       run: >
+        git diff --name-only HEAD ${{ inputs.BASE_BRANCH }}
+    - name: Find changed files
+      shell: bash
+      run: >
         IFS=$'\n' read -d '' -ra result_array <<< "$(git diff --name-only HEAD ${{ inputs.BASE_BRANCH }})"
     - name: Find markdown files
       shell: bash
