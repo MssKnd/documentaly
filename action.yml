@@ -45,7 +45,7 @@ runs:
       shell: bash
       run: >
         documentaly check
-        "${result_array[@]}"
+        $(git diff --name-only HEAD ${{ inputs.BASE_BRANCH }})
         -m $FIND_MARKDOWN_FILES
         >> ./dipendency.json
     - name: Generate comment body file
