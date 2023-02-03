@@ -8,7 +8,7 @@ function validateFilePath(input: unknown) {
     throw new Error("invalid file path");
   }
   // assertain wildcard path
-  // // only check (async) 
+  // // only check (async)
   // Deno.stat(input).catch(
   //   (error) => {
   //     if (error instanceof Deno.errors.NotFound) {

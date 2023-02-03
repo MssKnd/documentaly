@@ -27,7 +27,6 @@ function validateCommandLineArgument(input: Record<string, unknown>) {
   // baseConfig.jsonFilePath = "jsonFile" in input && isString(input.j)
   //   ? validateFilePath(await Deno.realPath(resolve(Deno.cwd(), input.j)))
   //   : undefined;
-  console.log(input.jsonString)
   return {
     json: JSON.parse(input.jsonString),
     // jsonFilePath: undefined
