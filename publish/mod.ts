@@ -3,6 +3,7 @@ import { FilePath } from "../check/file-path/mod.ts";
 import { markdownPropsParser } from "./markdown-props-parser/mod.ts";
 import { publishNotion } from "./notion/mod.ts";
 import { publishZendesk } from "./zendesk/mod.ts";
+import { replaceMarkdownImagePath } from "./replace-markdown-image-path/mos.ts";
 
 type Props = {
   filePaths: FilePath[];
@@ -31,12 +32,16 @@ function publish({ filePaths, zendeskApiAuthHeader, notionApiKey }: Props) {
       return;
     }
 
-    const { props, body } = markdownPropsParser(markdown);
+    const { props, body: unreplacedBody } = markdownPropsParser(markdown);
 
-    if (!hasDistObject(props)) {
+    if (!hasDist(props)) {
       console.info(`skip: ${filePath}`);
       return;
     }
+
+    const body = hasImageUrlReplacementPath(props)
+      ? replaceMarkdownImagePath(unreplacedBody, props.imageUrlReplacementPath)
+      : unreplacedBody;
 
     switch (props.dist.toLocaleLowerCase()) {
       case "zendesk":
@@ -60,10 +65,16 @@ function publish({ filePaths, zendeskApiAuthHeader, notionApiKey }: Props) {
   });
 }
 
-const hasDistObject = (
+const hasDist = (
   x: unknown,
 ): x is { dist: string } & Record<string, unknown> =>
   isObject(x) && ("dist" in x) && isString(x.dist);
+
+const hasImageUrlReplacementPath = (
+  x: unknown,
+): x is { imageUrlReplacementPath: string } & Record<string, unknown> =>
+  isObject(x) && ("imageUrlReplacementPath" in x) &&
+  isString(x.imageUrlReplacementPath);
 
 function help() {
   console.info(`documentaly publish help`);
