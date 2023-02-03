@@ -25,6 +25,7 @@ function validateCommandLineArgument(input: Record<string, unknown>) {
   const filePaths = input.filePaths.map((filePath) =>
     validateFilePath(filePath)
   );
+  console.log(input)
   return {
     targetBranch:
       "targetBranchName" in input && isString(input.targetBranchName)
@@ -36,7 +37,7 @@ function validateCommandLineArgument(input: Record<string, unknown>) {
         ? input.markdownFilePaths.split(",").map((markdownFilePath) =>
           validateMarkdownFilePath(markdownFilePath)
         )
-        : [validateMarkdownFilePath(".")],
+        : [],
   };
 }
 
