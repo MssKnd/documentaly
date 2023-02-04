@@ -1,5 +1,5 @@
 import { DependencyConfig } from "./dependency-config/mod.ts";
-import { FilePath } from "./file-path/mod.ts";
+import { FilePath } from "../utilities/file-path/mod.ts";
 import {
   documentDependencies,
   hasMarkdownExtention,

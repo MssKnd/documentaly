@@ -1,5 +1,5 @@
 import { isString } from "../../utilities/type-guard.ts";
-import { validateFilePath } from "../file-path/mod.ts";
+import { validateFilePath } from "../../utilities/file-path/mod.ts";
 import { validateMarkdownFilePath } from "../search-markdown-files/markdown-file-path.ts";
 
 const alias = {
