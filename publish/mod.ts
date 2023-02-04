@@ -3,7 +3,7 @@ import { FilePath } from "../check/file-path/mod.ts";
 import { markdownPropsParser } from "./markdown-props-parser/mod.ts";
 import { publishNotion } from "./notion/mod.ts";
 import { publishZendesk } from "./zendesk/mod.ts";
-import { replaceMarkdownImagePath } from "./replace-markdown-image-path/mos.ts";
+import { replaceMarkdownImagePath } from "./replace-markdown-image-path/mod.ts";
 
 type Props = {
   filePaths: FilePath[];

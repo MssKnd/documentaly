@@ -1,5 +1,5 @@
 import { assertEquals } from "https://deno.land/std@0.175.0/testing/asserts.ts";
-import { replaceMarkdownImagePath } from "./mos.ts";
+import { replaceMarkdownImagePath } from "./mod.ts";
 
 Deno.test("replaceMarkdownImagePath", async (t) => {
   await t.step("valid", () => {
