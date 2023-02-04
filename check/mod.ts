@@ -2,11 +2,9 @@ import { DependencyConfig } from "./dependency-config/mod.ts";
 import { FilePath } from "../utilities/file-path/mod.ts";
 import {
   documentDependencies,
-  hasMarkdownExtention,
-  MarkdonwFilePath,
   reverseDependencyMap,
-  validateMarkdownFilePath,
 } from "./search-markdown-files/mod.ts";
+import { hasMarkdownExtention, MarkdonwFilePath, validateMarkdownFilePath } from "../utilities/file-path/markdown-file-path.ts";
 
 function removeChangedDocumentFromDependencyMap(
   documentDependencyMap: Map<MarkdonwFilePath, DependencyConfig>,

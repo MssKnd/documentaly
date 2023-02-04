@@ -1,7 +1,5 @@
 // import { FilePath } from "../check/search-markdown-files/file-path.ts";
-import {
-  validateMarkdownFilePath,
-} from "../check/search-markdown-files/mod.ts";
+import { validateMarkdownFilePath } from "../utilities/file-path/markdown-file-path.ts";
 import { validateFilePath } from "../utilities/file-path/mod.ts";
 // import { importJsonFile } from "../utilities/import-json-file/import-json-file.ts";
 import { isObject, isString } from "../utilities/mod.ts";
