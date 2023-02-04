@@ -50,4 +50,4 @@ function documentDependencies(markdownFilePaths: MarkdonwFilePath[]) {
   return markdownFilePathConfigMap(markdownFilePaths);
 }
 
-export { documentDependencies, reverseDependencyMap }
+export { documentDependencies, reverseDependencyMap };
