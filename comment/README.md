@@ -8,6 +8,7 @@ dependentFilePaths: ['comment/*']
 
 ## -s (required)
 
-Pull Request head SHA. In GitHub Actions, We can get `${{ github.event.pull_request.head.sha }}`.
+Pull Request head SHA. In GitHub Actions, We can get
+`${{ github.event.pull_request.head.sha }}`.
 
 ## -b (required)
