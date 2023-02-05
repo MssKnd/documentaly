@@ -1,13 +1,13 @@
-import { FilePath } from "../utilities/file-path/mod.ts";
 import {
   documentDependencies,
   reverseDependencyMap,
 } from "./search-markdown-files/mod.ts";
 import {
+  FilePath,
   hasMarkdownExtention,
   MarkdonwFilePath,
   validateMarkdownFilePath,
-} from "../utilities/file-path/markdown-file-path.ts";
+} from "../utilities/path/mod.ts";
 
 type Props = {
   filePaths: FilePath[];
@@ -22,9 +22,11 @@ async function check(
     markdownFilePaths,
   );
 
-  const changedMarkdownFiles = changedFiles.filter((changedFile) =>
-    hasMarkdownExtention(changedFile)
-  ).map((changedMarkdownFile) => validateMarkdownFilePath(changedMarkdownFile));
+  const changedMarkdownFileSet = new Set(
+    changedFiles.filter((changedFile) => hasMarkdownExtention(changedFile)).map(
+      (changedMarkdownFile) => validateMarkdownFilePath(changedMarkdownFile),
+    ),
+  );
 
   const markdownGroupByDipendencyFileMap = reverseDependencyMap(
     DependencyFileGroupByMarkdownMap,
@@ -34,12 +36,12 @@ async function check(
     markdownGroupByDipendencyFileMap.entries(),
   )
     .flatMap(
-      ([path, markdownFilePaths]) => {
-        const pathRegExp = new RegExp(path);
+      ([regExpPath, markdownFilePathSet]) => {
+        const pathRegExp = new RegExp(regExpPath);
         const dependentChangedFile = changedFiles.filter((changedFile) =>
           changedFile.match(pathRegExp)
         );
-        return markdownFilePaths.map((markdownFilePath) =>
+        return [...markdownFilePathSet].map((markdownFilePath) =>
           [markdownFilePath, dependentChangedFile] as const
         );
       },
@@ -53,7 +55,7 @@ async function check(
     ) => ({
       markdownFilePath,
       changedDependencyFiles,
-      changed: changedMarkdownFiles.includes(markdownFilePath),
+      changed: changedMarkdownFileSet.has(markdownFilePath),
     }));
 
   console.log(`${JSON.stringify(result)}`);

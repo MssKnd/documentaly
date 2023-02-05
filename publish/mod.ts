@@ -1,5 +1,5 @@
 import { isObject, isString } from "../utilities/type-guard.ts";
-import { FilePath } from "../utilities/file-path/mod.ts";
+import { FilePath } from "../utilities/path/mod.ts";
 import { markdownPropsParser } from "./markdown-props-parser/mod.ts";
 import { publishNotion } from "./notion/mod.ts";
 import { publishZendesk } from "./zendesk/mod.ts";

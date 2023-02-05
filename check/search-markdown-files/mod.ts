@@ -1,11 +1,10 @@
 import { yaml } from "../../deps.ts";
-import { FilePath } from "../../utilities/file-path/mod.ts";
 import {
   DependencyConfig,
   validateDependencyConfig,
 } from "../dependency-config/mod.ts";
 import { extructYamlHeader } from "../../utilities/extruct-yaml-header/mod.ts";
-import { MarkdonwFilePath } from "../../utilities/file-path/markdown-file-path.ts";
+import { MarkdonwFilePath, RegExpPath } from "../../utilities/path/mod.ts";
 
 async function markdownFilePathConfigMap(
   markdownFilePaths: MarkdonwFilePath[],
@@ -24,16 +23,15 @@ async function markdownFilePathConfigMap(
 
 function reverseDependencyMap(
   map: Map<MarkdonwFilePath, DependencyConfig>,
-): Map<FilePath, MarkdonwFilePath[]> {
-  const reversedMap = new Map<FilePath, MarkdonwFilePath[]>();
+): Map<RegExpPath, Set<MarkdonwFilePath>> {
+  const reversedMap = new Map<RegExpPath, Set<MarkdonwFilePath>>();
 
-  for (const [key, value] of map.entries()) {
-    const config = validateDependencyConfig(value);
-    config.dependentFilePaths.forEach((val) => {
-      if (reversedMap.has(val)) {
-        reversedMap.get(val)?.push(key);
+  for (const [markdownFilePath, dependencyConfig] of map.entries()) {
+    dependencyConfig.dependentFilePaths.forEach((dependentFilePath) => {
+      if (reversedMap.has(dependentFilePath)) {
+        reversedMap.get(dependentFilePath)?.add(markdownFilePath);
       } else {
-        reversedMap.set(val, [key]);
+        reversedMap.set(dependentFilePath, new Set([markdownFilePath]));
       }
     });
   }

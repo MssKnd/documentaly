@@ -1,9 +1,9 @@
 import { isObject } from "../../utilities/mod.ts";
-import { FilePath, validateFilePath } from "../../utilities/file-path/mod.ts";
+import { RegExpPath, validateRegExpPath } from "../../utilities/path/mod.ts";
 
 /** Markdown header has DependencyConfig */
 type DependencyConfig = {
-  dependentFilePaths: FilePath[];
+  dependentFilePaths: RegExpPath[];
   // author: string; // TODO
 };
 
@@ -22,7 +22,7 @@ function validateDependencyConfig(input: unknown): DependencyConfig {
 
   return {
     dependentFilePaths: input.dependentFilePaths.map((filePath) =>
-      validateFilePath(filePath)
+      validateRegExpPath(filePath)
     ),
   };
 }

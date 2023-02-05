@@ -1,5 +1,7 @@
-import { validateMarkdownFilePath } from "../../utilities/file-path/markdown-file-path.ts";
-import { validateFilePath } from "../../utilities/file-path/mod.ts";
+import {
+  validateFilePath,
+  validateMarkdownFilePath,
+} from "../../utilities/path/mod.ts";
 import { isBoolean, isObject, isString } from "../../utilities/type-guard.ts";
 
 function validateDependencyMap(input: unknown) {
