@@ -32,7 +32,7 @@ runs:
       # Give a list of modified files and markdowns.
       shell: bash
       run: >
-        deno run -A mod.ts check
+        documentaly check
         $(git diff --name-only HEAD ${{ inputs.BASE_BRANCH }} | tr '\n' ' ')
         -m $(find ${{ inputs.MARKDOWN_DIR }} -name '*.md' -type f | sed -e ':a' -e 'N' -e '$!ba' -e 's/\n/,/g' -e 's/,$//')
         >> ./dipendency.json
@@ -42,7 +42,7 @@ runs:
         PR_HEAD_SHA: ${{github.event.pull_request.head.sha}}
         PR_HEAD_FULL_NAME: ${{github.event.pull_request.head.repo.full_name}}
       run: >
-        deno run -A mod.ts comment
+        documentaly comment
         -b ${PR_HEAD_FULL_NAME}
         -s ${PR_HEAD_SHA}
         -j "$( cat ./dipendency.json )"
