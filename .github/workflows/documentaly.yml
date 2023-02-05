@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: documentaly
-        uses: mssknd/documentaly
+        uses: mssknd/documentaly@main
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BASE_BRANCH: ${{ env.BASE_BRANCH }}
