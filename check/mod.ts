@@ -1,28 +1,13 @@
-import { DependencyConfig } from "./dependency-config/mod.ts";
-import { FilePath } from "./file-path/mod.ts";
+import { FilePath } from "../utilities/file-path/mod.ts";
 import {
   documentDependencies,
+  reverseDependencyMap,
+} from "./search-markdown-files/mod.ts";
+import {
   hasMarkdownExtention,
   MarkdonwFilePath,
-  reverseDependencyMap,
   validateMarkdownFilePath,
-} from "./search-markdown-files/mod.ts";
-
-function removeChangedDocumentFromDependencyMap(
-  documentDependencyMap: Map<MarkdonwFilePath, DependencyConfig>,
-  changedFiles: FilePath[],
-): Map<MarkdonwFilePath, DependencyConfig> {
-  const documentDependencyMapCopy = new Map(documentDependencyMap);
-  for (const changedFilePath of changedFiles) {
-    if (hasMarkdownExtention(changedFilePath)) {
-      const markdownPath = validateMarkdownFilePath(changedFilePath);
-      if (documentDependencyMapCopy.has(markdownPath)) {
-        documentDependencyMapCopy.delete(markdownPath);
-      }
-    }
-  }
-  return documentDependencyMapCopy;
-}
+} from "../utilities/file-path/markdown-file-path.ts";
 
 type Props = {
   filePaths: FilePath[];
@@ -33,39 +18,43 @@ type Props = {
 async function check(
   { filePaths: changedFiles, markdownFilePaths }: Props,
 ) {
-  /** create dipendency map */
-  const filePathDependencyMap = await documentDependencies(
+  const DependencyFileGroupByMarkdownMap = await documentDependencies(
     markdownFilePaths,
   );
 
-  const unchangedDocumentDependencyMap = removeChangedDocumentFromDependencyMap(
-    filePathDependencyMap,
-    changedFiles,
+  const changedMarkdownFiles = changedFiles.filter((changedFile) =>
+    hasMarkdownExtention(changedFile)
+  ).map((changedMarkdownFile) => validateMarkdownFilePath(changedMarkdownFile));
+
+  const markdownGroupByDipendencyFileMap = reverseDependencyMap(
+    DependencyFileGroupByMarkdownMap,
   );
 
-  const dependencyFilePathMap = reverseDependencyMap(
-    unchangedDocumentDependencyMap,
-  );
-
-  const unmaintainedMarkdown = Array.from(dependencyFilePathMap.entries())
+  const changedFileGroupByMarkdown = Array.from(
+    markdownGroupByDipendencyFileMap.entries(),
+  )
     .flatMap(
-      ([key, value]) => {
-        const filePathRegExp = new RegExp(key);
-        const changedFileHasDependencies = changedFiles.filter((changedFile) =>
-          changedFile.match(filePathRegExp)
+      ([path, markdownFilePaths]) => {
+        const pathRegExp = new RegExp(path);
+        const dependentChangedFile = changedFiles.filter((changedFile) =>
+          changedFile.match(pathRegExp)
         );
-        return value.map((markdown) =>
-          [markdown, changedFileHasDependencies] as const
+        return markdownFilePaths.map((markdownFilePath) =>
+          [markdownFilePath, dependentChangedFile] as const
         );
       },
     );
 
-  const result = unmaintainedMarkdown.filter(([_, changedDependencyfiles]) =>
-    changedDependencyfiles.length > 0
-  ).map(([markdownFilePath, changedDependencyfiles]) => ({
-    markdownFilePath,
-    changedDependencyfiles,
-  }));
+  const result = changedFileGroupByMarkdown.filter(([_, dependentFilePaths]) =>
+    dependentFilePaths.length > 0
+  )
+    .map((
+      [markdownFilePath, changedDependencyFiles],
+    ) => ({
+      markdownFilePath,
+      changedDependencyFiles,
+      changed: changedMarkdownFiles.includes(markdownFilePath),
+    }));
 
   console.log(`${JSON.stringify(result)}`);
 }
