@@ -30,13 +30,16 @@ function comment({
   }
   const baseBlobUrl = blobUrlBase(branchName, headSha);
   const result = Array.from(dependencyMap.entries()).map(
-    ([markdownFilePath, filePaths]) => {
-      return `未更新のドキュメント（[${markdownFilePath}](${baseBlobUrl}${markdownFilePath})）に関連した以下のファイルが変更されています。ドキュメントの更新は必要ありませんか？\n${
+    ([markdown, filePaths]) => {
+      if (markdown.changed) {
+        return `[x] [${markdown.filePath}](${baseBlobUrl}${markdown.filePath}) updated.\n\n`
+      }
+      return `[] 未更新のドキュメント（[${markdown.filePath}](${baseBlobUrl}${markdown.filePath})）に関連した以下のファイルが変更されています。ドキュメントの更新は必要ありませんか？\n${
         filePaths.map((filePath) => `- ${filePath}\n`).join("")
       }
     `;
     },
-  ).join("\n\n");
+  ).join("\n");
   console.log(result);
 }
 
