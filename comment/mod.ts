@@ -32,7 +32,7 @@ function comment({
   const result = Array.from(dependencyMap.entries()).map(
     ([markdown, filePaths]) => {
       if (markdown.changed) {
-        return `[x] [${markdown.filePath}](${baseBlobUrl}${markdown.filePath}) updated.\n\n`
+        return `[x] [${markdown.filePath}](${baseBlobUrl}${markdown.filePath}) updated.\n\n`;
       }
       return `[] 未更新のドキュメント（[${markdown.filePath}](${baseBlobUrl}${markdown.filePath})）に関連した以下のファイルが変更されています。ドキュメントの更新は必要ありませんか？\n${
         filePaths.map((filePath) => `- ${filePath}\n`).join("")

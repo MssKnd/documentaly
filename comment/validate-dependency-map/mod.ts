@@ -1,6 +1,6 @@
 import { validateMarkdownFilePath } from "../../utilities/file-path/markdown-file-path.ts";
 import { validateFilePath } from "../../utilities/file-path/mod.ts";
-import { isObject, isString, isBoolean } from "../../utilities/type-guard.ts";
+import { isBoolean, isObject, isString } from "../../utilities/type-guard.ts";
 
 function validateDependencyMap(input: unknown) {
   if (!Array.isArray(input)) {
@@ -22,8 +22,8 @@ function validateDependencyMap(input: unknown) {
     }
     const markdown = {
       filePath: validateMarkdownFilePath(item.markdownFilePath),
-      changed: item.changed
-    }
+      changed: item.changed,
+    };
     const filePaths = item.changedDependencyFiles.map((filePath) =>
       validateFilePath(filePath)
     );
