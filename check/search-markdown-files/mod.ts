@@ -1,11 +1,10 @@
 import { yaml } from "../../deps.ts";
-import { FilePath } from "../../utilities/file-path/mod.ts";
 import {
   DependencyConfig,
   validateDependencyConfig,
 } from "../dependency-config/mod.ts";
 import { extructYamlHeader } from "../../utilities/extruct-yaml-header/mod.ts";
-import { MarkdonwFilePath } from "../../utilities/file-path/markdown-file-path.ts";
+import { FilePath, MarkdonwFilePath } from "../../utilities/path/mod.ts";
 
 async function markdownFilePathConfigMap(
   markdownFilePaths: MarkdonwFilePath[],

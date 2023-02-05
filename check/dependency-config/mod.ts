@@ -1,5 +1,5 @@
 import { isObject } from "../../utilities/mod.ts";
-import { FilePath, validateFilePath } from "../../utilities/file-path/mod.ts";
+import { FilePath, validateFilePath } from "../../utilities/path/mod.ts";
 
 /** Markdown header has DependencyConfig */
 type DependencyConfig = {

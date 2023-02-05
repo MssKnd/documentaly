@@ -1,5 +1,5 @@
-import { Opaque } from "../../utilities/opaque.ts";
-import { isString } from "../../utilities/type-guard.ts";
+import { Opaque } from "../../opaque.ts";
+import { isString } from "../../type-guard.ts";
 
 type FilePath = Opaque<"FilePath">;
 

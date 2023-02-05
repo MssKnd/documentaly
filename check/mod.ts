@@ -1,13 +1,13 @@
-import { FilePath } from "../utilities/file-path/mod.ts";
 import {
   documentDependencies,
   reverseDependencyMap,
 } from "./search-markdown-files/mod.ts";
 import {
+  FilePath,
   hasMarkdownExtention,
   MarkdonwFilePath,
   validateMarkdownFilePath,
-} from "../utilities/file-path/markdown-file-path.ts";
+} from "../utilities/path/mod.ts";
 
 type Props = {
   filePaths: FilePath[];

@@ -1,4 +1,4 @@
-import { validateFilePath } from "../../utilities/file-path/mod.ts";
+import { validateFilePath } from "../../utilities/path/mod.ts";
 import { isString } from "../../utilities/type-guard.ts";
 
 /**
