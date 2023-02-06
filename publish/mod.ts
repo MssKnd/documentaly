@@ -1,22 +1,22 @@
 import { isObject, isString } from "../utilities/type-guard.ts";
-import { FilePath } from "../utilities/path/mod.ts";
 import { markdownPropsParser } from "./markdown-props-parser/mod.ts";
 import { publishNotion } from "./notion/mod.ts";
 import { publishZendesk } from "./zendesk/mod.ts";
 import { replaceMarkdownImagePath } from "./replace-markdown-image-path/mod.ts";
+import { MarkdonwFilePath } from "../utilities/path/mod.ts";
 
 type Props = {
-  filePaths: FilePath[];
+  markdownFilePaths: MarkdonwFilePath[];
   zendeskApiAuthHeader?: string;
   notionApiKey?: string;
 };
 
-function publish({ filePaths, zendeskApiAuthHeader, notionApiKey }: Props) {
-  if (filePaths.length === 0) {
+function publish({ markdownFilePaths, zendeskApiAuthHeader, notionApiKey }: Props) {
+  if (markdownFilePaths.length === 0) {
     console.info("No change files.");
     return;
   }
-  filePaths.map(async (filePath) => {
+  markdownFilePaths.map(async (filePath) => {
     const markdown = await Deno.readTextFile(filePath).catch(
       (error) => {
         if (error instanceof Deno.errors.NotFound) {
