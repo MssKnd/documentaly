@@ -11,7 +11,9 @@ type Props = {
   notionApiKey?: string;
 };
 
-function publish({ markdownFilePaths, zendeskApiAuthHeader, notionApiKey }: Props) {
+function publish(
+  { markdownFilePaths, zendeskApiAuthHeader, notionApiKey }: Props,
+) {
   if (markdownFilePaths.length === 0) {
     console.info("No change files.");
     return;
