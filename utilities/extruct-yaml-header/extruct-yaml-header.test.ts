@@ -1,4 +1,4 @@
-import { assertEquals } from "https://deno.land/std@0.176.0/testing/asserts.ts";
+import { assertEquals } from "https://deno.land/std@0.177.0/testing/asserts.ts";
 import { extructYamlHeader } from "./mod.ts";
 
 Deno.test("extructYamlHeader", async (t) => {
