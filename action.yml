@@ -5,9 +5,6 @@ branding:
   icon: file-text
   color: orange
 inputs:
-  GITHUB_TOKEN:
-    # description: 'ex. ${{ secrets.GITHUB_TOKEN }}'
-    required: true
   BASE_BRANCH:
     description: 'Base branch name (default: main)'
     default: 'main'
@@ -49,7 +46,7 @@ runs:
         >> comment-body.txt
     - name: Make comment on pull request when this action was pull request event.
       env:
-        GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
+        GH_TOKEN: ${{ github.token }}
         PR_NUMBER: ${{ github.event.pull_request.number }}      
       shell: bash
       run: >
