@@ -1,50 +1,15 @@
-name: publish
-
-on: 
+name: documentaly-publish
+on:
   pull_request:
     types: [closed]
-
 env:
-  NOTION_API_TOKEN: ${{ secrets.NOTION_API_TOKEN }}
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   BASE_BRANCH: main
-  PR_NUMBER: ${{ github.event.pull_request.number }}
-
 jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Setup deno
-        uses: denoland/setup-deno@v1
+      - name: use documentaly-publish
+        uses: mssknd/documentaly-publish@main
         with:
-          deno-version: v1.x
-      - name: install documentaly
-        shell: bash
-        run: deno install -A --name documentaly https://deno.land/x/documentaly/mod.ts
-      - name: Fetch base branch
-        env: ${{ env.BASE_BRANCH }}
-        shell: bash
-        run: git fetch origin ${BASE_BRANCH}
-      - name: Check to publish documents
-        env:
-          NOTION_API_TOKEN: ${{ env.NOTION_API_TOKEN }}
-          GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
-          PR_NUMBER: ${{ env.PR_NUMBER }}
-        shell: bash
-        run: >
-          documentaly publish
-          deno run -A mod.ts publish
-          $(gh pr diff ${PR_NUMBER} --name-only | grep '\.md$' | tr "\n" " "  )
-          --notion-api-key ${{ env.NOTION_API_TOKEN }}
-          > result.md
-      - name: Make comment on pull request when this action was pull request event.
-        env:
-          GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
-          PR_NUMBER: ${{ env.PR_NUMBER }}
-        shell: bash
-        run: >
-          if [ -n "${PR_NUMBER}" ]; then
-            gh pr comment ${PR_NUMBER} -F ./result.md
-          fi
+          BASE_BRANCH: ${{ env.BASE_BRANCH }}
+          NOTION_API_TOKEN: ${{ secrets.NOTION_API_TOKEN }}
