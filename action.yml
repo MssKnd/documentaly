@@ -21,7 +21,7 @@ runs:
         deno-version: v1.x
     - name: install documentaly
       shell: bash
-      run: deno install -A --name documentaly https://deno.land/x/documentaly/mod.ts
+      run: deno install -A --name documentaly mod.ts
     - name: Fetch base branch
       shell: bash
       run: git fetch origin ${{ inputs.BASE_BRANCH }}:${{ inputs.BASE_BRANCH }}
