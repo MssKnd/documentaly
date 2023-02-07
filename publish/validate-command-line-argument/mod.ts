@@ -1,4 +1,4 @@
-import { validateFilePath } from "../../utilities/path/mod.ts";
+import { validateMarkdownFilePath } from "../../utilities/path/mod.ts";
 import { isString } from "../../utilities/type-guard.ts";
 
 /**
@@ -18,10 +18,10 @@ function validateCommandLineArgument(input: Record<string, unknown>) {
     throw new Error("invalid check command argument");
   }
   const filePaths = input.filePaths.map((filePath) =>
-    validateFilePath(filePath)
+    validateMarkdownFilePath(filePath)
   );
   return {
-    filePaths: filePaths.length > 0 ? filePaths : [validateFilePath(".")],
+    markdownFilePaths: filePaths.length > 0 ? filePaths : [],
     zendeskApiAuthHeader: "zendesk-api-auth-header" in input &&
         isString(input["zendesk-api-auth-header"])
       ? input["zendesk-api-auth-header"]
