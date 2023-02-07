@@ -9,10 +9,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          submodules: 'true'
-      # - name: Checkout submodules
-      #   run: git submodule update --init --recursive
+      - name: SSH Setting
+        env:
+          TOKEN: ${{ secrets.SUBMODULES_TOKEN }}
+        run: |
+          mkdir -p /home/runner/.ssh/
+          echo -e "$TOKEN" > /home/runner/.ssh/id_rsa
+          chmod 600 /home/runner/.ssh/id_rsas
+      - name: Checkout submodules
+        shell: bash
+        run: |
+          git submodule sync --recursive
+          git submodule update --init --force --recursive
       - shell: bash
         run: ls -la .
       - shell: bash
