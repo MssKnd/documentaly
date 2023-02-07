@@ -8,7 +8,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - name: use documentaly-publish
+      - name: Use publish
         uses: mssknd/documentaly-publish@main
         with:
           BASE_BRANCH: ${{ env.BASE_BRANCH }}

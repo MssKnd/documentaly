@@ -23,16 +23,15 @@ jobs:
       - name: documentaly
         uses: mssknd/documentaly@main
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BASE_BRANCH: ${{ env.BASE_BRANCH }}
 ```
 
 # Inputs
 
-| Name         | Description       | Default | Required |
-| ------------ | ----------------- | ------- | -------- |
-| GITHUB_TOKEN | your github token | n/a     | yes      |
-| BASE_BRANCH  | base branch name  | main    | no       |
+| Name         | Description             | Default | Required |
+| ------------ | ----------------------- | ------- | -------- |
+| BASE_BRANCH  | base branch name        | main    | no       |
+| MARKDOWN_DIR | markdown directory path | .       | no       |
 
 # Outputs
 
