@@ -13,7 +13,8 @@ async function markdownFilePathConfigMap(
     markdownFilePaths.map(async (markdownFilePath) => {
       const markdown = await Deno.readTextFile(markdownFilePath);
       const { yamlHeader } = extructYamlHeader(markdown);
-      const config = yaml.parse(yamlHeader) ?? {};
+      // TODO: extract module
+      const config = yamlHeader ? yaml.parse(yamlHeader) ?? {} : {};
       const validateCondig = validateDependencyConfig(config);
       return [markdownFilePath, validateCondig] as const;
     }),

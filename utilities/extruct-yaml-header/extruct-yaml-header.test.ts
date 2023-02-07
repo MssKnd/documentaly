@@ -28,4 +28,18 @@ body`;
     assertEquals(yamlHeader, "");
     assertEquals(body, "body");
   });
+
+  await t.step("valid: When empty header only section.", () => {
+    // given:
+    const input = `---
+---
+body`;
+
+    // when:
+    const { yamlHeader, body } = extructYamlHeader(input);
+
+    // then:
+    assertEquals(yamlHeader, "");
+    assertEquals(body, "---\n---\nbody");
+  });
 });
