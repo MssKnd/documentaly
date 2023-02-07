@@ -1,10 +1,10 @@
-import { yaml } from "../../deps.ts";
 import {
   DependencyConfig,
   validateDependencyConfig,
 } from "../dependency-config/mod.ts";
 import { extructYamlHeader } from "../../utilities/extruct-yaml-header/mod.ts";
 import { MarkdonwFilePath, RegExpPath } from "../../utilities/path/mod.ts";
+import { yamlParser } from "../../utilities/yaml-parser/mod.ts";
 
 async function markdownFilePathConfigMap(
   markdownFilePaths: MarkdonwFilePath[],
@@ -13,7 +13,7 @@ async function markdownFilePathConfigMap(
     markdownFilePaths.map(async (markdownFilePath) => {
       const markdown = await Deno.readTextFile(markdownFilePath);
       const { yamlHeader } = extructYamlHeader(markdown);
-      const config = yaml.parse(yamlHeader) ?? {};
+      const config = yamlParser(yamlHeader);
       const validateCondig = validateDependencyConfig(config);
       return [markdownFilePath, validateCondig] as const;
     }),

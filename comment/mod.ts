@@ -25,7 +25,7 @@ function comment({
   // const jsonData = await importJsonFile(jsonFilePath);
   const dependencyMap = validateDependencyMap(json);
   if (dependencyMap.size === 0) {
-    console.log("未更新のドキュメントは無いようです 👀");
+    // console.log("未更新のドキュメントは無いようです 👀");
     return;
   }
   const baseBlobUrl = blobUrlBase(branchName, headSha);
