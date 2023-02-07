@@ -10,12 +10,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - shell: bash
-        run: ls -la /home
+        run: ls -la /home/runner
       - name: SSH Setting
         env:
           TOKEN: ${{ secrets.SUBMODULES_TOKEN }}
         run: |
           mkdir -p /home/runner/.ssh/
+          ls -la /home/runner
           echo -e "$TOKEN" > /home/runner/.ssh/id_rsa
           chmod 600 /home/runner/.ssh/id_rsas
       - name: Checkout submodules
