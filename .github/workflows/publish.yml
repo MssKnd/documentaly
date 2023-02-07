@@ -12,6 +12,12 @@ jobs:
         with:
           fetch-depth: 0
           submodules: true
+      - shell: bash
+        run: ls -la .
+      - shell: bash
+        run: ls -la ./actions
+      - shell: bash
+        run: ls -la ./actions/publish
       - name: Use publish
         uses: ./actions/publish
         with:
