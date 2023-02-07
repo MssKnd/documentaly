@@ -1,0 +1,3 @@
+[submodule "actions/publish"]
+	path = actions/publish
+	url = git@github.com:MssKnd/documentaly-publish.git
