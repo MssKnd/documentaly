@@ -10,7 +10,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Use publish
-        uses: ../../actions/publish
+        uses: ./actions/publish
         with:
           BASE_BRANCH: ${{ env.BASE_BRANCH }}
           NOTION_API_TOKEN: ${{ secrets.NOTION_API_TOKEN }}
