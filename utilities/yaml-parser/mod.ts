@@ -1,7 +1,11 @@
 import { yaml } from "../../deps.ts";
 
 function yamlParser(yamlString: string) {
-  return yaml.parse(yamlString) ?? {};
+  try {
+    return yaml.parse(yamlString) ?? {};
+  } catch {
+    return {}
+  }
 }
 
 export { yamlParser };
