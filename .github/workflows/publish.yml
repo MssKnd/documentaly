@@ -7,7 +7,9 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - name: use documentaly-publish
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Use publish
         uses: ../../actions/publish
         with:
           BASE_BRANCH: ${{ env.BASE_BRANCH }}
