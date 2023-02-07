@@ -7,28 +7,8 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - shell: bash
-        run: ls -la /home/runner
-      - name: SSH Setting
-        env:
-          TOKEN: ${{ secrets.SUBMODULES_TOKEN }}
-        run: |
-          mkdir -p /home/runner/.ssh/
-          echo -e "$TOKEN" > /home/runner/.ssh/id_rsa
-          chmod 600 /home/runner/.ssh/id_rsa
-      - name: Checkout submodules
-        shell: bash
-        run: |
-          git submodule sync --recursive
-          git submodule update --init --force --recursive
-      - shell: bash
-        run: ls -la .
-      - shell: bash
-        run: ls -la ./actions/publish
       - name: Use publish
-        uses: ./actions/publish
+        uses: mssknd/documentaly-publish@main
         with:
           BASE_BRANCH: ${{ env.BASE_BRANCH }}
           NOTION_API_TOKEN: ${{ secrets.NOTION_API_TOKEN }}
