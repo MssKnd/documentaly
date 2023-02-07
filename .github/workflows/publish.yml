@@ -10,8 +10,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          fetch-depth: 0
-          submodules: true
+          submodules: recursive
       - shell: bash
         run: ls -la .
       - shell: bash
