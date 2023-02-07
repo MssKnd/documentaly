@@ -10,6 +10,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
+          fetch-depth: 0
           submodules: true
       - name: Use publish
         uses: ./actions/publish
