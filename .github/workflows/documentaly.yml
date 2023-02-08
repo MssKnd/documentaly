@@ -9,5 +9,4 @@ jobs:
       - name: documentaly
         uses: mssknd/documentaly@main
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BASE_BRANCH: ${{ env.BASE_BRANCH }}
