@@ -1,4 +1,5 @@
 ---
+dependentFilePaths: ['.']
 ---
 
 # documentaly (Beta)

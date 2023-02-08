@@ -50,6 +50,6 @@ runs:
         PR_NUMBER: ${{ github.event.pull_request.number }}      
       shell: bash
       run: >
-        if [ -n "${PR_NUMBER}" ] && [ ! -s ./comment-body.txt ]; then
+        if [ -n "${PR_NUMBER}" ] && [ -s ./comment-body.txt ]; then
           gh pr comment ${PR_NUMBER} -F ./comment-body.txt
         fi
