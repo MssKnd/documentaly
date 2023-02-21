@@ -6,6 +6,6 @@ const isBoolean = (x: unknown): x is boolean => typeof x === "boolean";
 const isString = (x: unknown): x is string =>
   typeof x === "string" || x instanceof String;
 
-const isArray = Array.isArray
+const isArray = Array.isArray;
 
-export { isBoolean, isObject, isString, isArray };
+export { isArray, isBoolean, isObject, isString };

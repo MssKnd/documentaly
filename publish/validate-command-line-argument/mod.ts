@@ -1,5 +1,5 @@
 import { validateMarkdownFilePath } from "../../utilities/path/mod.ts";
-import { isString, isArray } from "../../utilities/type-guard.ts";
+import { isArray, isString } from "../../utilities/type-guard.ts";
 
 /**
  * @param {{filePaths: string[], "zenndesk-api-auth-header": string, "notion-api-key": string}} input

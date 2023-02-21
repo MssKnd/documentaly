@@ -2,7 +2,12 @@ import {
   validateFilePath,
   validateMarkdownFilePath,
 } from "../../utilities/path/mod.ts";
-import { isBoolean, isObject, isString, isArray } from "../../utilities/type-guard.ts";
+import {
+  isArray,
+  isBoolean,
+  isObject,
+  isString,
+} from "../../utilities/type-guard.ts";
 
 function validateDependencyMap(input: unknown) {
   if (!isArray(input)) {

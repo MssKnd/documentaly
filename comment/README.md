@@ -1,5 +1,8 @@
 ---
-dependentFilePaths: ['comment/*']
+dependentFilePaths: 
+  - comment/*
+  - comment/validate-dependency-map/mod.ts
+  - publish/validate-command-line-argument/mod.ts
 ---
 
 # comment

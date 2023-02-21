@@ -1,7 +1,7 @@
 import { validateCommandLineArgument as validateCheckCommandLineArgument } from "../../check/validate-command-line-argument/mod.ts";
 import { validateCommandLineArgument as validateCommentCommandLineArgument } from "../../comment/validate-command-line-argument/mod.ts";
 import { validateCommandLineArgument as validatePublishCommandLineArgument } from "../../publish/validate-command-line-argument/mod.ts";
-import { isBoolean, isObject, isString, isArray } from "../mod.ts";
+import { isArray, isBoolean, isObject, isString } from "../mod.ts";
 
 type Command = "check" | "comment" | "publish";
 
