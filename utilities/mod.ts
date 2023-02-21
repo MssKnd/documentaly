@@ -1,2 +1,2 @@
 export type { Opaque } from "./opaque.ts";
-export { isBoolean, isObject, isString } from "./type-guard.ts";
+export { isBoolean, isObject, isString, isArray } from "./type-guard.ts";

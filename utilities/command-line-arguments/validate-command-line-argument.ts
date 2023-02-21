@@ -1,7 +1,7 @@
 import { validateCommandLineArgument as validateCheckCommandLineArgument } from "../../check/validate-command-line-argument/mod.ts";
 import { validateCommandLineArgument as validateCommentCommandLineArgument } from "../../comment/validate-command-line-argument/mod.ts";
 import { validateCommandLineArgument as validatePublishCommandLineArgument } from "../../publish/validate-command-line-argument/mod.ts";
-import { isBoolean, isObject, isString } from "../../utilities/mod.ts";
+import { isBoolean, isObject, isString, isArray } from "../mod.ts";
 
 type Command = "check" | "comment" | "publish";
 
@@ -54,7 +54,7 @@ function correctNonFlugArguments(args: unknown[]) {
  */
 function validateCommandLineArgument(input: unknown) {
   if (
-    !isObject(input) || !("_" in input) || !Array.isArray(input._)
+    !isObject(input) || !("_" in input) || !isArray(input._)
   ) {
     throw new Error("invalid argument");
   }
