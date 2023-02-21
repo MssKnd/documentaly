@@ -32,29 +32,48 @@ async function check(
     DependencyFileGroupByMarkdownMap,
   );
 
-  const changedFileGroupByMarkdown = Array.from(
+  const changedFileGroupByMarkdown = new Map<MarkdonwFilePath, Set<FilePath>>();
+  Array.from(
     markdownGroupByDipendencyFileMap.entries(),
   )
     .flatMap(
       ([regExpPath, markdownFilePathSet]) => {
         const pathRegExp = new RegExp(regExpPath);
-        const dependentChangedFile = changedFiles.filter((changedFile) =>
+        const dependentChangedFiles = changedFiles.filter((changedFile) =>
           changedFile.match(pathRegExp)
         );
-        return [...markdownFilePathSet].map((markdownFilePath) =>
-          [markdownFilePath, dependentChangedFile] as const
-        );
+        if (dependentChangedFiles.length < 1) {
+          return [];
+        }
+        return [...markdownFilePathSet].map((
+          markdownFilePath,
+        ) => ({ markdownFilePath, dependentChangedFiles } as const));
       },
-    );
+    )
+    .forEach(({ markdownFilePath, dependentChangedFiles }) => {
+      if (changedFileGroupByMarkdown.has(markdownFilePath)) {
+        const dependentChangedFileSet = new Set([
+          ...changedFileGroupByMarkdown.get(markdownFilePath) ?? [],
+          ...dependentChangedFiles,
+        ]);
+        changedFileGroupByMarkdown.set(
+          markdownFilePath,
+          dependentChangedFileSet,
+        );
+        return;
+      }
+      changedFileGroupByMarkdown.set(
+        markdownFilePath,
+        new Set([...dependentChangedFiles]),
+      );
+    });
 
-  const result = changedFileGroupByMarkdown.filter(([_, dependentFilePaths]) =>
-    dependentFilePaths.length > 0
-  )
+  const result = Array.from(changedFileGroupByMarkdown.entries())
     .map((
-      [markdownFilePath, changedDependencyFiles],
+      [markdownFilePath, changedDependencyFileSet],
     ) => ({
       markdownFilePath,
-      changedDependencyFiles,
+      changedDependencyFiles: [...changedDependencyFileSet],
       changed: changedMarkdownFileSet.has(markdownFilePath),
     }));
 
