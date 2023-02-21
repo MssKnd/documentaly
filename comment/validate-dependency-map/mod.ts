@@ -2,10 +2,15 @@ import {
   validateFilePath,
   validateMarkdownFilePath,
 } from "../../utilities/path/mod.ts";
-import { isBoolean, isObject, isString } from "../../utilities/type-guard.ts";
+import {
+  isArray,
+  isBoolean,
+  isObject,
+  isString,
+} from "../../utilities/type-guard.ts";
 
 function validateDependencyMap(input: unknown) {
-  if (!Array.isArray(input)) {
+  if (!isArray(input)) {
     throw new Error("invalid");
   }
   const map = input.map((item) => {
@@ -15,7 +20,7 @@ function validateDependencyMap(input: unknown) {
         "markdownFilePath" in item &&
         isString(item.markdownFilePath) &&
         "changedDependencyFiles" in item &&
-        Array.isArray(item.changedDependencyFiles) &&
+        isArray(item.changedDependencyFiles) &&
         "changed" in item &&
         isBoolean(item.changed)
       )

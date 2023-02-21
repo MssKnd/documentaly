@@ -1,5 +1,5 @@
 import { validateMarkdownFilePath } from "../../utilities/path/mod.ts";
-import { isString } from "../../utilities/type-guard.ts";
+import { isArray, isString } from "../../utilities/type-guard.ts";
 
 /**
  * @param {{filePaths: string[], "zenndesk-api-auth-header": string, "notion-api-key": string}} input
@@ -13,7 +13,7 @@ import { isString } from "../../utilities/type-guard.ts";
  */
 function validateCommandLineArgument(input: Record<string, unknown>) {
   if (
-    !("filePaths" in input) || !Array.isArray(input.filePaths)
+    !("filePaths" in input) || !isArray(input.filePaths)
   ) {
     throw new Error("invalid check command argument");
   }

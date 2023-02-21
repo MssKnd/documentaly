@@ -1,5 +1,6 @@
 ---
-dependentFilePaths: ['comment/*']
+dependentFilePaths: 
+  - comment/*
 ---
 
 # comment
