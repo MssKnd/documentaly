@@ -40,7 +40,7 @@ function comment({
     `;
     },
   ).join("\n");
-  console.log(result);
+  console.log(`${result}\n<sub>reported by documentaly</sub>`);
 }
 
 function help() {
