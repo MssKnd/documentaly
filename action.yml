@@ -50,15 +50,11 @@ runs:
         GH_TOKEN: ${{ github.token }}
         PR_NUMBER: ${{ github.event.pull_request.number }}
       run: >
-        # PRのURL
         pr_number="${PR_NUMBER}"
-        # 発言を検索するための文字列
         search_string="<sub>reported by documentaly</sub>"
 
-        # GitHub CLIを使用してPRのコメントを取得する
         comments=$(gh pr view $pr_number --json comments)
 
-        # すべてのコメントをループして、指定された文字列を含むコメントのIDを見つける
         for comment in $(echo "${comments}" | jq -r '.[] | @base64'); do
           comment_id=$(echo ${comment} | base64 --decode | jq -r '.id')
           comment_body=$(echo ${comment} | base64 --decode | jq -r '.body')
