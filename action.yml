@@ -49,7 +49,7 @@ runs:
       env:
         GH_TOKEN: ${{ github.token }}
         PR_NUMBER: ${{ github.event.pull_request.number }}
-      run: >
+      run: |
         pr_number="${PR_NUMBER}"
         search_string="<sub>reported by documentaly</sub>"
 
