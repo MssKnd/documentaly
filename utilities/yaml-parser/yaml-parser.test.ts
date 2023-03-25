@@ -1,4 +1,4 @@
-import { assertEquals } from "https://deno.land/std@0.177.0/testing/asserts.ts";
+import { assertEquals } from "https://deno.land/std@0.181.0/testing/asserts.ts";
 import { yamlParser } from "./mod.ts";
 
 Deno.test("yamlParser", async (t) => {
