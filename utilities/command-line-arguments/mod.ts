@@ -1,4 +1,4 @@
-import { parse } from "https://deno.land/std@0.177.0/flags/mod.ts";
+import { parse } from "https://deno.land/std@0.181.0/flags/mod.ts";
 import { validateCommandLineArgument } from "./validate-command-line-argument.ts";
 import { alias as commentAlias } from "../../comment/validate-command-line-argument/mod.ts";
 import { alias as checkAlias } from "../../check/validate-command-line-argument/mod.ts";
