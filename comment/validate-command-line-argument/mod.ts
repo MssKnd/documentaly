@@ -1,5 +1,6 @@
 import { isString } from "../../utilities/type-guard.ts";
 
+// TODO: change to cabab-case
 const alias = {
   j: "jsonString",
   s: "sha",
