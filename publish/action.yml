@@ -43,7 +43,7 @@ runs:
         --zendesk-api-auth-header ${ZENDESK_API_AUTH_HEADER}
         > result.md
     - name: Check change files
-      id: check_file
+      shell: bash
       run: |
         content=$(cat result.md)
         if [[ "$content" == "No change files." ]]; then
