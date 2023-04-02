@@ -26,13 +26,13 @@ runs:
       run: deno install -A --name documentaly https://deno.land/x/documentaly/mod.ts
     - name: Fetch base branch
       env: 
-        BASE_BRANCH: ${{ env.BASE_BRANCH }}
+        BASE_BRANCH: ${{ inputs.BASE_BRANCH }}
       shell: bash
       run: git fetch origin ${BASE_BRANCH}
     - name: Check to publish documents
       env:
-        NOTION_API_TOKEN: ${{ env.NOTION_API_TOKEN }}
-        ZENDESK_API_AUTH_HEADER: ${{ env.ZENDESK_API_AUTH_HEADER }}
+        NOTION_API_TOKEN: ${{ inputs.NOTION_API_TOKEN }}
+        ZENDESK_API_AUTH_HEADER: ${{ inputs.ZENDESK_API_AUTH_HEADER }}
         GH_TOKEN: ${{ github.token }}
         PR_NUMBER: ${{ github.event.pull_request.number }}
       shell: bash
