@@ -1,4 +1,4 @@
-import * as yaml from "https://deno.land/std@0.181.0/encoding/yaml.ts";
+import * as yaml from "https://deno.land/std@0.182.0/encoding/yaml.ts";
 
 function yamlParser(yamlString: string) {
   try {
