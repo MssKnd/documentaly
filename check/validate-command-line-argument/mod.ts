@@ -4,6 +4,7 @@ import {
 } from "../../utilities/path/mod.ts";
 import { isString } from "../../utilities/type-guard.ts";
 
+// TODO: change to cabab-case
 const alias = {
   t: "targetBranchName",
   m: "markdownFilePaths",

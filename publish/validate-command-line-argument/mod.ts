@@ -1,6 +1,10 @@
 import { validateMarkdownFilePath } from "../../utilities/path/mod.ts";
 import { isArray, isString } from "../../utilities/type-guard.ts";
 
+const alias = {
+  d: "dry-run",
+} as const;
+
 /**
  * @param {{filePaths: string[], "zenndesk-api-auth-header": string, "notion-api-key": string}} input
  * @param {string[]} input.filePaths - target file paths.
@@ -22,6 +26,7 @@ function validateCommandLineArgument(input: Record<string, unknown>) {
   );
   return {
     markdownFilePaths: filePaths.length > 0 ? filePaths : [],
+    dryRun: "dry-run" in input && !!input["dry-run"],
     zendeskApiAuthHeader: "zendesk-api-auth-header" in input &&
         isString(input["zendesk-api-auth-header"])
       ? input["zendesk-api-auth-header"]
@@ -32,4 +37,4 @@ function validateCommandLineArgument(input: Record<string, unknown>) {
   };
 }
 
-export { validateCommandLineArgument };
+export { alias, validateCommandLineArgument };
