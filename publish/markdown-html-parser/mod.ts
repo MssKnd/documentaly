@@ -1,8 +1,7 @@
-import { rustyMarkdown } from "../deps.ts";
+import { gfm } from "../deps.ts";
 
 function markdownHtmlParser(markdown: string) {
-  const tokenized = rustyMarkdown.tokens(markdown, { strikethrough: true });
-  return rustyMarkdown.html(tokenized);
+  return gfm.render(markdown)
 }
 
 export { markdownHtmlParser };
