@@ -4,6 +4,7 @@ dist: 'notion'
 pageId: '59be4190a22e426f9a30af8b2ebb756f'
 title: 'Publish page by documentaly'
 ---
+
 # documentaly publish
 
 This GitHub Actions can publish markdown to several platforms.
