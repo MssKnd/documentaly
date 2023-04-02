@@ -1,0 +1,53 @@
+name: documentaly-publish
+author: MssKnd
+description: Publish markdown to several platforms
+branding:
+  icon: file-text
+  color: green
+inputs:
+  BASE_BRANCH:
+    description: 'Base branch name (default: main)'
+    default: main
+  NOTION_API_TOKEN:
+    description: Notion API token
+  ZENDESK_API_AUTH_HEADER:
+    description: 'Zendesk API auth header (ex. Authorization: <here>)'
+runs:
+  using: composite
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Setup deno
+      uses: denoland/setup-deno@v1
+      with:
+        deno-version: v1.x
+    - name: install documentaly
+      shell: bash
+      run: deno install -A --name documentaly https://deno.land/x/documentaly/mod.ts
+    - name: Fetch base branch
+      env: 
+        BASE_BRANCH: ${{ env.BASE_BRANCH }}
+      shell: bash
+      run: git fetch origin ${BASE_BRANCH}
+    - name: Check to publish documents
+      env:
+        NOTION_API_TOKEN: ${{ env.NOTION_API_TOKEN }}
+        ZENDESK_API_AUTH_HEADER: ${{ env.ZENDESK_API_AUTH_HEADER }}
+        GH_TOKEN: ${{ github.token }}
+        PR_NUMBER: ${{ github.event.pull_request.number }}
+      shell: bash
+      run: >
+        documentaly publish
+        $(gh pr diff ${PR_NUMBER} --name-only | grep '\.md$' | tr "\n" " "  )
+        --notion-api-key ${NOTION_API_TOKEN}
+        --zendesk-api-auth-header ${ZENDESK_API_AUTH_HEADER}
+        > result.md
+    - name: Make comment on pull request when this action was pull request event.
+      env:
+        GH_TOKEN: ${{ github.token }}
+        PR_NUMBER: ${{ github.event.pull_request.number }}
+      shell: bash
+      run: >
+        if [ -n "${PR_NUMBER}" ]; then
+          gh pr comment ${PR_NUMBER} -F ./result.md
+        fi
