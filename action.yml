@@ -43,13 +43,9 @@ runs:
         -b ${PR_HEAD_FULL_NAME}
         -s ${PR_HEAD_SHA}
         -j "$( cat ./dipendency.json )"
-        > comment-body.txt
+        > comment-body.md
     - name: Make comment on pull request when this action was pull request event.
-      env:
-        GH_TOKEN: ${{ github.token }}
-        PR_NUMBER: ${{ github.event.pull_request.number }}      
-      shell: bash
-      run: >
-        if [ -n "${PR_NUMBER}" ] && [ -s ./comment-body.txt ]; then
-          gh pr comment ${PR_NUMBER} -F ./comment-body.txt
-        fi
+      uses: thollander/actions-comment-pull-request@v2
+      with:
+        filePath: comment-body.md
+        comment_tag: documentaly-comment

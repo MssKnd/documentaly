@@ -42,12 +42,18 @@ runs:
         --notion-api-key ${NOTION_API_TOKEN}
         --zendesk-api-auth-header ${ZENDESK_API_AUTH_HEADER}
         > result.md
-    - name: Make comment on pull request when this action was pull request event.
-      env:
-        GH_TOKEN: ${{ github.token }}
-        PR_NUMBER: ${{ github.event.pull_request.number }}
+    - name: Check change files
       shell: bash
-      run: >
-        if [ -n "${PR_NUMBER}" ]; then
-          gh pr comment ${PR_NUMBER} -F ./result.md
+      run: |
+        content=$(cat result.md)
+        if [[ "$content" == "No change files." ]]; then
+          echo "NO_CHANGE_FILES=true" >> $GITHUB_ENV
+        else
+          echo "NO_CHANGE_FILES=false" >> $GITHUB_ENV
         fi
+    - name: Make comment on pull request when this action was pull request event.
+      if: env.NO_CHANGE_FILES == 'false'
+      uses: thollander/actions-comment-pull-request@v2
+      with:
+        filePath: result.md
+        comment_tag: documentaly-publish
