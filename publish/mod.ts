@@ -9,10 +9,11 @@ type Props = {
   markdownFilePaths: MarkdonwFilePath[];
   zendeskApiAuthHeader?: string;
   notionApiKey?: string;
+  dryRun?: boolean;
 };
 
 function publish(
-  { markdownFilePaths, zendeskApiAuthHeader, notionApiKey }: Props,
+  { markdownFilePaths, zendeskApiAuthHeader, notionApiKey, dryRun }: Props,
 ) {
   if (markdownFilePaths.length === 0) {
     console.info("No change files.");
@@ -52,13 +53,13 @@ function publish(
             "need Zendesk API authotization header (base64 encoded).",
           );
         }
-        publishZendesk(zendeskApiAuthHeader, props, body);
+        publishZendesk(zendeskApiAuthHeader, props, body, dryRun);
         break;
       case "notion":
         if (!notionApiKey) {
           throw Error("need notion API key.");
         }
-        publishNotion(notionApiKey, props, body);
+        publishNotion(notionApiKey, props, body, dryRun);
         break;
       default:
         console.info(`skip: ${filePath}`);
