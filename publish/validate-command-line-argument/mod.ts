@@ -37,4 +37,4 @@ function validateCommandLineArgument(input: Record<string, unknown>) {
   };
 }
 
-export { validateCommandLineArgument, alias };
+export { alias, validateCommandLineArgument };

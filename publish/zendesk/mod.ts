@@ -14,7 +14,9 @@ async function publishZendesk(
   const html = markdownHtmlParser(body);
   const zendeskClient = ZendeskClient(zendeskApiAuthHeader);
   if (dryRun) {
-    console.log(`[DryRun]\n"[${title}](${articleId})" updated at ${new Date()} 🚀`);
+    console.log(
+      `[DryRun]\n"[${title}](${articleId})" updated at ${new Date()} 🚀`,
+    );
     return;
   }
   // TODO: error handling
