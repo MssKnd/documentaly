@@ -50,10 +50,9 @@ runs:
         GH_TOKEN: ${{ github.token }}
         PR_NUMBER: ${{ github.event.pull_request.number }}
       run: |
-        pr_number="${PR_NUMBER}"
         search_string="<sub>reported by documentaly</sub>"
 
-        comments=$(gh pr view $pr_number --json comments)
+        comments=$(gh pr view ${PR_NUMBER} --json comments)
 
         for comment in $(echo "${comments}" | jq -r '.[] | @base64'); do
           comment_id=$(echo ${comment} | base64 --decode | jq -r '.id')
