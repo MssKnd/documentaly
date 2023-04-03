@@ -45,13 +45,12 @@ runs:
         -j "$( cat ./dipendency.json )"
         > comment-body.md
     - name: Check file size
-      id: check_file_size
       shell: bash
       run: |
         file_size=$(stat -c%s comment-body.md)
-        echo "::set-output name=size::$file_size"
+        echo "file_size=$file_size" >> $GITHUB_ENV
     - name: Make comment on pull request when this action was pull request event.
-      if: steps.check_file_size.outputs.size != '0'
+      if: env.file_size != '0'
       uses: thollander/actions-comment-pull-request@v2
       with:
         filePath: comment-body.md

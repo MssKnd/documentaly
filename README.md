@@ -1,3 +1,7 @@
+---
+dependentFilePaths: ['.']
+---
+
 # documentaly (Beta)
 
 This GitHub Action reminds pull request reviewers to check the related
