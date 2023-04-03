@@ -7,6 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: documentaly
-        uses: mssknd/documentaly@fix/comment
+        uses: mssknd/documentaly@main
         with:
           BASE_BRANCH: ${{ env.BASE_BRANCH }}
