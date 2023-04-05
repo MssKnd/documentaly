@@ -39,8 +39,8 @@ runs:
       run: >
         documentaly publish
         $(gh pr diff ${PR_NUMBER} --name-only | grep '\.md$' | tr "\n" " "  )
-        --notion-api-key ${NOTION_API_TOKEN}
-        --zendesk-api-auth-header ${ZENDESK_API_AUTH_HEADER}
+        ${{ env.ZENDESK_API_AUTH_HEADER && "--zendesk-api-auth-header ${ZENDESK_API_AUTH_HEADER}" || "" }}
+        ${{ env.NOTION_API_TOKEN && "--notion-api-key ${NOTION_API_TOKEN}" || "" }}
         > result.md
     - name: Check change files
       shell: bash
