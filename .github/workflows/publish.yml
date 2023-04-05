@@ -1,7 +1,7 @@
 name: documentaly-publish
 on:
-  pull_request #:
-    # types: [closed]
+  pull_request:
+    types: [closed]
 env:
   BASE_BRANCH: main
 jobs:
@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Use publish
-        uses: mssknd/documentaly@feature/option:publish
+        uses: mssknd/documentaly@main:publish
         with:
           BASE_BRANCH: ${{ env.BASE_BRANCH }}
           NOTION_API_TOKEN: ${{ secrets.NOTION_API_TOKEN }}
