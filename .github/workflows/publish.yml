@@ -1,7 +1,7 @@
 name: documentaly-publish
 on:
-  pull_request:
-    types: [closed]
+  pull_request #:
+    # types: [closed]
 env:
   BASE_BRANCH: main
 jobs:
