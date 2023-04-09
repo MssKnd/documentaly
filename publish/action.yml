@@ -33,7 +33,7 @@ runs:
       env:
         ZENDESK_API_AUTH_HEADER: Basic testxxxx # ${{ inputs.ZENDESK_API_AUTH_HEADER }}
       shell: bash
-      run: echo "--zendesk-api-auth-header \"${{ env.ZENDESK_API_AUTH_HEADER }}\"" 
+      run: echo $([[ -n "${{ env.ZENDESK_API_AUTH_HEADER }}" ]] && echo "--zendesk-api-auth-header \"${{ env.ZENDESK_API_AUTH_HEADER }}\"" || echo "")
     - name: Check to publish documents
       env:
         NOTION_API_TOKEN: ${{ inputs.NOTION_API_TOKEN }}

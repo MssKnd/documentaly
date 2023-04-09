@@ -3,7 +3,6 @@ import { comment, help as commentHelp } from "./comment/mod.ts";
 import { help as publishHelp, publish } from "./publish/mod.ts";
 import { commandLineArgument } from "./utilities/command-line-arguments/mod.ts";
 
-console.info(Deno.args);
 const commandLineArguments = await commandLineArgument();
 console.info(Deno.args, { commandLineArguments });
 /** $ documentaly <commands> */
