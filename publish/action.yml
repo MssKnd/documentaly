@@ -23,28 +23,23 @@ runs:
         deno-version: v1.x
     - name: install documentaly
       shell: bash
-      run: deno install -A --name documentaly mod.ts #https://deno.land/x/documentaly/mod.ts
+      run: deno install -A --name documentaly https://deno.land/x/documentaly/mod.ts
     - name: Fetch base branch
       env: 
         BASE_BRANCH: ${{ inputs.BASE_BRANCH }}
       shell: bash
       run: git fetch origin ${BASE_BRANCH}
-    - name: test
-      env:
-        ZENDESK_API_AUTH_HEADER: Basic testxxxx # ${{ inputs.ZENDESK_API_AUTH_HEADER }}
-      shell: bash
-      run: echo ${ZENDESK_API_AUTH_HEADER:+--zendesk-api-auth-header "${ZENDESK_API_AUTH_HEADER}"}
     - name: Check to publish documents
       env:
         NOTION_API_TOKEN: ${{ inputs.NOTION_API_TOKEN }}
-        ZENDESK_API_AUTH_HEADER: Basic testxxxzz # ${{ inputs.ZENDESK_API_AUTH_HEADER }}
+        ZENDESK_API_AUTH_HEADER: ${{ inputs.ZENDESK_API_AUTH_HEADER }}
         GH_TOKEN: ${{ github.token }}
         PR_NUMBER: ${{ github.event.pull_request.number }}
       shell: bash
       run: |
         documentaly publish \
         $(gh pr diff ${PR_NUMBER} --name-only | grep '\.md$' | tr "\n" " "  ) \
-        $([[ -n "${{ env.NOTION_API_TOKEN }}" ]] && echo "--notion-api-key \"${{ env.NOTION_API_TOKEN }}\"" || echo "") \
+        ${NOTION_API_TOKEN:+--notion-api-key "${NOTION_API_TOKEN}"} \
         ${ZENDESK_API_AUTH_HEADER:+--zendesk-api-auth-header "${ZENDESK_API_AUTH_HEADER}"} \
         > result.md
     - name: Check change files
