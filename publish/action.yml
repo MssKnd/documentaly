@@ -32,7 +32,7 @@ runs:
     - name: Check to publish documents
       env:
         NOTION_API_TOKEN: ${{ inputs.NOTION_API_TOKEN }}
-        ZENDESK_API_AUTH_HEADER: ${{ inputs.ZENDESK_API_AUTH_HEADER }}
+        ZENDESK_API_AUTH_HEADER: Basic test # ${{ inputs.ZENDESK_API_AUTH_HEADER }}
         GH_TOKEN: ${{ github.token }}
         PR_NUMBER: ${{ github.event.pull_request.number }}
       shell: bash
