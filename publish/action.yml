@@ -23,7 +23,7 @@ runs:
         deno-version: v1.x
     - name: install documentaly
       shell: bash
-      run: deno install -A --name documentaly https://deno.land/x/documentaly/mod.ts
+      run: deno install -A --name documentaly mod.ts #https://deno.land/x/documentaly/mod.ts
     - name: Fetch base branch
       env: 
         BASE_BRANCH: ${{ inputs.BASE_BRANCH }}
@@ -42,7 +42,7 @@ runs:
         PR_NUMBER: ${{ github.event.pull_request.number }}
       shell: bash
       run: >
-        deno run --lock=deno.lock -A mod.ts publish
+        documentaly publish
         $(gh pr diff ${PR_NUMBER} --name-only | grep '\.md$' | tr "\n" " "  )
         $([[ -n "${{ env.NOTION_API_TOKEN }}" ]] && echo "--notion-api-key \"${{ env.NOTION_API_TOKEN }}\"" || echo "")
         $([[ -n "${{ env.ZENDESK_API_AUTH_HEADER }}" ]] && echo "--zendesk-api-auth-header \"${{ env.ZENDESK_API_AUTH_HEADER }}\"" || echo "")
