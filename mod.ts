@@ -7,28 +7,28 @@ console.info(Deno.args);
 const commandLineArguments = await commandLineArgument();
 console.info(Deno.args, { commandLineArguments });
 /** $ documentaly <commands> */
-switch (commandLineArguments.command) {
-  case "check":
-    if (commandLineArguments.helpFlag) {
-      checkHelp();
-      break;
-    }
-    check(commandLineArguments);
-    break;
-  case "comment":
-    if (commandLineArguments.helpFlag) {
-      commentHelp();
-      break;
-    }
-    comment(commandLineArguments);
-    break;
-  case "publish":
-    if (commandLineArguments.helpFlag) {
-      publishHelp();
-      break;
-    }
-    publish(commandLineArguments);
-    break;
-  default:
-    throw new Error("invalid command");
-}
+// switch (commandLineArguments.command) {
+//   case "check":
+//     if (commandLineArguments.helpFlag) {
+//       checkHelp();
+//       break;
+//     }
+//     check(commandLineArguments);
+//     break;
+//   case "comment":
+//     if (commandLineArguments.helpFlag) {
+//       commentHelp();
+//       break;
+//     }
+//     comment(commandLineArguments);
+//     break;
+//   case "publish":
+//     if (commandLineArguments.helpFlag) {
+//       publishHelp();
+//       break;
+//     }
+//     publish(commandLineArguments);
+//     break;
+//   default:
+//     throw new Error("invalid command");
+// }

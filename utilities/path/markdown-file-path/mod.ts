@@ -7,7 +7,7 @@ function validateMarkdownFilePath(input: unknown) {
   const filePath = validateFilePath(input);
   if (!hasMarkdownExtention(filePath)) {
     // TODO: will change Result Type
-    throw new Error(`invalid markdown file path: ${filePath}`);
+    // throw new Error(`invalid markdown file path: ${filePath}`);
   }
   return input as MarkdonwFilePath;
 }
