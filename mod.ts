@@ -4,7 +4,7 @@ import { help as publishHelp, publish } from "./publish/mod.ts";
 import { commandLineArgument } from "./utilities/command-line-arguments/mod.ts";
 
 const commandLineArguments = await commandLineArgument();
-console.log(Deno.args, {commandLineArguments});
+console.log(Deno.args, { commandLineArguments });
 /** $ documentaly <commands> */
 switch (commandLineArguments.command) {
   case "check":
