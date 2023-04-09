@@ -36,11 +36,11 @@ runs:
         GH_TOKEN: ${{ github.token }}
         PR_NUMBER: ${{ github.event.pull_request.number }}
       shell: bash
-      run: >
-        documentaly publish
-        $(gh pr diff ${PR_NUMBER} --name-only | grep '\.md$' | tr "\n" " "  )
-        $([[ -n "${{ env.NOTION_API_TOKEN }}" ]] && echo "--notion-api-key \"${{ env.NOTION_API_TOKEN }}\"" || echo "")
-        $([[ -n "${{ env.ZENDESK_API_AUTH_HEADER }}" ]] && echo "--zendesk-api-auth-header \"${{ env.ZENDESK_API_AUTH_HEADER }}\"" || echo "")
+      run: |
+        documentaly publish \
+        $(gh pr diff ${PR_NUMBER} --name-only | grep '\.md$' | tr "\n" " "  ) \
+        ${NOTION_API_TOKEN:+--notion-api-key "${NOTION_API_TOKEN}"} \
+        ${ZENDESK_API_AUTH_HEADER:+--zendesk-api-auth-header "${ZENDESK_API_AUTH_HEADER}"} \
         > result.md
     - name: Check change files
       shell: bash
