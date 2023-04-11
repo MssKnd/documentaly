@@ -2,7 +2,6 @@ import { isObject, isString } from "../utilities/type-guard.ts";
 import { markdownPropsParser } from "./markdown-props-parser/mod.ts";
 import { publishNotion } from "./notion/mod.ts";
 import { publishZendesk } from "./zendesk/mod.ts";
-import { replaceMarkdownImagePath } from "./replace-markdown-image-path/mod.ts";
 import { MarkdonwFilePath } from "../utilities/path/mod.ts";
 
 type Props = {
@@ -35,16 +34,12 @@ function publish(
       return;
     }
 
-    const { props, body: unreplacedBody } = markdownPropsParser(markdown);
+    const { props, body } = markdownPropsParser(markdown);
 
     if (!hasDist(props)) {
       console.info(`skip: ${filePath}`);
       return;
     }
-
-    const body = hasImageUrlReplacementPath(props)
-      ? replaceMarkdownImagePath(unreplacedBody, props.imageUrlReplacementPath)
-      : unreplacedBody;
 
     switch (props.dist.toLocaleLowerCase()) {
       case "zendesk":
@@ -72,12 +67,6 @@ const hasDist = (
   x: unknown,
 ): x is { dist: string } & Record<string, unknown> =>
   isObject(x) && ("dist" in x) && isString(x.dist);
-
-const hasImageUrlReplacementPath = (
-  x: unknown,
-): x is { imageUrlReplacementPath: string } & Record<string, unknown> =>
-  isObject(x) && ("imageUrlReplacementPath" in x) &&
-  isString(x.imageUrlReplacementPath);
 
 function help() {
   console.info(`documentaly publish help`);
