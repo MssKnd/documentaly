@@ -1,4 +1,3 @@
-import { isObject, isString } from "../../utilities/type-guard.ts";
 import { markdownHtmlParser } from "../markdown-html-parser/mod.ts";
 import { ZendeskClient } from "./client/mod.ts";
 import { validateMarkdownProps } from "./props-validator/mod.ts";
@@ -12,9 +11,7 @@ async function publishZendesk(
   const { title, articleId, subdomain, locale } = validateMarkdownProps(
     props,
   );
-  // TODO: include validateMarkdownProps
-  const mediaBaseUrl = hasImageUrlReplacementPath(props) ? props.imageUrlReplacementPath : undefined;
-  const html = markdownHtmlParser(body, mediaBaseUrl);
+  const html = markdownHtmlParser(body);
   const zendeskClient = ZendeskClient(zendeskApiAuthHeader);
   if (dryRun) {
     console.log(
@@ -38,11 +35,5 @@ async function publishZendesk(
   } = await res.json();
   console.log(`"[${title}](${articleUrl})" updated at ${updatedAt} 🚀`);
 }
-
-const hasImageUrlReplacementPath = (
-  x: unknown,
-): x is { imageUrlReplacementPath: string } & Record<string, unknown> =>
-  isObject(x) && ("imageUrlReplacementPath" in x) &&
-  isString(x.imageUrlReplacementPath);
 
 export { publishZendesk };
