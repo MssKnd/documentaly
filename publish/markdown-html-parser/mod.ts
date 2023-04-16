@@ -1,9 +1,7 @@
 import { gfm } from "../deps.ts";
 
-function markdownHtmlParser(markdown: string, mediaBaseUrl?: string) {
-  return gfm.render(markdown, {
-    mediaBaseUrl,
-  });
+function markdownHtmlParser(markdown: string) {
+  return gfm.render(markdown);
 }
 
 export { markdownHtmlParser };
